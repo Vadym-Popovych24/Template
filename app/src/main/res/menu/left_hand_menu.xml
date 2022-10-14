@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navigation_menu_item_1"
+            android:icon="@drawable/ic_apply"
+            android:checkable="false"
+            android:title="@string/menu_item_1" />
+
+        <item
+            android:id="@+id/navigation_menu_item_2"
+            android:icon="@drawable/ic_add"
+            android:checkable="false"
+            android:title="@string/menu_item_2" />
+
+        <item
+            android:id="@+id/navigation_menu_item_3"
+            android:icon="@drawable/ic_add_chat"
+            android:checkable="false"
+            android:title="@string/menu_item_3" />
+
+        <item
+            android:id="@+id/navigation_menu_item_4"
+            android:icon="@drawable/svg_alerts"
+            android:checkable="false"
+            android:title="@string/menu_item_4" />
+
+        <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/ic_settings"
+            android:checkable="false"
+            android:title="@string/settings" />
+    </group>
+
+<!--    <group-->
+<!--        android:id="@+id/menu_2"-->
+<!--        android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/sign_out"-->
+<!--            android:checkable="false"-->
+<!--            android:icon="@drawable/ic_sign_out"-->
+<!--            android:title="@string/sign_out" />-->
+<!--    </group>-->
+
+</menu>

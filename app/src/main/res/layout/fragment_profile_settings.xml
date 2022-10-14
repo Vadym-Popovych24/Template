@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.settings.profile.viewmodel.ProfileSettingsViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/white"
+            android:elevation="@dimen/xxsmall_padding"
+            app:title="@string/profile"
+            app:titleTextColor="@android:color/black" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{safeUnbox(!viewModel.isLoading()) ? View.VISIBLE : View.GONE}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/first_name"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:error="@{viewModel.firstNameError}"
+                        app:startIconDrawable="@drawable/ic_user">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapSentences"
+                            android:singleLine="true"
+                            android:text="@={viewModel.firstName}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/last_name"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:error="@{viewModel.lastNameError}"
+                        app:startIconDrawable="@drawable/ic_user">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapSentences"
+                            android:singleLine="true"
+                            android:text="@={viewModel.lastName}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/email"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:error="@{viewModel.emailError}"
+                        app:startIconDrawable="@drawable/ic_email">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:singleLine="true"
+                            android:text="@={viewModel.email}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/birthday"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:error="@{viewModel.birthDayError}"
+                        app:startIconDrawable="@drawable/ic_today">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/birthDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="date"
+                            android:singleLine="true"
+                            android:text="@={viewModel.birthDay}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="phone_number"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:error="@{viewModel.phoneError}"
+                        app:startIconDrawable="@drawable/ic_phone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:singleLine="true"
+                            android:text="@={viewModel.phone}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/gender"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:startIconDrawable="@drawable/ic_gender">
+
+                        <com.android.template.utils.custom.InstantAutoComplete
+                            android:id="@+id/genderDropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/input_item_size"
+                            android:gravity="start|bottom"
+                            android:padding="@dimen/small_padding"
+                            android:singleLine="true"
+                            android:text="@={viewModel.gender}"
+                            android:textSize="@dimen/label_text_size_default"
+                            tools:ignore="LabelFor" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:hint="@string/language"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:startIconDrawable="@drawable/ic_language">
+
+                        <com.android.template.utils.custom.InstantAutoComplete
+                            android:id="@+id/languageDropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/input_item_size"
+                            android:gravity="start|bottom"
+                            android:padding="@dimen/small_padding"
+                            android:singleLine="true"
+                            android:text="@={viewModel.language}"
+                            android:textSize="@dimen/label_text_size_default"
+                            tools:ignore="LabelFor" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:onClick="@{() -> viewModel.save()}"
+                        android:text="@string/save" />
+
+                </LinearLayout>
+            </ScrollView>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{safeUnbox(viewModel.isLoading()) ? View.VISIBLE : View.GONE}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

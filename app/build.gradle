@@ -1,0 +1,240 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'org.sonarqube' // added for sonar qube
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.android.template"
+        minSdkVersion 22
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+        compose true
+    }
+
+    kapt {
+        generateStubs = true
+        javacOptions {
+            // Increase the max count of errors from annotation processors.
+            // Default is 100.
+            option("-Xmaxerrs", 500)
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0-alpha08'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Template"
+        property "sonar.projectKey", "Template"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.language", "kotlin"
+        property "sonar.sources", "src/main/java"
+        property "sonar.java.sources", "src/main/java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.login", "admin"
+        property "sonar.password", "mySonarQ24;"
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha05'
+
+    // App dependencies
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    //Fast Android Networking
+    implementation "com.amitshekhar.android:android-networking:$fastAndroidNetworkingVersion"
+    implementation "com.amitshekhar.android:rx2-android-networking:$fastAndroidNetworkingVersion"
+
+    /**
+     * di Dagger 2
+     */
+    // Basic Dagger 2 (required)
+    implementation "com.google.dagger:dagger:${dagger_version}"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+
+    // dagger.android package (optional)
+    implementation "com.google.dagger:dagger-android:$dagger3_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+
+    // Support library support (optional)
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+
+    /**
+     * ROOM
+     */
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // debug database
+    debugImplementation "com.amitshekhar.android:debug-db:$debug_db_version"
+
+    /**
+     * VIEW MODEL AND LIVE DATE
+     */
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    /**
+     * Reactive Programing library
+     */
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+
+    /**
+     * KeyStore
+     */
+    implementation 'in.co.ophio:secure-preferences:0.1.3'
+
+    /**
+     * Pagination Library
+     */
+    implementation "androidx.paging:paging-runtime-ktx:$pagination_version"
+    implementation "androidx.paging:paging-rxjava2-ktx:$pagination_version"
+
+    /**
+     * Picasso fot image
+     */
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    /**
+     * * SwipeRefreshLayout
+     */
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+//    image picker
+    implementation 'com.github.nguyenhoanglam:ImagePicker:1.3.3'
+    //file picker
+    implementation 'com.nononsenseapps:filepicker:4.1.0'
+
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'androidx.fragment:fragment-ktx:1.3.3'
+
+    // Dynamic Feature Module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //expandableLayout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+    //sms retriever
+    //  implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    //  implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.0'
+    //crop
+    implementation 'com.isseiaoki:simplecropview:1.1.8'
+
+    //secure code
+    implementation 'com.chaos.view:pinview:1.4.4'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:28.3.1')
+
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    //  implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    //   implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-database'
+
+    //data picker
+    implementation 'com.github.dewinjm:monthyear-picker:1.0.2'
+
+//    implementation 'androidx.activity:activity-ktx:1.3.0-alpha07'
+    //  implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+//    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
+    //SignalR Java client
+//    implementation "com.microsoft.signalr:signalr:${signalrVersion}"
+
+    // Compose
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.6.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.2.1'
+    // Animations
+    implementation 'androidx.compose.animation:animation:1.2.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.2.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.2.1'
+}

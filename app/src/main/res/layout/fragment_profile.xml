@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.profile.viewmodel.ProfileViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="@dimen/xxxsmall_padding"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/xxxsmall_padding"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@android:color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@android:color/white">
+
+                <!-- Toolbar -->
+
+                <!-- Image & Titles expanded -->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@android:color/transparent"
+                    android:elevation="@dimen/xxxsmall_padding"
+                    app:layout_collapseMode="pin">
+
+                    <LinearLayout
+                        android:id="@+id/infoCollapsed"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/subtitleCollapsed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@{viewModel.userEmail}"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            tools:text="Site name" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/infoExpanded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/overview_image_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@color/colorPrimary"
+                        android:contentDescription="@string/none"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="H,5:2.6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:loadImageUrlWithoutPlaceholder="@{viewModel.userCover}"
+                        tools:background="@color/design_default_color_secondary" />
+
+                    <ImageView
+                        android:id="@+id/icon_change_cover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="6dp"
+                        android:padding="10dp"
+                        android:src="@drawable/svg_photo_camera"
+                        app:layout_constraintBottom_toBottomOf="@+id/overview_image_cover"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                 <!--   <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/large_text_size" />-->
+
+
+                    <TextView
+                        android:id="@+id/subtitleExpanded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingBottom="8dp"
+                        android:singleLine="true"
+                        android:text="@{viewModel.userEmail}"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/titleExpanded"
+                        tools:text="SubTitle"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/titleExpanded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@{viewModel.userName}"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/avatarExpanded"
+                        tools:text="Title" />
+
+                    <TextView
+                        android:id="@+id/contactRequestsExpanded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="contacts_request"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/medium_text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/subtitleExpanded"
+                        tools:text="contact Requests" />
+
+                    <ImageView
+                        android:id="@+id/avatarExpanded"
+                        android:layout_width="158dp"
+                        android:layout_height="158dp"
+                        app:circleImageWithBorder="@{viewModel.userAvatar}"
+                        app:layout_constraintBottom_toBottomOf="@+id/overview_image_cover"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/overview_image_cover"
+                        tools:background="@color/design_default_color_primary" />
+
+                    <ImageView
+                        android:id="@+id/changeAvatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circler_border_with_background"
+                        android:padding="7dp"
+                        android:src="@{@drawable/svg_photo_camera}"
+                        app:layout_constraintBottom_toBottomOf="@+id/avatarExpanded"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarExpanded"
+                        app:layout_constraintHorizontal_bias="0.97"
+                        app:layout_constraintStart_toStartOf="@+id/avatarExpanded"
+                        app:layout_constraintTop_toTopOf="@+id/avatarExpanded"
+                        app:layout_constraintVertical_bias="0.97" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#d6d6d6"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/titleCollapsed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@{viewModel.userName}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_anchor="@+id/appbar"
+            app:layout_anchorGravity="top|center"
+            tools:text="Site name" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

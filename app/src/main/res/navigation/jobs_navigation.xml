@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/jobs_navigation"
+    app:startDestination="@id/navigationRecommendations">
+
+
+    <fragment
+        android:id="@+id/navigationSettings"
+        android:name="com.android.template.ui.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.android.template.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/changeAvatarFragment"
+        android:name="com.android.template.ui.profile.avatar.ChangeAvatarFragment"
+        android:label="ChangeAvatarFragment"
+        tools:layout="@layout/fragment_change_avatar" />
+
+    <fragment
+        android:id="@+id/profileSettings"
+        android:name="com.android.template.ui.settings.profile.ProfileSettingsFragment"
+        android:label="ProfileSettingsFragment"
+        tools:layout="@layout/fragment_profile_settings" />
+
+    <fragment
+        android:id="@+id/changePasswordSettings"
+        android:name="com.android.template.ui.settings.password.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_passwords" />
+
+    <fragment
+        android:id="@+id/navigationHome"
+        android:name="com.android.template.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/navigationRecommendations"
+        android:name="com.android.template.ui.recommendations.RecommendationsFragment"
+        android:label="RecommendationsFragment"
+        tools:layout="@layout/fragment_recommendations"/>
+
+    <fragment
+        android:id="@+id/navigationLiked"
+        android:name="com.android.template.ui.recommendations.liked.LikedFragment"
+        android:label="LikedFragment"
+        tools:layout="@layout/fragment_liked"/>
+
+    <fragment
+        android:id="@+id/navigationHistory"
+        android:name="com.android.template.ui.recommendations.history.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem1"
+        android:name="com.android.template.ui.menu1.MenuItem1Fragment"
+        android:label="MenuItem1Fragment"
+        tools:layout="@layout/fragment_menu_item_one"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem2"
+        android:name="com.android.template.ui.menu2.MenuItem2Fragment"
+        android:label="MenuItem1Fragment"
+        tools:layout="@layout/fragment_menu_item_two"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem3"
+        android:name="com.android.template.ui.menu3.MenuItem3Fragment"
+        android:label="MenuItem1Fragment"
+        tools:layout="@layout/fragment_menu_item_three"/>
+
+
+    <fragment
+        android:id="@+id/navigationMenuItem4"
+        android:name="com.android.template.ui.menu4.MenuItem4Fragment"
+        android:label="MenuItem1Fragment"
+        tools:layout="@layout/fragment_menu_item_four"/>
+
+</navigation>

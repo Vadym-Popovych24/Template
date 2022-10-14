@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="xxxxsmall_padding">1dp</dimen>
+    <dimen name="xxxsmall_padding">3dp</dimen>
+    <dimen name="xxsmall_padding">4dp</dimen>
+    <dimen name="xsmall_padding">8dp</dimen>
+    <dimen name="small_padding">12dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="medium_padding">20dp</dimen>
+    <dimen name="large_padding">24dp</dimen>
+    <dimen name="xlarge_padding">32dp</dimen>
+    <dimen name="xxlarge_padding">48dp</dimen>
+    <dimen name="xxxlarge_padding">60dp</dimen>
+    <dimen name="default_item_size">40dp</dimen>
+    <dimen name="medium_item_size">48dp</dimen>
+    <dimen name="large_item_size">56dp</dimen>
+    <dimen name="input_item_size">60dp</dimen>
+    <dimen name="small_item_size">24dp</dimen>
+    <dimen name="xsmall_item_size">18dp</dimen>
+    <dimen name="bottom_navigation_size">96dp</dimen>
+    <dimen name="icon_margin">56dp</dimen>
+
+    <dimen name="progress_animation_size">120dp</dimen>
+    <dimen name="logo_size">140dp</dimen>
+    <dimen name="comment_field">120dp</dimen>
+    <dimen name="salary_field">80dp</dimen>
+    <dimen name="nav_header_size">220dp</dimen>
+    <dimen name="avatar_size">90dp</dimen>
+    <dimen name="avatar_size_small">70dp</dimen>
+    <dimen name="avatar_size_large">64dp</dimen>
+    <dimen name="image_gallery_item_height">130dp</dimen>
+    <dimen name="attachment_height">146dp</dimen>
+    <dimen name="image_gallery_item_width">180dp</dimen>
+    <dimen name="ll_padding_post_item">8dp</dimen>
+    <dimen name="tv_text_size_like_comment_repost_count">12sp</dimen>
+    <dimen name="iv_size_like_post">15dp</dimen>
+    <dimen name="ll_padding_like_comment_share">16dp</dimen>
+    <dimen name="tv_padding_like_comment_share_post">5dp</dimen>
+    <dimen name="tv_size_like_repost_comment">12sp</dimen>
+    <dimen name="iv_size_comment_share_post">18dp</dimen>
+    <dimen name="ll_padding_top_post_item">10dp</dimen>
+    <dimen name="iv_size_post_avatar">45dp</dimen>
+    <dimen name="tv_margin_left_post_creator_name">8dp</dimen>
+    <dimen name="iv_size_time_icon_post">12dp</dimen>
+    <dimen name="tv_size_date_post">12sp</dimen>
+    <dimen name="tv_margin_top_for_text">12dp</dimen>
+    <dimen name="ll_bottom_post_menu_padding">8dp</dimen>
+    <dimen name="iv_size_bottom_post_menu">20dp</dimen>
+    <dimen name="tv_pading_left_bottom_post_menu">16dp</dimen>
+
+    <dimen name="label_text_size_default">16sp</dimen>
+    <dimen name="attachment_text_size">20sp</dimen>
+    <dimen name="collapsible_toolbar_height">224dp</dimen>
+    <dimen name="collapsible_avatar_size">94dp</dimen>
+    <dimen name="job_details_action_panel_size">64dp</dimen>
+    <dimen name="large_text_size">24sp</dimen>
+    <dimen name="medium_text_size">18sp</dimen>
+    <dimen name="xmedium_text_size">16sp</dimen>
+    <dimen name="small_text_size">14sp</dimen>
+    <dimen name="xsmall_text_size">12sp</dimen>
+
+    <dimen name="about_label_weight">0.8</dimen>
+    <dimen name="working_hours_label_weight">0.4</dimen>
+
+    <dimen name="tv_height_apply_job">100dp</dimen>
+
+    <dimen name="message_start_margin">120dp</dimen>
+    <dimen name="message_image_width">150dp</dimen>
+    <dimen name="message_image_height">100dp</dimen>
+
+    <dimen name="message_attachment_height">60dp</dimen>
+    <dimen name="text_view_height">120dp</dimen>
+
+    <dimen name="img_splash_background">220dp</dimen>
+    <dimen name="padding_top_login">30dp</dimen>
+
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.android.template.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"/>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.android.template.ui.login.signup.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up"/>
+
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.android.template.ui.login.reset.PasswordResetFragment"
+        android:label="PasswordResetFragment"
+        tools:layout="@layout/fragment_reset_password"/>
+</navigation>

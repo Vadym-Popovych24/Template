@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.template.ui.crash.CrashActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.crash.viewmodel.CrashViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/xxxlarge_padding"
+                android:layout_marginBottom="@dimen/small_padding"
+                android:layout_weight="1"
+                android:src="@drawable/critical_error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/xxsmall_padding"
+                android:text="@string/critical_error"
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="@string/description_critical_error"
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/large_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again_later"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:text="@string/try_again_later_continue"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_marginEnd="@dimen/xxxsmall_padding"/>
+
+        <TextView
+            android:id="@+id/tv_here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/here"
+            android:textColor="@color/blue"
+            android:textColorLink="@color/blue" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
+
+</layout>

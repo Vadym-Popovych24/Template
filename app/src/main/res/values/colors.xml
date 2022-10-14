@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1CD981</color>
+    <color name="colorPrimaryDark">#059345</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="red">#DD0000</color>
+    <color name="green">#00CC00</color>
+    <color name="orange">#ff9900</color>
+    <color name="orange_trans">#88ff9900</color>
+    <color name="blue_trans">#55258AE0</color>
+    <color name="blue_trans_v2">#33258AE0</color>
+    <color name="blue">#258AE0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="shadow">#d0d8dc</color>
+    <color name="shadow_trans">#88d0d8dc</color>
+    <color name="red_shadow_trans">#55FF0000</color>
+    <color name="gray">#808080</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="gray_line">#C0C0C0</color>
+    <color name="background_LHM">#F8F9FA</color>
+    <color name="gray_post_line">#E5E5E5</color>
+    <color name="gray_for_like_comment_repost">#999999</color>
+    <color name="posts_background">#F2F2F2</color>
+    <color name="gray_post_time">#A7B1BF</color>
+    <color name="gray_for_bottom_sheet">#eeeeee</color>
+    <color name="bottom_menu_selected">#4AED94</color>
+    <color name="bottom_menu_unselected">#818181</color>
+    <color name="login_button">#3949ab</color>
+    <color name="gray_for_background">#f5f5f5</color>
+    <color name="crop_grid_color">#88000000</color>
+    <color name="gray_for_text_resume_education">#696969</color>
+    <color name="dialog_blue">#258AE0</color>
+    <color name="dialog_gray">#F8F9FA</color>
+    <color name="border_message">#D8D8D8</color>
+    <color name="bg_message_attachment">#FDF6F6</color>
+    <color name="green_approved_text">#109326</color>
+    <color name="red_rejected_text">#DD2F3C</color>
+</resources>

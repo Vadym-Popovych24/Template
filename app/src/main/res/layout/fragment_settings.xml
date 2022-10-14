@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.settings.viewmodel.SettingsViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/white"
+            android:elevation="@dimen/xxsmall_padding"
+            app:title="@string/settings"
+            app:titleTextColor="@android:color/black" />
+
+        <TextView
+            android:layout_marginTop="@dimen/default_padding"
+            android:id="@+id/profileSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/default_padding"
+            android:text="@string/profile"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/label_text_size_default"
+            android:textStyle="bold" />
+
+        <include layout="@layout/horizontal_gray_line" />
+
+        <TextView
+            android:id="@+id/passwordSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/default_padding"
+            android:text="@string/password"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/label_text_size_default"
+            android:textStyle="bold" />
+
+        <include layout="@layout/horizontal_gray_line" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/default_padding"
+                android:text="@string/settings_app_version"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/label_text_size_default"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:text="@{viewModel.appVersion}"
+                android:textSize="@dimen/label_text_size_default" />
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_gray_line" />
+
+        <TextView
+            android:id="@+id/signOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/default_padding"
+            android:text="@string/sign_out"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/label_text_size_default"
+            android:textStyle="bold" />
+
+        <include layout="@layout/horizontal_gray_line" />
+    </LinearLayout>
+</layout>

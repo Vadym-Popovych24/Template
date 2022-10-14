@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <plurals name="seconds">
+        <item quantity="one">секунду</item>
+        <item quantity="few">секунди</item>
+        <item quantity="other">секунд</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">хвилину</item>
+        <item quantity="few">хвилини</item>
+        <item quantity="other">хвилин</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">годину</item>
+        <item quantity="few">години</item>
+        <item quantity="other">годин</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">день</item>
+        <item quantity="few">дні</item>
+        <item quantity="other">днів</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="one">тиждень</item>
+        <item quantity="few">тижні</item>
+        <item quantity="other">тижнів</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">місяць</item>
+        <item quantity="few">місяці</item>
+        <item quantity="other">місяців</item>
+    </plurals>
+
+    <plurals name="spend_time_format">
+        <item quantity="one">день тому</item>
+        <item quantity="other">днів тому</item>
+    </plurals>
+    <plurals name="applicant">
+        <item quantity="one">відгук</item>
+        <item quantity="other">відгуків</item>
+    </plurals>
+    <plurals name="jobs">
+        <item quantity="one">вакансія</item>
+        <item quantity="other">вакансій</item>
+    </plurals>
+
+</resources>

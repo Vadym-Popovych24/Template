@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.base.BaseViewModel" />
+    </data>
+    <FrameLayout
+        android:id="@+id/fl_for_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        
+        <ImageView
+            android:layout_width="@dimen/img_splash_background"
+            android:layout_height="@dimen/img_splash_background"
+            android:layout_gravity="center"
+            android:background="@drawable/logo"/>
+        
+    </FrameLayout>
+</layout>

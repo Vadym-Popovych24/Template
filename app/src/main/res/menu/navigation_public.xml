@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_recommendations"
+        android:icon="@drawable/ic_timeline"
+        android:title="@string/recommendations"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/navigation_liked"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_like"
+        android:title="@string/liked" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_timeline"
+        android:title="@string/history"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/svg_home"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+
+</menu>
