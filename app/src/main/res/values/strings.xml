@@ -68,7 +68,8 @@
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
-    <string name="show_more">Show more…</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
@@ -222,6 +223,6 @@
 
     <string name="from">From</string>
     <string name="title_activity_compose">ComposeActivity</string>
-
+    <string name="title_activity_onboarding">OnboardingActivity</string>
 
 </resources>
