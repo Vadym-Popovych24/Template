@@ -18,7 +18,7 @@ buildscript {
         fastAndroidNetworkingVersion = '1.0.2'
         pagination_version = '3.0.0'
         nav_version = '2.3.5'
-        //    appCenterSdkVersion = '4.1.0'
+        appCenterSdkVersion = '4.4.5'
         signalrVersion = '3.1.15'
         gsm_version = '4.3.10'
         compose_ui_version = '1.1.1'
