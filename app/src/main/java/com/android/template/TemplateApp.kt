@@ -65,8 +65,6 @@ class TemplateApp : Application(), HasAndroidInjector {
 
         AndroidNetworking.initialize(applicationContext, okHttpClient)
         AndroidNetworking.setParserFactory(GsonParserFactory(gson))
-
-        val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     fun moveToLogin() {
