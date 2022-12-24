@@ -14,14 +14,6 @@ import androidx.core.content.ContextCompat
 import com.android.template.R
 
 class RoundedImageView: AppCompatImageView {
-    private val SCALE_TYPE = ScaleType.CENTER_CROP
-
-    private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
-    private val COLORDRAWABLE_DIMENSION = 2
-
-    private val DEFAULT_BORDER_WIDTH = 0
-    private val DEFAULT_BORDER_COLOR = Color.BLACK
-    private val DEFAULT_BORDER_OVERLAY = false
 
     private val mDrawableRect = RectF()
     private val mBorderRect = RectF()
@@ -116,7 +108,7 @@ class RoundedImageView: AppCompatImageView {
         return mBorderColor
     }
 
-    fun setBorderColor(borderColor: Int) {
+    private fun setBorderColor(borderColor: Int) {
         if (borderColor == mBorderColor) {
             return
         }
@@ -203,7 +195,7 @@ class RoundedImageView: AppCompatImageView {
             val bitmap: Bitmap
 
             if (drawable is ColorDrawable) {
-                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG)
+                bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION, COLOR_DRAWABLE_DIMENSION, BITMAP_CONFIG)
             } else {
                 bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, BITMAP_CONFIG)
             }
@@ -273,5 +265,16 @@ class RoundedImageView: AppCompatImageView {
         mShaderMatrix.postTranslate((dx + 0.5f).toInt() + mDrawableRect.left, (dy + 0.5f).toInt() + mDrawableRect.top)
 
         mBitmapShader!!.setLocalMatrix(mShaderMatrix)
+    }
+
+    companion object {
+        private val SCALE_TYPE = ScaleType.CENTER_CROP
+
+        private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
+        private const val COLOR_DRAWABLE_DIMENSION = 2
+
+        private const val DEFAULT_BORDER_WIDTH = 0
+        private const val DEFAULT_BORDER_COLOR = Color.BLACK
+        private const val DEFAULT_BORDER_OVERLAY = false
     }
 }

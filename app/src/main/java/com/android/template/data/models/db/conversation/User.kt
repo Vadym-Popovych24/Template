@@ -1,7 +1,6 @@
 package com.android.template.data.models.db.conversation
 
 import androidx.room.*
-import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "conversation_users",
     indices = [Index("conversation_id")], )

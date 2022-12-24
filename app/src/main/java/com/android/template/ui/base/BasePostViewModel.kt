@@ -1,20 +1,13 @@
 package com.android.template.ui.base
 
 import android.content.Context
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import com.android.template.R
-import com.android.template.data.models.enums.ReturnResult
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.*
 
-abstract class BasePostViewModel constructor() : BaseViewModel() {
+abstract class BasePostViewModel : BaseViewModel() {
     private val LENGTH_SHORT_TEXT = 200
     private var isOpenFullText: Boolean = false
     var postId: Int = 0

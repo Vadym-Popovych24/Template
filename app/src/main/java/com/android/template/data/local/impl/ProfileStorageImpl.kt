@@ -25,7 +25,7 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
             culture = model.culture
         }
 
-        val id = database.profileDao().insert(profile)
+        database.profileDao().insert(profile)
     }
 
     override fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar> {

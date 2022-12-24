@@ -2,7 +2,6 @@ package com.android.template.ui.menu2.di
 
 import androidx.lifecycle.ViewModel
 import com.android.template.di.qualifiers.ViewModelKey
-import com.android.template.ui.menu1.viewmodel.MenuItem1ViewModel
 import com.android.template.ui.menu2.viewmodel.MenuItem2ViewModel
 import dagger.Binds
 import dagger.Module

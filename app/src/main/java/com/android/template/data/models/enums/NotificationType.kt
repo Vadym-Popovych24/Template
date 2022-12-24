@@ -1,8 +1,5 @@
 package com.android.template.data.models.enums
 
-import androidx.annotation.StringRes
-import com.android.template.R
-
 enum class NotificationType(
     val code: Int,
     val topic: String,

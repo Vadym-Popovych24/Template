@@ -13,7 +13,6 @@ import com.android.template.utils.interceptors.RefreshTokenInterceptor
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.gsonparserfactory.GsonParserFactory
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics

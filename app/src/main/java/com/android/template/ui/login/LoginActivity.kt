@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.android.template.R
-import com.android.template.ui.login.signup.SignUpFragment
 import dagger.android.support.DaggerAppCompatActivity
 
 class LoginActivity : DaggerAppCompatActivity() {

@@ -4,9 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import com.android.template.data.local.interfaces.ProfileStorage
 import com.android.template.data.models.ProfileSettings
-import com.android.template.data.models.api.model.CoverPicture
 import com.android.template.data.models.api.model.ProfileMenuModel
-import com.android.template.data.models.api.model.ProfileModel
 import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
@@ -28,12 +26,6 @@ class ProfileRepositoryImpl @Inject constructor(
     private val loginWebservice: LoginWebservice,
     private val cacheDir: File
 ) : BaseRepositoryImpl(), ProfileRepository {
-
-    override fun getProfileAPI(): Unit {
-        val id = preferences.getProfileId()
-        var profile: ProfileModel? = null
-        var altAttribute: String? = null
-    }
 
     override fun getProfile(): LiveData<ProfileAndAvatar> {
         val id = preferences.getProfileId()
@@ -103,34 +95,4 @@ class ProfileRepositoryImpl @Inject constructor(
         }
 
     override fun logout(): Completable = Completable.complete()
-
-/*    @OptIn(ExperimentalPagingApi::class)
-    override fun contactRequestPagingData(): Pager<Int, ContactRequest> = Pager(
-        config = PagingConfig(pageSize = AppConstants.GetContactRequestsCount),
-        remoteMediator = RxPagingRemoteMediator(getSourceHandler()),
-        pagingSourceFactory = { storage.getContactRequests() }
-    )*/
-
-/*    private fun getSourceHandler() = object : RxPagingRemoteMediator.SourceHandler<ContactRequest> {
-        override fun loadNextBunch(pageNumber: Int): Single<List<ContactRequest>> {
-            val request = GetContactsRequest().apply {
-                page = pageNumber
-                profileId = preferences.getProfileId().toString()
-            }
-
-            return profileWebservice.getContactRequests(request)
-        }
-
-    //    override fun clearDatabase() = storage.clearContactRequests()
-
-        override fun insertAll(items: List<ContactRequest>) {
-            // TODO need remove page==1 and load all pages but web don't have
-            //  page and size parameters for this request!
-//            if (getContactsRequest.page == 1) {
-//                storage.saveContactRequests(it)
-//            }
-
-       //     storage.saveContactRequests(items)
-        }
-    }*/
 }

@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.android.template.data.models.api.model.UserModel
 import com.android.template.data.models.api.request.DeviceLoginRequest
-import com.android.template.data.models.api.request.ServerLoginRequest
 import com.android.template.data.models.api.response.LoginResponse
 import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.LoginWebservice
@@ -24,9 +23,6 @@ class LoginRepositoryImpl @Inject constructor(
     private val profileWebservice: ProfileWebservice,
     private val preferences: PreferencesHelper
 ) : BaseRepositoryImpl(), LoginRepository {
-
-    override fun signUp(serverLoginRequest: ServerLoginRequest): Completable =
-        loginWebservice.signUp(serverLoginRequest)
 
     override fun getCachedEmail(): Single<String> = Single.just(preferences).map {
         preferences.getEmail() ?: ""
@@ -52,7 +48,7 @@ class LoginRepositoryImpl @Inject constructor(
             ?.let { validityPeriod -> preferences.setValidityPeriod(validityPeriod) }
         preferences.setValidityStart(System.currentTimeMillis())
 
-//        initUUID()
+        initUUID()
 
         loginWebservice.loginDevice(
             DeviceLoginRequest(
@@ -71,10 +67,10 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     @Throws(Exception::class)
-    private fun decodeAndSave(JWTEncoded: String): Completable {
+    private fun decodeAndSave(jwtEncoded: String): Completable {
         try {
             val split =
-                JWTEncoded.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                jwtEncoded.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val dataAboutUser = getJson(split[1])
             val parseDate = JsonParser().parse(dataAboutUser)
             val user: UserModel = Gson().fromJson(parseDate, UserModel::class.java)

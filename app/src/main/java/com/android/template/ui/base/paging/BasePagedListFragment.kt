@@ -11,7 +11,6 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.template.ui.base.BaseFragment
-import com.android.template.R
 
 abstract class BasePagedListFragment<D : ViewDataBinding, V : BasePagedListViewModel> : BaseFragment<D, V>() {
 

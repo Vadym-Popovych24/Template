@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.android.template.R
 import com.android.template.data.models.enums.NotificationType
 import com.android.template.ui.base.BaseActivityWithMenuPublic
@@ -16,7 +15,6 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     override val fragmentContainerId = R.id.fl_for_fragment_public
 
     override fun updateBottomNavigation(bottomNavigationVisibility: Int) {
-       // findViewById<View>(R.id.bottom_sheet_layout)?.visibility = bottomNavigationVisibility
         findViewById<View>(R.id.bottomNavigation)?.visibility = bottomNavigationVisibility
     }
 
@@ -28,8 +26,6 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
             navController.navigate(R.id.profileFragment)
             closeDrawer()
         }
-
-        var mFirebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     }
 
@@ -60,6 +56,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
     override fun onDrawerOpened() {
+        super.openDrawer() //TODO check how it works
     }
 
 
@@ -70,8 +67,8 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
 
     companion object {
 
-        const val EXTRA_NOTIFICATION_TYPE = "EXTRA_NOTIFICATION_TYPE"
-        const val EXTRA_ITEM_ID = "EXTRA_ITEM_ID"
+        private const val EXTRA_NOTIFICATION_TYPE = "EXTRA_NOTIFICATION_TYPE"
+        private const val EXTRA_ITEM_ID = "EXTRA_ITEM_ID"
         private const val EXTRA_BADGE = "EXTRA_BADGE"
 
         var screenInitialized = false

@@ -3,7 +3,6 @@ package com.android.template.ui.base
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
@@ -69,10 +68,6 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
             openDrawer()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun showDemoToast(text: String) {
-        Toast.makeText(applicationContext, "You click to $text", Toast.LENGTH_SHORT).show()
     }
 
     override fun onBackPressed() {

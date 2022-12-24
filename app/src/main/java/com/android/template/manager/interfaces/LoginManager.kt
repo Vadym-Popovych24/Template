@@ -1,14 +1,10 @@
 package com.android.template.manager.interfaces
 
-import com.android.template.data.models.api.request.ServerLoginRequest
-import com.android.template.data.models.api.response.LoginResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LoginManager: BaseManager {
     fun auth(username: String, password: String): Completable
-
-    fun signUp(serverLoginRequest: ServerLoginRequest): Completable
 
     fun getCachedEmail(): Single<String>
 

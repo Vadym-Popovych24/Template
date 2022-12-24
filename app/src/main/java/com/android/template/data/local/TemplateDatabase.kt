@@ -10,12 +10,8 @@ import com.android.template.data.local.converter.ListStringsConverter
 import com.android.template.data.local.converter.PictureConverter
 import com.android.template.data.local.dao.*
 import com.android.template.data.models.db.*
-
-
 import com.android.template.data.models.db.conversation.Attachment
-
 import com.android.template.data.models.db.conversation.User
-
 
 @Database(
     entities = [Profile::class, ProfileAvatar::class, User::class, Attachment::class],
@@ -39,11 +35,7 @@ abstract class TemplateDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                TemplateDatabase::class.java,
-                "TemplateDatabase.db"
-            ).allowMainThreadQueries() // TODO remove this
+            Room.databaseBuilder(context.applicationContext, TemplateDatabase::class.java, "TemplateDatabase.db")
                 .fallbackToDestructiveMigration()
                 .build()
     }

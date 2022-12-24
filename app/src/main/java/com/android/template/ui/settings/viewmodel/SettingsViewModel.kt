@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(private val profileManager: ProfileManager) : BaseViewModel() {
 
-    val appVersion = ObservableField<String>(TemplateApp.instance.getAppVersion())
+    val appVersion = ObservableField(TemplateApp.instance.getAppVersion())
 
     fun logOut(callback: () -> Unit) = makeRx(profileManager.logout().onErrorComplete(), callback)
 

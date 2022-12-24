@@ -2,14 +2,11 @@ package com.android.template.manager.impl
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
 import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.api.model.CoverPicture
 import com.android.template.data.models.api.model.PictureValue
 import com.android.template.data.models.api.model.ProfileMenuModel
-import com.android.template.data.models.api.request.ApproveContactRequest
 import com.android.template.data.models.api.request.ChangePasswordRequest
-import com.android.template.data.models.db.ContactRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.manager.interfaces.ProfileManager

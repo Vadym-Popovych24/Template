@@ -2,17 +2,15 @@ package com.android.template.ui.login.signup.viewmodel
 
 import androidx.databinding.ObservableField
 import com.android.template.R
-import com.android.template.data.models.api.request.ServerLoginRequest
 import com.android.template.data.models.enums.SignUpError
 import com.android.template.data.models.exception.SignUpException
-import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.getValueOrEmpty
 import com.android.template.utils.isEmail
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val loginManager: LoginManager) :
+class SignUpViewModel @Inject constructor() :
     BaseViewModel() {
 
     val firstName = ObservableField<String>()
@@ -34,18 +32,7 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
 
     fun signUp() {
         if (isDataValid()) {
-            signUpFinishedCallback?.let {
-                makeRx(
-                    loginManager.signUp(
-                        ServerLoginRequest(firstName.get().toString(),
-                        lastName.get().toString(),
-                        email.get().toString(),
-                        password.get().toString(),
-                        "15.08.2021"
-                        )
-                    ), it
-                )
-            }
+            // TODO implement sign up request
         }
     }
 

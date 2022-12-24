@@ -10,7 +10,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface ProfileRepository : BaseRepository {
-    fun getProfileAPI(): Unit
     fun getProfile(): LiveData<ProfileAndAvatar>
     fun getProfileSettings(): Single<ProfileSettings>
     fun getProfileHeader(): Single<ProfileMenuModel>

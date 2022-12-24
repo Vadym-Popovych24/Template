@@ -1,6 +1,5 @@
 package com.android.template.manager.impl
 
-import com.android.template.data.models.api.request.ServerLoginRequest
 import com.android.template.data.repository.interfaces.LoginRepository
 import com.android.template.manager.interfaces.LoginManager
 import io.reactivex.Completable
@@ -12,9 +11,6 @@ class LoginManagerImpl @Inject constructor(private val loginRepository: LoginRep
 
     override fun auth(username: String, password: String): Completable =
             loginRepository.auth(username, password)
-
-    override fun signUp(serverLoginRequest: ServerLoginRequest): Completable =
-        loginRepository.signUp(serverLoginRequest)
 
     override fun getCachedEmail(): Single<String> =
         loginRepository.getCachedEmail()

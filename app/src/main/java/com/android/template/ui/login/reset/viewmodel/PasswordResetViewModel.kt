@@ -5,14 +5,12 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.android.template.R
-import com.android.template.data.repository.interfaces.LoginRepository
 import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.getValueOrEmpty
 import com.android.template.utils.helpers.SECOND
 import com.android.template.utils.isEmail
-import io.reactivex.Completable
 import javax.inject.Inject
 
 class PasswordResetViewModel @Inject constructor(private val loginManager: LoginManager) :

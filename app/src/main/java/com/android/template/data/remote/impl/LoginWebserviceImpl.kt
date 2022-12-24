@@ -1,11 +1,7 @@
 package com.android.template.data.remote.impl
 
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.Gson
 import com.android.template.R
 import com.android.template.data.models.api.request.DeviceLoginRequest
-import com.android.template.data.models.api.request.ServerLoginRequest
 import com.android.template.data.models.api.response.LoginResponse
 import com.android.template.data.remote.interfaces.LoginWebservice
 import com.android.template.utils.AppConstants
@@ -16,18 +12,12 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoginWebserviceImpl @Inject constructor(
-    private val gson: Gson,
     authenticator: Authenticator
 ) : BaseWebserviceImpl(authenticator), LoginWebservice {
 
-
-   private val database = FirebaseDatabase
-        .getInstance("https://irecommend-96e4f-default-rtdb.europe-west1.firebasedatabase.app")
-        .reference.child("users")
-
     override fun loginApiCall(username: String, password: String): Single<LoginResponse> =
         Rx2AndroidNetworking.post(AppConstants.ENDPOINT_SERVER_LOGIN)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
+            .addHeaders(contentType, contentTypeValue)
             .addBodyParameter("UserName", username)
             .addBodyParameter("password", password)
             .addBodyParameter("grant_type", AppConstants.GRANT_PASSWORD)
@@ -44,20 +34,9 @@ class LoginWebserviceImpl @Inject constructor(
             .build()
             .stringCompletable
 
-    override fun signUp(
-        serverLoginRequest: ServerLoginRequest
-    ): Completable =
-        Completable.fromAction {
-            database.push().setValue(
-                serverLoginRequest
-            ).addOnCompleteListener(OnCompleteListener<Void?> {
-                Completable.complete()
-            })
-        }
-
     override fun requestResetPasswordCode(email: String): Completable =
         Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_GET_CODE)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
+            .addHeaders(contentType, contentTypeValue)
             .addBodyParameter("email", email)
             .build()
             .stringCompletable
@@ -73,7 +52,7 @@ class LoginWebserviceImpl @Inject constructor(
 
     override fun sendResetPasswordCode(email: String, code: String): Completable =
         Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_SUBMIT_CODE)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
+            .addHeaders(contentType, contentTypeValue)
             .addBodyParameter("email", email)
             .addBodyParameter("code", code)
             .build()
@@ -92,7 +71,7 @@ class LoginWebserviceImpl @Inject constructor(
         password: String
     ): Single<LoginResponse> =
         Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
+            .addHeaders(contentType, contentTypeValue)
             .addBodyParameter("email", email)
             .addBodyParameter("code", code)
             .addBodyParameter("password", password)
@@ -109,4 +88,8 @@ class LoginWebserviceImpl @Inject constructor(
                 )
             }
 
+    companion object {
+       private const val contentType = "Content-Type"
+       private const val contentTypeValue = "application/x-www-form-urlencoded"
+    }
 }

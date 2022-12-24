@@ -1,7 +1,5 @@
 package com.android.template.data.models.enums
 
-import com.android.template.R
-
 enum class LanguageLevelType(val code: Int, val value: String, val localizedTitle: String) {
     BASE(0, "Elementary", "level_base"),
     BELOW_AVERAGE(1, "PreIntermediate", "level_below_average"),

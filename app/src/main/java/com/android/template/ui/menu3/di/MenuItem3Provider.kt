@@ -1,6 +1,5 @@
 package com.android.template.ui.menu3.di
 
-import com.android.template.ui.menu1.MenuItem1Fragment
 import com.android.template.ui.menu3.MenuItem3Fragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
