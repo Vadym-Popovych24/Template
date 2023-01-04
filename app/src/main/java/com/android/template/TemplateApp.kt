@@ -53,7 +53,7 @@ class TemplateApp : Application(), HasAndroidInjector {
         val okHttpClient = OkHttpClient()
             .newBuilder()
             .addInterceptor(RefreshTokenInterceptor() {
-              //  moveToLogin()
+              //  moveToLogin() TODO
             })
             .addInterceptor(ErrorHandlerInterceptor())
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
