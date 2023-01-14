@@ -74,12 +74,12 @@ class TemplateApp : Application(), HasAndroidInjector {
     }
 
     fun getAppVersion(): String {
-        try {
+        return try {
             val pInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
-            return pInfo.versionName
+            pInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
-            return ""
+            ""
         }
     }
 

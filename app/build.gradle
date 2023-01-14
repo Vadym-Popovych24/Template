@@ -244,4 +244,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.2.1'
 
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 }

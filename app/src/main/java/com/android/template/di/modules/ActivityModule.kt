@@ -1,5 +1,6 @@
 package com.android.template.di.modules
 
+import com.android.template.ui.coroutine.di.CoroutineProvider
 import com.android.template.ui.crash.CrashActivity
 import com.android.template.ui.crash.di.CrashModule
 import com.android.template.ui.crash.di.CrashProvider
@@ -54,7 +55,8 @@ abstract class ActivityModule {
             MenuItem1Provider::class,
             MenuItem2Provider::class,
             MenuItem3Provider::class,
-            MenuItem4Provider::class
+            MenuItem4Provider::class,
+            CoroutineProvider::class
         ]
     )
     internal abstract fun bindNavigationPublicActivity(): NavigationActivity
