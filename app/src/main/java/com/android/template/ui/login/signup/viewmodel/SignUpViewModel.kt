@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor() :
 
     fun signUp() {
         if (isDataValid()) {
-            // TODO implement sign up request
+            // implement sign up
         }
     }
 

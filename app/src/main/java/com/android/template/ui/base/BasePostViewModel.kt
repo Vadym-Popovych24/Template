@@ -1,8 +1,6 @@
 package com.android.template.ui.base
 
-import android.content.Context
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt

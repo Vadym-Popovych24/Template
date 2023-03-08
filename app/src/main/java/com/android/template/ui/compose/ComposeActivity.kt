@@ -62,12 +62,12 @@ private fun Greetings(names: List<String> = List(1000) { "$it" }) {
 fun Greeting(name: String) {
     var expanded by remember { mutableStateOf(false) }
 
-    val extraPadding by animateDpAsState(
+    /*val extraPadding by animateDpAsState(
         targetValue = if (expanded) 48.dp else 0.dp,
         animationSpec = tween(
             durationMillis = 1000
         )
-        /*spring(
+        *//*spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
         )*/

@@ -8,6 +8,8 @@ import javax.inject.Inject
 
 class CoroutineViewModel @Inject constructor() : BaseViewModel() {
 
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+
     init {
         viewModelScope.launch {
             Log.e("launch", "ok")
@@ -19,7 +21,6 @@ class CoroutineViewModel @Inject constructor() : BaseViewModel() {
 
             delay(1000)
 
-            val dispatcher: CoroutineDispatcher = Dispatchers.Default
             val result = withContext(dispatcher) {
                 val part1 = async {
                     Log.e("async", "1")
