@@ -1,8 +1,11 @@
 package com.android.template.utils
 
 import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.*
+import android.os.Build
 import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -308,3 +311,10 @@ fun TextInputEditText.afterTextChanged(error : ObservableField<String>){
         }
     })
 }
+
+fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int = 0): PackageInfo =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
+    } else {
+        @Suppress("DEPRECATION") getPackageInfo(packageName, flags)
+    }
