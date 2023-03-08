@@ -12,7 +12,6 @@ import com.android.template.di.qualifiers.PreferenceInfo
 import com.android.template.utils.AppConstants
 import com.android.template.utils.Connectivity
 import com.android.template.utils.ViewModelProviderFactory
-import com.android.template.utils.custom.AppSignatureHelper
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -47,11 +46,6 @@ class GeneralModule {
     @Provides
     @Singleton
     fun provideGeocoder(context: Context) = Geocoder(context)
-
-
-    @Provides
-    @Singleton
-    fun provideSignatureHelper(context: Context) = AppSignatureHelper(context)
 
     @Provides
     @Singleton
