@@ -70,8 +70,8 @@ class GeneralModule {
 
     @Provides
     @Singleton
-    fun provideConnectivityUtil(context: Context): Connectivity {
-        return Connectivity.getInstance(context)!!
+    fun provideConnectivityUtil(): Connectivity {
+        return Connectivity.getInstance()!!
     }
 
     @Provides

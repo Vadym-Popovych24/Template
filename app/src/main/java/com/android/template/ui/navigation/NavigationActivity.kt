@@ -57,7 +57,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
     override fun onDrawerOpened() {
-        super.openDrawer() //TODO check how it works
+        super.openDrawer()
     }
 
 

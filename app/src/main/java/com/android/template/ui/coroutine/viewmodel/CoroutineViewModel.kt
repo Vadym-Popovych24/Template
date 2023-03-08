@@ -19,7 +19,8 @@ class CoroutineViewModel @Inject constructor() : BaseViewModel() {
 
             delay(1000)
 
-            val result = withContext(Dispatchers.Default) {
+            val dispatcher: CoroutineDispatcher = Dispatchers.Default
+            val result = withContext(dispatcher) {
                 val part1 = async {
                     Log.e("async", "1")
                     delay(1000)

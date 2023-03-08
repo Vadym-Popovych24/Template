@@ -319,9 +319,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     ): AlertDialog = AlertDialog.Builder(context)
         .setTitle(confirmationSubject)
         .setPositiveButton(
-            android.R.string.yes
+            R.string.ok
         ) { _, _ -> confirmationCallback() }
-        .setNegativeButton(android.R.string.no, null)
+        .setNegativeButton(R.string.cancel, null)
         .show()
 
     fun setFragmentResult(key: String) = setFragmentResult(key, Bundle())

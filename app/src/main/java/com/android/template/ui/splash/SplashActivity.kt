@@ -36,7 +36,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
         intent?.extras?.apply {
             keySet().forEach {
-                Log.d("myLogs", "Splash $it = [${get(it)}]")
+                Log.d("myLogs", "Splash $it = [${getString(it)}]")
             }
         }
     }

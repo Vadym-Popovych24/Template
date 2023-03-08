@@ -21,6 +21,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.databinding.ObservableField
 import androidx.navigation.NavController
@@ -134,7 +135,7 @@ fun Int.getStringArrayFromResource() =
 val Int.getStringFromResource: String
     get() = TemplateApp.appContext.applicationContext.getString(this)
 
-fun Int.getColorFromResource() = TemplateApp.appContext.resources.getColor(this)
+fun Int.getColorFromResource() = ResourcesCompat.getColor(TemplateApp.appContext.resources, this, null)
 
 val Int.toDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
@@ -257,9 +258,11 @@ fun Toolbar.initNavigationIcon(@DrawableRes iconId: Int, callback: () -> Unit) {
 fun TabLayout.setOnTabSelectedCallback(callback: (Int) -> Unit) =
     addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {
+            // Implementation
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
+            // Implementation
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -305,9 +308,11 @@ fun TextInputEditText.afterTextChanged(error : ObservableField<String>){
         }
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            // Implementation
         }
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            // Implementation
         }
     })
 }

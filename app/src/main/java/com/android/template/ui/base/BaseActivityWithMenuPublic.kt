@@ -20,7 +20,7 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        findViewById<BottomNavigationView>(R.id.bottomNavigation).setOnNavigationItemSelectedListener {
+        findViewById<BottomNavigationView>(R.id.bottomNavigation).setOnItemSelectedListener {
             selectedBottomNavigationItems()
             onItemSelected(it)
         }

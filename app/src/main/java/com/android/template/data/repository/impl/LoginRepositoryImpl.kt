@@ -72,7 +72,7 @@ class LoginRepositoryImpl @Inject constructor(
             val split =
                 jwtEncoded.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val dataAboutUser = getJson(split[1])
-            val parseDate = JsonParser().parse(dataAboutUser)
+            val parseDate = JsonParser.parseString(dataAboutUser)
             val user: UserModel = Gson().fromJson(parseDate, UserModel::class.java)
 
             val firstName = user.firstName

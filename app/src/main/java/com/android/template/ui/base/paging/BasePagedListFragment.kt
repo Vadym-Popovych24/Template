@@ -10,6 +10,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.android.template.R
 import com.android.template.ui.base.BaseFragment
 
 abstract class BasePagedListFragment<D : ViewDataBinding, V : BasePagedListViewModel> : BaseFragment<D, V>() {
@@ -22,14 +23,14 @@ abstract class BasePagedListFragment<D : ViewDataBinding, V : BasePagedListViewM
         savedInstanceState: Bundle?
     ): View? {
         val contentView = super.onCreateView(inflater, container, savedInstanceState)
-       /* contentView?.findViewById<View>(R.id.emptyContentContainer)?.let { emptyContentContainer ->
+        contentView?.findViewById<View>(R.id.emptyContentContainer)?.let { emptyContentContainer ->
 
             if (emptyContentContainer is ViewGroup) {
                 emptyContentViewLayoutId?.let {
                     inflateNoContentView(emptyContentContainer)
                 }
             }
-        }*/
+        }
         return contentView
     }
 

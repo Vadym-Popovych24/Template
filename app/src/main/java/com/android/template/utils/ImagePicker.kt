@@ -3,6 +3,7 @@ package com.android.template.utils
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
+import android.os.Build
 import androidx.fragment.app.Fragment
 import com.nguyenhoanglam.imagepicker.model.Config
 import com.nguyenhoanglam.imagepicker.model.Image
@@ -49,9 +50,9 @@ class ImagePicker {
             maxCount: Int,
             requestCode: Int
         ) {
-            val colorPrimary = resources.getColor(R.color.colorPrimary).toHex()
-            val colorPrimaryDark = resources.getColor(R.color.colorPrimaryDark).toHex()
-            val white = resources.getColor(android.R.color.white).toHex()
+            val colorPrimary = R.color.colorPrimary.getColorFromResource().toHex()
+            val colorPrimaryDark = R.color.colorPrimaryDark.getColorFromResource().toHex()
+            val white = android.R.color.white.getColorFromResource().toHex()
 
             builder
                 //  Initialize ImagePicker with activity or fragment context
@@ -86,7 +87,12 @@ class ImagePicker {
             callback: (images: ArrayList<Image>) -> Unit
         ): Boolean {
             return if (requestCode == Config.RC_PICK_IMAGES && resultCode == Activity.RESULT_OK && data != null) {
-                val images = data.getParcelableArrayListExtra<Image>(Config.EXTRA_IMAGES)
+                val images = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    data.getParcelableArrayListExtra(Config.EXTRA_IMAGES, Image::class.java)
+                } else {
+                    data.getParcelableArrayListExtra<Image>(Config.EXTRA_IMAGES)
+                }
+
                 images?.let {
                     callback(images)
                 }

@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -15,10 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.android.template.R
 import com.android.template.utils.ViewModelProviderFactory
 import com.android.template.utils.getGenericClassExtends
 import com.android.template.utils.getLayoutId
-import com.android.template.ui.base.BaseViewModel
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -47,7 +48,16 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     open val bindingVariable: Int = com.android.template.BR.viewModel
 
     @get:IdRes
-    open val fragmentContainerId: Int = com.android.template.R.id.fl_for_fragment
+    open val fragmentContainerId: Int = R.id.fl_for_fragment
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            finish()
+            if (!supportFragmentManager.popBackStackImmediate()) {
+                finish()
+            }
+        }
+    }
 
     /**
      * Called to do initial creation of a fragment.
@@ -63,6 +73,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         performDataBinding()
+        onBackPressedDispatcher.addCallback(this,onBackPressedCallback)
     }
 
     /**
@@ -131,21 +142,15 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    override fun onBackPressed() {
-        if (!supportFragmentManager.popBackStackImmediate()) {
-            super.onBackPressed()
-        }
-    }
-
     protected fun initConfirmationAlert(
         @StringRes confirmationSubject: Int,
         confirmationCallback: () -> Unit
     ): AlertDialog = AlertDialog.Builder(this)
         .setTitle(confirmationSubject)
         .setPositiveButton(
-            android.R.string.yes
+            R.string.ok
         ) { _, _ -> confirmationCallback() }
-        .setNegativeButton(android.R.string.no, null)
+        .setNegativeButton(R.string.cancel, null)
         .show()
 
     override fun onSupportNavigateUp(): Boolean {

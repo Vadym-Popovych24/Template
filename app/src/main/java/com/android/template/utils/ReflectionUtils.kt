@@ -34,7 +34,7 @@ fun Class<*>.getGenericClassExtends(clazz: Class<*>): Class<*>? {
                         }
                     }
                 } catch (e: Exception) {
-//                        e.printStackTrace()
+                    e.printStackTrace()
                 }
             }
             checkingClazz = checkingClazz.superclass
@@ -66,7 +66,7 @@ fun Class<*>.containsParent(clazz: Class<*>): Boolean {
 
 fun Class<*>.getLayoutId(): Int {
     val layoutName = simpleName.replace("Binding", "")
-        .replace(Regex("[A-Z]")) { "_${it.value.toLowerCase(Locale.getDefault())}" }
+        .replace(Regex("[A-Z]")) { "_${it.value.lowercase(Locale.getDefault())}" }
         .split("_")
         .filter { it.isNotEmpty() }
         .toMutableList()

@@ -73,6 +73,8 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="write_a_comment">Write a comment…</string>
     <string name="comment_add_success">Comment is added</string>

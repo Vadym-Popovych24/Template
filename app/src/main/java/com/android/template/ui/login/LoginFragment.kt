@@ -8,6 +8,7 @@ import com.android.template.databinding.FragmentLoginBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.viewmodel.LoginViewModel
 import com.android.template.ui.navigation.NavigationActivity
+import com.android.template.utils.getColorFromResource
 import com.android.template.utils.setOnActionDoneCallback
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -29,6 +30,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         forgotPassword?.setOnClickListener {
             navController.navigate(R.id.resetPasswordFragment)
         }
+
+        binding.signUp.setTextColor(R.color.colorAccent.getColorFromResource())
     }
 
     private fun subscribeToObservableFields() {

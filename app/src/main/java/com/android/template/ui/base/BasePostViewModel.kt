@@ -164,7 +164,5 @@ abstract class BasePostViewModel : BaseViewModel() {
         isVisibleLikeCount.set(likesCount.get() > 0)
     }
 
-    private fun showToast(context: Context, text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-    }
+
 }
