@@ -2,9 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/jobs_navigation"
+    android:id="@+id/main_navigation_container"
     app:startDestination="@id/navigationRecommendations">
-
 
     <fragment
         android:id="@+id/navigationSettings"
@@ -81,11 +80,16 @@
         android:label="MenuItem1Fragment"
         tools:layout="@layout/fragment_menu_item_three"/>
 
-
     <fragment
         android:id="@+id/navigationMenuItem4"
         android:name="com.android.template.ui.menu4.MenuItem4Fragment"
         android:label="MenuItem1Fragment"
         tools:layout="@layout/fragment_menu_item_four"/>
+
+    <fragment
+        android:id="@+id/navigationMenuCoroutine"
+        android:name="com.android.template.ui.coroutine.CoroutineFragment"
+        android:label="CoroutineFragment"
+        tools:layout="@layout/fragment_coroutine"/>
 
 </navigation>

@@ -34,6 +34,12 @@
             android:icon="@drawable/ic_settings"
             android:checkable="false"
             android:title="@string/settings" />
+
+        <item
+            android:id="@+id/navigation_coroutines"
+            android:icon="@drawable/ic_trending_up"
+            android:checkable="false"
+            android:title="@string/coroutines" />
     </group>
 
 <!--    <group-->
