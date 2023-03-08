@@ -70,8 +70,8 @@ fun Greeting(name: String) {
         *//*spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
-        )*/
-    )
+        )*//*
+    )*/
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
