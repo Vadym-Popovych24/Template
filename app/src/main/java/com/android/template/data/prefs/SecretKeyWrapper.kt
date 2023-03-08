@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec
 
 class SecretKeyWrapper {
     @SuppressLint("GetInstance")
-    private val mCipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
+    private val mCipher = Cipher.getInstance("AES/GCM/NoPadding")
 
     private val secret: SecretKey
 

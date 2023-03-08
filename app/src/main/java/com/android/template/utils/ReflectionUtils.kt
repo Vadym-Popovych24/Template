@@ -29,8 +29,8 @@ fun Class<*>.getGenericClassExtends(clazz: Class<*>): Class<*>? {
                                 checkingFinished = true
                                 return genericClazz
                             }
-                        }catch (e: Exception){
-
+                        } catch (e: Exception){
+                            e.printStackTrace()
                         }
                     }
                 } catch (e: Exception) {
