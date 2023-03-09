@@ -4,6 +4,7 @@ import android.content.Context
 import com.android.template.TemplateApp
 import java.util.*
 
+@Throws(Exception::class)
 fun Class<*>.getGenericClassExtends(clazz: Class<*>): Class<*>? {
     var checkingClazz: Class<*>? = this
     var checkingFinished = false
@@ -11,30 +12,17 @@ fun Class<*>.getGenericClassExtends(clazz: Class<*>): Class<*>? {
         if (checkingClazz != null) {
             checkingClazz.genericSuperclass?.apply {
                 val signature = this.toString()
-                val genericParamsBegin = signature.indexOfFirst {
-                    it == '<'
-                }
-                val genericParamsEnd = signature.indexOfLast {
-                    it == '>'
-                }
-                try {
-                    val genericSignature =
-                        signature.substring(genericParamsBegin + 1, genericParamsEnd)
-                    val generics = genericSignature.split(",")
-                    generics.forEach {
-                        try {
-                            val genericClazz = Class.forName(it.trim())
-                            val genericHasParent = genericClazz.containsParent(clazz)
-                            if (genericHasParent) {
-                                checkingFinished = true
-                                return genericClazz
-                            }
-                        } catch (e: Exception){
-                            e.printStackTrace()
-                        }
+                val genericParamsBegin = signature.indexOfFirst { it == '<' }
+                val genericParamsEnd = signature.indexOfLast { it == '>' }
+                val genericSignature = signature.substring(genericParamsBegin + 1, genericParamsEnd)
+                val generics = genericSignature.split(",")
+                generics.forEach {
+                    val genericClazz = Class.forName(it.trim())
+                    val genericHasParent = genericClazz.containsParent(clazz)
+                    if (genericHasParent) {
+                        checkingFinished = true
+                        return genericClazz
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
             }
             checkingClazz = checkingClazz.superclass
