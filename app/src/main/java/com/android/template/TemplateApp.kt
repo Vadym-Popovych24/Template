@@ -3,12 +3,9 @@ package com.android.template
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import com.android.template.di.component.AppComponent
 import com.android.template.di.component.DaggerAppComponent
 import com.android.template.ui.login.LoginActivity
-import com.android.template.utils.getPackageInfoCompat
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor
 import com.android.template.utils.interceptors.RefreshTokenInterceptor
 import com.androidnetworking.AndroidNetworking
@@ -74,15 +71,7 @@ class TemplateApp : Application(), HasAndroidInjector {
         })
     }
 
-    fun getAppVersion(): String {
-        return try {
-            val pInfo: PackageInfo = packageManager.getPackageInfoCompat(packageName, 0)
-            pInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            ""
-        }
-    }
+    fun getAppVersion(): String = BuildConfig.VERSION_NAME
 
     companion object {
         lateinit var appContext: Context

@@ -320,13 +320,6 @@ fun TextInputEditText.afterTextChanged(error : ObservableField<String>){
     })
 }
 
-fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int = 0): PackageInfo =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
-    } else {
-        @Suppress("DEPRECATION") getPackageInfo(packageName, flags)
-    }
-
 fun File.encryptedFile(): EncryptedFile {
     val cryptoFileKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
     return EncryptedFile.Builder(
