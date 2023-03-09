@@ -27,6 +27,8 @@ import androidx.databinding.ObservableField
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.RecyclerView
+import androidx.security.crypto.EncryptedFile
+import androidx.security.crypto.MasterKeys
 import com.android.template.R
 import com.android.template.TemplateApp
 import com.androidnetworking.common.RequestBuilder
@@ -35,6 +37,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
+import java.io.File
 
 
 /** START Glide **/
@@ -323,3 +326,13 @@ fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int = 0): Pa
     } else {
         @Suppress("DEPRECATION") getPackageInfo(packageName, flags)
     }
+
+fun File.encryptedFile(): EncryptedFile {
+    val cryptoFileKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+    return EncryptedFile.Builder(
+        this,
+        TemplateApp.appContext,
+        cryptoFileKey,
+        EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+    ).build()
+}

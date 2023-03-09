@@ -2,6 +2,7 @@ package com.android.template.data.repository.impl
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
+import androidx.security.crypto.EncryptedFile
 import com.android.template.data.local.interfaces.ProfileStorage
 import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.api.model.ProfileMenuModel
@@ -12,10 +13,10 @@ import com.android.template.data.remote.interfaces.LoginWebservice
 import com.android.template.data.remote.interfaces.ProfileWebservice
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
 import com.android.template.data.repository.interfaces.ProfileRepository
+import com.android.template.utils.encryptedFile
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File
-import java.io.FileOutputStream
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -49,22 +50,24 @@ class ProfileRepositoryImpl @Inject constructor(
         }
 
     override fun updateProfile(profileSettings: ProfileSettings): Completable =
-     //   profileWebservice.updateProfile(profileSettings).doOnComplete {
-            Completable.fromAction {
-                storage.saveProfile(profileSettings)
-                preferences.setLanguageCode(profileSettings.culture)
-                preferences.setUserName(profileSettings.userName)
-                preferences.setEmail(profileSettings.email)
-            }
-         //   preferences.setLanguageCode(profileSettings.culture)
-   //     }
+        //   profileWebservice.updateProfile(profileSettings).doOnComplete {
+        Completable.fromAction {
+            storage.saveProfile(profileSettings)
+            preferences.setLanguageCode(profileSettings.culture)
+            preferences.setUserName(profileSettings.userName)
+            preferences.setEmail(profileSettings.email)
+        }
+    //   preferences.setLanguageCode(profileSettings.culture)
+    //     }
 
     override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable =
         profileWebservice.changePassword(changePasswordRequest)
 
     override fun uploadAvatar(bitmap: Bitmap): Single<String> {
         val imageFile = File(cacheDir, "cached_avatar.jpg")
-        return writeAvatarToCache(imageFile, bitmap).flatMap {
+
+        val encryptedFile = imageFile.encryptedFile()
+        return writeAvatarToCache(encryptedFile, bitmap, imageFile.path).flatMap {
             remoteFileWebservice.uploadAvatar(it)
         }.map {
             preferences.setUserAvatar(it)
@@ -85,13 +88,13 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun writeAvatarToCache(imageFile: File, bitmap: Bitmap): Single<String> =
+    private fun writeAvatarToCache(encryptedFile: EncryptedFile, bitmap: Bitmap, path: String): Single<String> =
         Single.just(bitmap).map {
-            val os = FileOutputStream(imageFile)
+            val os = encryptedFile.openFileOutput()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
             os.flush()
             os.close()
-            imageFile.path
+            path
         }
 
     override fun logout(): Completable = Completable.complete()

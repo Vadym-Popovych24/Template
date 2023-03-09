@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.android.template"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 33
         versionCode 4
         versionName "1.4"
@@ -247,4 +247,7 @@ dependencies {
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // Security-crypto
+    implementation "androidx.security:security-crypto:$security_crypto"
 }
