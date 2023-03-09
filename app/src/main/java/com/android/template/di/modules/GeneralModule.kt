@@ -17,6 +17,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Provider
@@ -83,6 +85,12 @@ class GeneralModule {
     @Provides
     fun provideViewModelFactory(providerMap: MutableMap<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProviderFactory {
         return ViewModelProviderFactory(providerMap)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideDispatchersDefault(): CoroutineDispatcher {
+        return Dispatchers.Default
     }
 
 }

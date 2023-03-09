@@ -6,9 +6,7 @@ import com.android.template.ui.base.BaseViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class CoroutineViewModel @Inject constructor() : BaseViewModel() {
-
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+class CoroutineViewModel @Inject constructor(private val dispatcher: CoroutineDispatcher) : BaseViewModel() {
 
     init {
         viewModelScope.launch {
