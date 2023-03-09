@@ -21,7 +21,7 @@ class FilePathHelper {
                     val split = docId.split(":".toRegex()).toTypedArray()
                     val type = split[0]
                     if ("primary".equals(type, ignoreCase = true)) {
-                        return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                        return context.filesDir.toString() + "/" + split[1]
                     }
 
                 } else if (isDownloadsDocument(uri)) {
