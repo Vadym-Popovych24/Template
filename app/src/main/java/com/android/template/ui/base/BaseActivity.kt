@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.android.template.R
@@ -102,8 +102,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     protected fun showToast(message: String?) =
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-    private fun provideViewModel(clazz: Class<V>): V = ViewModelProviders.of(this, mVMFactory)
-        .get(clazz)
+    private fun provideViewModel(clazz: Class<V>): V = ViewModelProvider(this, mVMFactory)[clazz]
 
     /**
      * Perform data binding for corresponding view
