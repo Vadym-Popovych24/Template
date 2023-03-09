@@ -3,7 +3,6 @@ package com.android.template.data.prefs
 import `in`.co.ophio.secure.vault.Utils
 import android.app.Application
 import android.util.Base64
-import android.util.Log
 import java.io.File
 import java.security.SecureRandom
 import javax.crypto.spec.SecretKeySpec
@@ -26,17 +25,12 @@ class KeyStoreKeyGenerator private constructor(val application: Application) {
             val raw = ByteArray(DATA_KEY_LENGTH)
             SecureRandom().nextBytes(raw)
             val key = SecretKeySpec(raw, "AES")
-            Log.e("key", Base64.encodeToString(key.encoded, Base64.DEFAULT).toString())
-          //  Log.e("key.encoded", key.encoded.toString())
-            val wrapped = wrapper.encryptO(Base64.encodeToString(key.encoded, Base64.DEFAULT).toString())
-            Log.e("wrapped", Base64.encodeToString(wrapped, Base64.DEFAULT).toString())
+            val wrapped = wrapper.encrypt(Base64.encodeToString(key.encoded, Base64.NO_PADDING ).toString())
             Utils.writeFully(keyFile, wrapped)
         }
 
-       val wrapped = Utils.readFully(keyFile)
-        Log.e("wrapped read", Base64.encodeToString(wrapped, Base64.DEFAULT))
-        val unwrapped = wrapper.decryptO(wrapped)
-        Log.e("unwrapped", Base64.encodeToString(unwrapped, Base64.DEFAULT))
+        val wrapped = Utils.readFully(keyFile)
+        val unwrapped = wrapper.decrypt(wrapped)
         return Base64.encodeToString(unwrapped, Base64.DEFAULT).toString()
     }
 
