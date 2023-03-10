@@ -1,11 +1,8 @@
 package com.android.template.utils
 
 import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.*
-import android.os.Build
 import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
