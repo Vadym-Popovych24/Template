@@ -88,11 +88,11 @@ class ImagePicker {
                 val images = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     data.getParcelableArrayListExtra(Config.EXTRA_IMAGES, Image::class.java)
                 } else {
-                    data.getParcelableArrayListExtra(Config.EXTRA_IMAGES)
+                   // data.getParcelableArrayListExtra(Config.EXTRA_IMAGES)
                 }
 
                 images?.let {
-                    callback(images)
+                    callback(images as ArrayList<Image>)
                 }
                 true
             } else

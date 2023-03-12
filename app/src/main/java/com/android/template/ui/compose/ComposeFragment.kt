@@ -93,14 +93,12 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
         animationSpec = tween(
             durationMillis = 1000
         )
-        *//*
-*/
+        */
+
 /*spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
-        )*//*
-*/
-/*
+        )
     )*/
 
         Surface(
