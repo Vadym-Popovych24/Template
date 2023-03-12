@@ -2,19 +2,11 @@ package com.android.template.ui.login.reset
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import com.android.template.R
 import com.android.template.databinding.FragmentResetPasswordBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.reset.viewmodel.PasswordResetViewModel
 import com.android.template.ui.navigation.NavigationActivity
-import com.android.template.utils.getStringFromResource
-import com.android.template.utils.setOnActionDoneCallback
-import com.android.template.utils.setTextWithClickableLink
-import kotlinx.android.synthetic.main.fragment_reset_password.*
-import kotlinx.android.synthetic.main.reset_password_enter_code.*
-import kotlinx.android.synthetic.main.reset_password_enter_email.*
-import kotlinx.android.synthetic.main.reset_password_new_password.*
 
 class PasswordResetFragment :
     BaseFragment<FragmentResetPasswordBinding, PasswordResetViewModel>() {
@@ -36,24 +28,24 @@ class PasswordResetFragment :
             hideKeyboard()
         }
 
-        viewModel.currentState.observe(viewLifecycleOwner, Observer {
+        viewModel.currentState.observe(viewLifecycleOwner) {
             if (it == PasswordResetViewModel.State.RESET_PASSWORD) {
-                toolbar?.initUpNavigation()
-                clockView?.init(PasswordResetViewModel.SECURE_CODE_ATTEMPT_DURATION)
+                binding.toolbar.initUpNavigation()
+            //    binding.clockView?.init(PasswordResetViewModel.SECURE_CODE_ATTEMPT_DURATION)
             } else if (it == PasswordResetViewModel.State.SAVE_NEW_PASSWORD) {
-                toolbar?.releaseNavigationIcon()
+                binding.toolbar.releaseNavigationIcon()
             }
 
-            toolbar?.menu?.findItem(R.id.close)?.isVisible =
+            binding.toolbar.menu?.findItem(R.id.close)?.isVisible =
                 it == PasswordResetViewModel.State.SAVE_NEW_PASSWORD
 
-        })
+        }
     }
 
     private fun setupUI() {
-        toolbar?.initUpNavigation()
-        toolbar?.inflateMenu(R.menu.menu_close)
-        toolbar?.setOnMenuItemClickListener {
+        binding.toolbar.initUpNavigation()
+        binding.toolbar.inflateMenu(R.menu.menu_close)
+        binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.close) {
                 initConfirmationAlert(
                     requireContext(),
@@ -63,7 +55,7 @@ class PasswordResetFragment :
             true
         }
 
-        clockView?.updateTextCallback = {
+/*        clockView?.updateTextCallback = {
             R.string.enter_code_timer_hint.getStringFromResource.format(it)
         }
 
@@ -81,10 +73,10 @@ class PasswordResetFragment :
 
         codeView?.setOnActionDoneCallback {
             viewModel.action()
-        }
+        }*/
     }
 
-    private fun showSendAgainButton() =
+/*    private fun showSendAgainButton() =
         clockView?.setTextWithClickableLink(
             R.string.enter_code_timer_finished_hint.getStringFromResource,
             R.string.enter_code_timer_finished_clickable.getStringFromResource
@@ -92,7 +84,7 @@ class PasswordResetFragment :
             viewModel.resendCode {
                 clockView?.init(PasswordResetViewModel.SECURE_CODE_ATTEMPT_DURATION)
             }
-        }
+        }*/
 
     override fun navigateUp() {
         if (viewModel.currentState.value == PasswordResetViewModel.State.RESET_PASSWORD) {

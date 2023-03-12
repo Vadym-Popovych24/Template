@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs.kotlin'
@@ -63,9 +61,6 @@ android {
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
-    androidExtensions {
-        experimental = true
-    }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
     composeOptions {
         kotlinCompilerExtensionVersion '1.2.0-alpha08'

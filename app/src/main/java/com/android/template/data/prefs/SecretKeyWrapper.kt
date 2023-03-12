@@ -56,9 +56,7 @@ class SecretKeyWrapper {
         val cipher = Cipher.getInstance(transformation)
         val parameterSpec = GCMParameterSpec(128, iv) //128 bit auth tag length
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec)
-        if (associatedData != null) {
-            cipher.updateAAD(associatedData)
-        }
+       cipher.updateAAD(associatedData)
         val cipherText = cipher.doFinal(plainBytes)
         val byteBuffer = ByteBuffer.allocate(4 + iv.size + cipherText.size)
         byteBuffer.putInt(iv.size)
@@ -95,9 +93,7 @@ class SecretKeyWrapper {
             SecretKeySpec(key, aesAlgorithm),
             GCMParameterSpec(128, iv)
         )
-        if (associatedData != null) {
-            cipher.updateAAD(associatedData)
-        }
+        cipher.updateAAD(associatedData)
     //    cipher.update(cipherText)
         return cipher.doFinal(cipherText)
     }

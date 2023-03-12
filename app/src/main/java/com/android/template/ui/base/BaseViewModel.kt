@@ -35,7 +35,7 @@ abstract class BaseViewModel : ViewModel() {
     lateinit var messageCallback: (message: String?) -> Unit
     var logoutCallback: (() -> Unit)? = null
 
-    private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+    private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, _ ->
         // you can add some exception handling here
     }
 

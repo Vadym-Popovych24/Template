@@ -11,7 +11,6 @@ import com.google.android.material.navigation.NavigationView
 import com.android.template.R
 import com.android.template.databinding.ActivityNavigationPublicBinding
 import com.android.template.ui.navigation.NavigationActivityCallback
-import kotlinx.android.synthetic.main.activity_navigation_public.view.*
 
 abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
     BaseActivity<ActivityNavigationPublicBinding, V>(), NavigationActivityCallback {
@@ -31,7 +30,7 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
 
         val toggle = object : ActionBarDrawerToggle(
             this,
-            viewDataBinding.root.drawer_layout_public,
+            viewDataBinding.drawerLayoutPublic,
             R.string.none,
             R.string.none
         ) {
@@ -42,7 +41,7 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
 
         toggle.drawerArrowDrawable.color = ActivityCompat.getColor(this, android.R.color.white)
 
-        viewDataBinding.root.drawer_layout_public.addDrawerListener(toggle)
+        viewDataBinding.drawerLayoutPublic.addDrawerListener(toggle)
 
         toggle.syncState()
 
@@ -71,18 +70,18 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
     }
 
     override fun onBackPressed() {
-        if (viewDataBinding.root.drawer_layout_public.isDrawerOpen(GravityCompat.START)) {
+        if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START)) {
             closeDrawer()
         } else navController.navigateUp() || super.onSupportNavigateUp()
 
     }
 
     override fun openDrawer() {
-        viewDataBinding.root.drawer_layout_public.openDrawer(GravityCompat.START)
+        viewDataBinding.drawerLayoutPublic.openDrawer(GravityCompat.START)
     }
 
     protected fun closeDrawer() {
-        viewDataBinding.root.drawer_layout_public.closeDrawer(GravityCompat.START)
+        viewDataBinding.drawerLayoutPublic.closeDrawer(GravityCompat.START)
     }
 
     abstract fun onDrawerOpened()

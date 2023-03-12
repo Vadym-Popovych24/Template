@@ -7,7 +7,6 @@ import com.android.template.R
 import com.android.template.databinding.FragmentChangeAvatarBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.profile.avatar.viewmodel.ChangeAvatarViewModel
-import kotlinx.android.synthetic.main.fragment_change_avatar.*
 import java.io.File
 
 class ChangeAvatarFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeAvatarViewModel>() {
@@ -15,9 +14,9 @@ class ChangeAvatarFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeAva
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar?.initUpNavigation()
-        toolbar?.inflateMenu(R.menu.menu_confirm_blue)
-        toolbar?.setOnMenuItemClickListener {
+        binding.toolbar.initUpNavigation()
+        binding.toolbar.inflateMenu(R.menu.menu_confirm_blue)
+        binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.confirm) {
                 confirmCropAndUploadAvatar()
                 return@setOnMenuItemClickListener true
@@ -25,13 +24,13 @@ class ChangeAvatarFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeAva
             false
         }
         arguments?.getString(EXTRA_IMAGE_PATH)?.let {
-            cropImageView?.loadAsCompletable(Uri.fromFile(File(it)))?.let { completable ->
+            binding.cropImageView.loadAsCompletable(Uri.fromFile(File(it)))?.let { completable ->
                 viewModel.makeRx(completable)
             }
         }
     }
 
-    private fun confirmCropAndUploadAvatar() = cropImageView?.cropAsSingle()?.let {
+    private fun confirmCropAndUploadAvatar() = binding.cropImageView.cropAsSingle()?.let {
         val resumeId = arguments?.getString(EXTRA_RESUME_ID)
         if (resumeId.isNullOrEmpty()) {
             viewModel.changeAvatar(it) {

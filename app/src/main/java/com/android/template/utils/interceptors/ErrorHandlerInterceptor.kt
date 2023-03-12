@@ -4,6 +4,7 @@ import com.android.template.R
 import com.android.template.utils.getStringFromResource
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -54,7 +55,7 @@ class ErrorHandlerInterceptor(
                 .message(errorMessage)
                 .request(request)
                 .protocol(Protocol.HTTP_1_0)
-                .body(ResponseBody.create("application/json".toMediaTypeOrNull(), errorMessage))
+                .body(errorMessage.toResponseBody("application/json".toMediaTypeOrNull()))
                 .addHeader("content-type", "application/json")
                 .build()
     }

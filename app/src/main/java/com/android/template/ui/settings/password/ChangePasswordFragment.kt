@@ -6,7 +6,6 @@ import com.android.template.R
 import com.android.template.databinding.FragmentChangePasswordsBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.settings.password.viewmodel.ChangePasswordViewModel
-import kotlinx.android.synthetic.main.fragment_change_passwords.*
 
 class ChangePasswordFragment :
     BaseFragment<FragmentChangePasswordsBinding, ChangePasswordViewModel>(){
@@ -21,13 +20,12 @@ class ChangePasswordFragment :
         viewModel.confirmNewPassword.set("")
         viewModel.confirmNewPasswordError.set("")
 
-        toolbar?.initUpNavigation()
+        binding.toolbar.initUpNavigation()
         viewModel.uploadCallback = onUploadCallback
     }
 
-    private val onUploadCallback: (() -> Unit)? = {
+    private val onUploadCallback: (() -> Unit) = {
         navigateUp()
         showToast(getString(R.string.password_saved))
     }
-
 }

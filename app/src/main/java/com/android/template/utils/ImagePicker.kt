@@ -2,7 +2,6 @@ package com.android.template.utils
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Build
 import androidx.fragment.app.Fragment
 import com.nguyenhoanglam.imagepicker.model.Config
@@ -32,20 +31,19 @@ class ImagePicker {
         }
 
         fun callInMultipleMode(fragment: Fragment, maxCount: Int) {
-            call(ImagePicker.with(fragment), fragment.resources, true, maxCount, 0)
+            call(ImagePicker.with(fragment), true, maxCount, 0)
         }
 
         fun callInSingleMode(activity: Activity, requestCode: Int) {
-            call(ImagePicker.with(activity), activity.resources, false, 1, requestCode)
+            call(ImagePicker.with(activity), false, 1, requestCode)
         }
 
         fun callInSingleMode(fragment: Fragment, requestCode: Int) {
-            call(ImagePicker.with(fragment), fragment.resources, false, 1, requestCode)
+            call(ImagePicker.with(fragment), false, 1, requestCode)
         }
 
         fun call(
             builder: ImagePicker.Builder,
-            resources: Resources,
             multipleMode: Boolean,
             maxCount: Int,
             requestCode: Int
@@ -90,7 +88,7 @@ class ImagePicker {
                 val images = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     data.getParcelableArrayListExtra(Config.EXTRA_IMAGES, Image::class.java)
                 } else {
-                    data.getParcelableArrayListExtra<Image>(Config.EXTRA_IMAGES)
+                    data.getParcelableArrayListExtra(Config.EXTRA_IMAGES)
                 }
 
                 images?.let {

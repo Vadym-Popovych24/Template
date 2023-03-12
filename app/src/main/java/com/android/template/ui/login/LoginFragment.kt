@@ -10,7 +10,6 @@ import com.android.template.ui.login.viewmodel.LoginViewModel
 import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.utils.getColorFromResource
 import com.android.template.utils.setOnActionDoneCallback
-import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
@@ -19,15 +18,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         subscribeToObservableFields()
         initToolbar()
 
-        password?.setOnActionDoneCallback {
+        binding.password.setOnActionDoneCallback {
             viewModel.loginClick()
         }
 
-        signUp?.setOnClickListener {
+        binding.signUp.setOnClickListener {
             navController.navigate(R.id.signUpFragment)
         }
 
-        forgotPassword?.setOnClickListener {
+        binding.forgotPassword.setOnClickListener {
             navController.navigate(R.id.resetPasswordFragment)
         }
 

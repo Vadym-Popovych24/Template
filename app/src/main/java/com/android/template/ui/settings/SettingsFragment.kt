@@ -7,30 +7,27 @@ import com.android.template.databinding.FragmentSettingsBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.LoginActivity
 import com.android.template.ui.settings.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.fragment_settings.*
-
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar?.initDefaultNavigation()
+        binding.toolbar.initDefaultNavigation()
 
-        profileSettings?.setOnClickListener {
+        binding.profileSettings.setOnClickListener {
             navController.navigate(R.id.profileSettings)
         }
 
-        passwordSettings?.setOnClickListener {
+        binding.passwordSettings.setOnClickListener {
             navController.navigate(R.id.changePasswordSettings)
         }
 
-        signOut?.setOnClickListener {
+        binding.signOut.setOnClickListener {
             viewModel.logOut {
                 requireActivity().finish()
                 startActivity(LoginActivity.newIntent(requireContext()))
             }
         }
     }
-
 }

@@ -13,7 +13,6 @@ import com.android.template.ui.settings.profile.viewmodel.ProfileSettingsViewMod
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.helpers.DatePickerCallback
 import com.android.template.utils.helpers.defaultDateFormat
-import kotlinx.android.synthetic.main.fragment_profile_settings.*
 import java.text.ParseException
 import java.util.*
 
@@ -28,42 +27,42 @@ class ProfileSettingsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar?.initUpNavigation()
+        binding.toolbar.initUpNavigation()
 
         viewModel.uploadCallback = onUploadCallback
         initGenderDropdown()
         initLanguageDropdown()
 
-        birthDay?.setOnClickListener {
+        binding.birthDay.setOnClickListener {
             showBirthdaySelector()
         }
 
       //  viewModel.loadData()
     }
 
-    private val onUploadCallback: (() -> Unit)? = {
+    private val onUploadCallback: (() -> Unit) = {
         showToast(getString(R.string.data_saved))
     }
 
-    private fun initGenderDropdown() = genderDropdown?.apply {
+    private fun initGenderDropdown() = binding.genderDropdown.apply {
         val genders = GenderType.values()
         val genderLabels = Array(genders.size) {
             genders[it].localizedTitle.getStringFromResource
         }
 
-        val adapter = ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, genderLabels)
+        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, genderLabels)
         setAdapter(adapter)
         setOnItemClickListener { _, _, position, _ ->
             viewModel.setGender(genders[position])
         }
     }
 
-    private fun initLanguageDropdown() = languageDropdown?.apply {
+    private fun initLanguageDropdown() = binding.languageDropdown.apply {
         val languages = Language.values()
         val languageLabels = Array(languages.size) {
             languages[it].localizedTitle.getStringFromResource
         }
-        val adapter = ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, languageLabels)
+        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, languageLabels)
         setAdapter(adapter)
         setOnItemClickListener { _, _, position, _ ->
             viewModel.setLanguage(languages[position])
@@ -75,8 +74,8 @@ class ProfileSettingsFragment :
 
         try {
             viewModel.birthDay.get()?.let {
-                defaultDateFormat.parse(it)?.let {
-                    c.time = it
+                defaultDateFormat.parse(it)?.let { birthDayDate ->
+                    c.time = birthDayDate
                 }
             }
         } catch (e: ParseException) {

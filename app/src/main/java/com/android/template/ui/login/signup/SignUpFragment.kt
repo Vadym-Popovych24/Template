@@ -6,7 +6,6 @@ import com.android.template.databinding.FragmentSignUpBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.signup.viewmodel.SignUpViewModel
 import com.android.template.ui.navigation.NavigationActivity
-import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
 
@@ -19,7 +18,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
             moveToActivity(NavigationActivity.newIntent(requireContext()))
         }
 
-        toolbar?.initUpNavigation()
+        binding.toolbar.initUpNavigation()
     }
-
 }
