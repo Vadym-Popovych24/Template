@@ -1,6 +1,5 @@
 package com.android.template.di.modules
 
-import com.android.template.data.remote.impl.*
 import com.android.template.data.remote.interfaces.*
 import com.android.template.data.remote.impl.LoginWebserviceImpl
 import com.android.template.data.remote.impl.ProfileWebserviceImpl

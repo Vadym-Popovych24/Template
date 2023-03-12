@@ -50,6 +50,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         R.id.navigation_menu_item_3 -> navController.navigate(R.id.navigationMenuItem3)
         R.id.navigation_menu_item_4 -> navController.navigate(R.id.navigationMenuItem4)
         R.id.navigation_coroutines -> navController.navigate(R.id.navigationMenuCoroutine)
+        R.id.navigation_compose -> navController.navigate(R.id.navigationMenuCompose)
 
         R.id.navigation_settings -> navController.navigate(R.id.navigationSettings)
 

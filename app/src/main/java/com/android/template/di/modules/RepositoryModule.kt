@@ -16,4 +16,8 @@ interface RepositoryModule {
     @Singleton
     fun provideProfileRepository(repository: ProfileRepositoryImpl): ProfileRepository
 
+    @Binds
+    @Singleton
+    fun provideNewsRepository(repository: NewsRepositoryImpl): NewsRepository
+
 }

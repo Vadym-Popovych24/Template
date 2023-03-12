@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 val gmtDateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", Locale.getDefault())
+val newsServerDateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault())
+val newsUIDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.getDefault())
 val notificationsDateFormat =
     SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSSSZZZZZ", Locale.getDefault())
 val experiencesDateFormat = SimpleDateFormat("MM/dd/yyyy h:mm:ss a", Locale.getDefault())

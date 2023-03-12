@@ -3,9 +3,14 @@ package com.android.template.ui.base
 import androidx.annotation.StringRes
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.androidnetworking.error.ANError
 import com.android.template.R
+import com.android.template.data.models.api.ErrorResult
+import com.android.template.data.models.api.Result
+import com.android.template.data.models.api.SuccessResult
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.FORBIDDEN
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INTERNAL_SERVER_ERROR
@@ -16,7 +21,11 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 import org.json.JSONObject
+
+typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
+typealias LiveResult<T> = LiveData<Result<T>>
 
 abstract class BaseViewModel : ViewModel() {
     val compositeDisposable = CompositeDisposable()
@@ -26,13 +35,17 @@ abstract class BaseViewModel : ViewModel() {
     lateinit var messageCallback: (message: String?) -> Unit
     var logoutCallback: (() -> Unit)? = null
 
-    /**
-     * This method will be called when this ViewModel is no longer used and will be destroyed.
-     */
+    private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+        // you can add some exception handling here
+    }
+
+    private var job: Job = SupervisorJob()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + job + NonCancellable)
 
     override fun onCleared() {
         compositeDisposable.dispose()
         super.onCleared()
+        coroutineScope.cancel()
     }
 
     fun showMessage(message: String) {
@@ -71,6 +84,23 @@ abstract class BaseViewModel : ViewModel() {
                     handleError(it)
                 })
         )
+    }
+
+    /**
+     * Launch the specified suspending [block] and use its result as a value for the
+     * provided [liveResult].
+     */
+    fun <T> into(liveResult: MutableLiveResult<T>, block: suspend () -> T) {
+        isLoading.set(true)
+        coroutineScope.launch {
+            try {
+                liveResult.postValue(SuccessResult(block()))
+            } catch (e: Exception) {
+                if (e !is CancellationException) liveResult.postValue(ErrorResult(e))
+            } finally {
+                isLoading.set(false)
+            }
+        }
     }
 
     protected open fun handleError(it: Throwable) {

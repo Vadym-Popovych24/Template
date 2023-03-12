@@ -40,6 +40,12 @@
             android:icon="@drawable/ic_trending_up"
             android:checkable="false"
             android:title="@string/coroutines" />
+
+        <item
+            android:id="@+id/navigation_compose"
+            android:icon="@drawable/ic_core_behavior"
+            android:checkable="false"
+            android:title="@string/compose" />
     </group>
 
 <!--    <group-->

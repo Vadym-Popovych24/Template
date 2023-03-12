@@ -15,4 +15,8 @@ interface ManagerModule {
     @Binds
     @Singleton
     fun provideProfileManager(manager: ProfileManagerImpl): ProfileManager
+
+    @Binds
+    @Singleton
+    fun provideNewsManager(manager: NewsManagerImpl): NewsManager
 }

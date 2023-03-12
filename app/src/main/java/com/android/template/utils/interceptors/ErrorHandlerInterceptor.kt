@@ -3,6 +3,8 @@ package com.android.template.utils.interceptors
 import com.android.template.R
 import com.android.template.utils.getStringFromResource
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -12,7 +14,7 @@ class ErrorHandlerInterceptor(
 
     constructor():this(null)
 
-    override fun intercept(chain: Interceptor.Chain): Response? {
+    override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         return try {
             val response = chain.proceed(chain.request())
@@ -28,7 +30,7 @@ class ErrorHandlerInterceptor(
     }
 
     private fun validateResponse(response: Response, request: Request): Response? {
-        return when (response.code()) {
+        return when (response.code) {
             UNAUTHORIZED -> {
                 errorCodeCallback?.let { it(UNAUTHORIZED) }
                 return getResponseWithError(UNAUTHORIZED, request)
@@ -52,7 +54,7 @@ class ErrorHandlerInterceptor(
                 .message(errorMessage)
                 .request(request)
                 .protocol(Protocol.HTTP_1_0)
-                .body(ResponseBody.create(MediaType.parse("application/json"), errorMessage))
+                .body(ResponseBody.create("application/json".toMediaTypeOrNull(), errorMessage))
                 .addHeader("content-type", "application/json")
                 .build()
     }

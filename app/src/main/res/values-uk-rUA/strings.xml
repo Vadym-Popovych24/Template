@@ -204,5 +204,6 @@
     <string name="from">Від</string>
 
     <string name="coroutines">Корутини</string>
+    <string name="compose">Compose</string>
 
 </resources>

@@ -13,6 +13,6 @@ class CoroutineFragment : BaseFragment<FragmentCoroutineBinding, CoroutineViewMo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar?.initUpNavigation()
+        binding.toolbar.initUpNavigation()
     }
 }

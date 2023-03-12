@@ -92,4 +92,10 @@
         android:label="CoroutineFragment"
         tools:layout="@layout/fragment_coroutine"/>
 
+    <fragment
+        android:id="@+id/navigationMenuCompose"
+        android:name="com.android.template.ui.compose.ComposeFragment"
+        android:label="ComposeActivityt"
+        tools:layout="@layout/fragment_compose"/>
+
 </navigation>

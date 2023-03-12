@@ -18,7 +18,7 @@ class LoginViewModel @Inject constructor(private val loginManager: LoginManager)
 
     init {
         email.set("vadympopovychn24@gmail.com")
-        password.set("1")
+        password.set("1234567Q")
     }
 
     fun loginClick() {
