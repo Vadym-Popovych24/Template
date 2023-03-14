@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -39,6 +40,31 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="@{safeUnbox(viewModel.isLoading()) ? View.VISIBLE : View.GONE}" />
+
+                <ProgressBar
+                    android:id="@+id/saveProgressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:layout_marginBottom="50dp"
+                    android:layout_gravity="bottom"
+                    android:visibility="gone"
+                    tools:progress="33"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/saveProgressBarText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/large_text_size"
+                    android:visibility="gone"
+                    tools:text="57"/>
+
 
             </FrameLayout>
     </LinearLayout>

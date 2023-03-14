@@ -22,6 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.android.template.R
 import com.android.template.data.models.api.response.Article
@@ -30,6 +34,7 @@ import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.compose.ui.theme.TemplateTheme
 import com.android.template.ui.compose.viewmodel.ComposeViewModel
 import com.android.template.utils.helpers.*
+import kotlinx.coroutines.launch
 
 class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>() {
 
@@ -51,8 +56,23 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
                 }
             }
         }
+
     }
 
+    private fun launchProgress() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.numbersFlow().collect { percentage ->
+                    binding.saveProgressBar.progress = percentage
+                    val percentageText = "$percentage %"
+                    binding.saveProgressBarText.text = percentageText
+                    binding.saveProgressBar.isVisible = percentage != 100
+                    binding.saveProgressBarText.isVisible = percentage != 100
+                    binding.composeView.isVisible = percentage == 100
+                }
+            }
+        }
+    }
 
     @Composable
     fun MyApp() {
@@ -61,6 +81,7 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
         if (shouldShowBoarding) {
             OnboardingScreen(
                 onContinueClicked = {
+                    launchProgress()
                     viewModel.getNews()
                     shouldShowBoarding = false
                 }

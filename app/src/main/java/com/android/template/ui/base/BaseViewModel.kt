@@ -22,10 +22,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
 typealias LiveResult<T> = LiveData<Result<T>>
+typealias ResultFlow<T> = Flow<Result<T>>
 
 abstract class BaseViewModel : ViewModel() {
     val compositeDisposable = CompositeDisposable()
