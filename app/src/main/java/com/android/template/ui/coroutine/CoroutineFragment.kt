@@ -16,7 +16,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutineBinding, CoroutineViewMo
 
         binding.toolbar.initUpNavigation()
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        Handler().postDelayed({
             binding.tvCoroutine.text = "New Coroutine"
         }, 3000)
     }
