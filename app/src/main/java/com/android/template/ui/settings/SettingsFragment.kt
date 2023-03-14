@@ -13,7 +13,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.initDefaultNavigation()
+        binding.toolbar.initUpNavigation()
 
         binding.profileSettings.setOnClickListener {
             navController.navigate(R.id.profileSettings)

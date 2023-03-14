@@ -48,7 +48,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     }
 
     private fun onlyForRefreshToken(): Boolean =
-        arguments?.getBoolean(EXTRA_ONLY_REFRESH_TOKEN, false)!!
+        arguments?.getBoolean(EXTRA_ONLY_REFRESH_TOKEN, false) == true
 
     companion object {
         private const val EXTRA_ONLY_REFRESH_TOKEN = "extra_only_refresh_token"

@@ -56,7 +56,6 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
                 }
             }
         }
-
     }
 
     private fun launchProgress() {
