@@ -50,7 +50,7 @@ class SecretKeyWrapper {
         val secureRandom = SecureRandom()
         val secretKey: SecretKey = SecretKeySpec(key, aesAlgorithm)
 
-        val iv = ByteArray(12) //NEVER REUSE THIS IV WITH SAME KEY
+        val iv = ByteArray(12)
         secureRandom.nextBytes(iv)
 
         val cipher = Cipher.getInstance(transformation)
@@ -63,7 +63,6 @@ class SecretKeyWrapper {
         byteBuffer.put(iv)
         byteBuffer.put(cipherText)
         val cipherMessage = byteBuffer.array()
-      //  Arrays.fill(key, 0.toByte()) //overwrite the content of key with zeros
 
         return cipherMessage
     }

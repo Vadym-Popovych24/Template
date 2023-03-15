@@ -51,7 +51,7 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
             it.map { articles ->
                 binding.composeView.setContent {
                     TemplateTheme {
-                        Greetings(articles)
+                        MakeList(articles)
                     }
                 }
             }
@@ -89,7 +89,7 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
     }
 
     @Composable
-    private fun Greetings(
+    private fun MakeList(
         /*articles: List<Article>*/
         articles: List<Article> = listOf(Article(
             null, "Manish Singh", "US strengthens tech ties with India but doesn't seek decoupling from China, Raimondo says",
@@ -98,13 +98,13 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
     )) {
         LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
             items(items = articles) { article ->
-                Greeting(article)
+                MakeItemList(article)
             }
         }
     }
 
     @Composable
-    fun Greeting(article: Article) {
+    fun MakeItemList(article: Article) {
         var expanded by remember { mutableStateOf(false) }
 
 
@@ -192,7 +192,7 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
     @Composable
     fun DefaultPreview() {
         TemplateTheme {
-              Greetings()
+              MakeList()
         }
     }
 
