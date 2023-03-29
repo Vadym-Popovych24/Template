@@ -37,7 +37,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/coroutines"
                 android:textColor="@color/black"
-                android:textSize="@dimen/large_text_size" />
+                android:textSize="@dimen/large_text_size"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
         </LinearLayout>
 

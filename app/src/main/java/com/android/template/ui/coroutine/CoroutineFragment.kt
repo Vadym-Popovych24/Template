@@ -1,6 +1,7 @@
 package com.android.template.ui.coroutine
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import com.android.template.databinding.FragmentCoroutineBinding
 import com.android.template.ui.base.BaseFragment
@@ -13,6 +14,9 @@ class CoroutineFragment : BaseFragment<FragmentCoroutineBinding, CoroutineViewMo
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.initUpNavigation()
-        
+
+        Handler().postDelayed({
+            binding.tvCoroutine.visibility = View.VISIBLE
+        }, 3000)
     }
 }
