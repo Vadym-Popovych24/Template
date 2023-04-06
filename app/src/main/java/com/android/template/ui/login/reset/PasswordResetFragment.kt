@@ -48,7 +48,7 @@ class PasswordResetFragment :
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.close) {
                 initConfirmationAlert(
-                    requireContext(),
+                    context!!,
                     R.string.cancel_password_reset_confirmation_message
                 ) { navController.navigateUp() }
             }
