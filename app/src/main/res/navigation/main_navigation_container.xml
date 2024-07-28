@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_container"
-    app:startDestination="@id/navigationRecommendations">
+    app:startDestination="@id/stub">
+
+    <fragment
+        android:id="@+id/stub"
+        android:name="com.android.template.ui.base.Stub"
+        android:label="Stub" />
 
     <fragment
         android:id="@+id/navigationSettings"

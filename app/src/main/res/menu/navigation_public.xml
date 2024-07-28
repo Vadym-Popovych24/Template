@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_recommendations"
+        android:id="@+id/bottom_menu_item_recommendations"
         android:icon="@drawable/ic_timeline"
         android:title="@string/recommendations"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/navigation_liked"
+        android:id="@+id/bottom_menu_item_liked"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_like"
         android:title="@string/liked" />
 
     <item
-        android:id="@+id/navigation_history"
+        android:id="@+id/bottom_menu_item_history"
         android:icon="@drawable/ic_timeline"
         android:title="@string/history"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/bottom_menu_item_home"
         android:icon="@drawable/svg_home"
         android:title="@string/home"
         app:showAsAction="ifRoom" />

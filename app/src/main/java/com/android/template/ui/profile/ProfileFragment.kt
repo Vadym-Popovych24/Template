@@ -13,4 +13,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
         binding.toolbar.initUpNavigation()
     }
+
+    companion object {
+
+        fun newInstance() = ProfileFragment()
+    }
 }

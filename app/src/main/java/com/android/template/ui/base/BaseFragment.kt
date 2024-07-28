@@ -48,7 +48,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     var baseActivity: BaseActivity<*, *>? = null
 
-    protected open val bottomNavigationVisibility = View.VISIBLE
+    open val bottomNavigationVisibility = View.GONE
 
     protected var viewDataBinding: T? = null
 
@@ -182,6 +182,13 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         viewModel.isLoading.addOnPropertyChangedCallback(isLoadingDataCallback)
     }
 
+    protected fun showFragment(fragment: Fragment) {
+        val activity = requireActivity()
+        if (activity is NavigationActivityCallback) {
+            activity.showFragment(fragment)
+        }
+    }
+
 
     /**
      * Called when the fragment is no longer attached to its activity. This is called after onDestroy().
@@ -194,6 +201,18 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     override fun onStop() {
         super.onStop()
         hideKeyboard()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        activity?.let {
+            if (it is NavigationActivityCallback) {
+                if (!hidden) {
+                    it.updateBottomNavigation(bottomNavigationVisibility)
+                    it.setCurrentFragmentOfBottomMenu(this)
+                }
+            }
+        }
     }
 
     /**
@@ -310,7 +329,11 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     open fun navigateUp() {
         hideKeyboard()
-        navController.navigateUp()
+        popBackStack()
+    }
+
+    private fun popBackStack() {
+        activity?.onBackPressed()
     }
 
     protected fun initConfirmationAlert(

@@ -26,7 +26,7 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
 
         if (savedInstanceState == null)
             findViewById<BottomNavigationView>(R.id.bottomNavigation).selectedItemId =
-                R.id.navigation_recommendations
+                R.id.bottom_menu_item_recommendations
 
         val toggle = object : ActionBarDrawerToggle(
             this,
@@ -67,13 +67,6 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
             openDrawer()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START)) {
-            closeDrawer()
-        } else navController.navigateUp() || super.onSupportNavigateUp()
-
     }
 
     override fun openDrawer() {

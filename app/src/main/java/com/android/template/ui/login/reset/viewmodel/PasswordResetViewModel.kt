@@ -1,5 +1,6 @@
 package com.android.template.ui.login.reset.viewmodel
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -55,6 +56,9 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
                     passwordFieldsVisible.set(true)
                     emailVisible.set(false)
                 }
+                else -> {
+                    Log.i("currentState", "else case")
+                }
             }
         }
     }
@@ -70,6 +74,9 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
             State.SEND_CODE_TO_EMAIL -> requestSecureCode()
             State.RESET_PASSWORD -> confirmSecureCode()
             State.SAVE_NEW_PASSWORD -> saveNewPassword()
+            else -> {
+                Log.i("action", "else case")
+            }
         }
     }
 

@@ -38,10 +38,19 @@
                 android:layout_height="match_parent"
                 app:addHeader="@{viewModel}"
                 app:menu="@menu/left_hand_menu"
+                app:itemBackground="@drawable/item_menu_divider_line"
                 android:layout_gravity="start"
                 android:background="@color/background_LHM"/>
 
         </androidx.drawerlayout.widget.DrawerLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/contentLoadingProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:visibility="visible" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

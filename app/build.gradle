@@ -11,12 +11,12 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.sonarqube' // added for sonar qube
 
 android {
-    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.android.template"
         minSdkVersion 23
-        targetSdkVersion 33
+        compileSdk 34
+        targetSdkVersion 34
         versionCode 11
         versionName "2.0"
 
@@ -63,13 +63,14 @@ android {
 
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-alpha08'
+        kotlinCompilerExtensionVersion '1.5.0'
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.android.template'
 }
 
 sonarqube {
@@ -121,12 +122,12 @@ dependencies {
      * di Dagger 2
      */
     // Basic Dagger 2 (required)
-    implementation "com.google.dagger:dagger:${dagger_version}"
+    implementation "com.google.dagger:dagger:${dagger2_version}"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
 
     // dagger.android package (optional)
-    implementation "com.google.dagger:dagger-android:$dagger3_version"
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
 
     // Support library support (optional)
@@ -149,8 +150,6 @@ dependencies {
      * VIEW MODEL AND LIVE DATE
      */
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     /**

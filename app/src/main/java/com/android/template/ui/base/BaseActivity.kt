@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -25,8 +24,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppCompatActivity() {
-    val navController: NavController by lazy {
-//        Navigation.findNavController(this, fragmentContainerId)
+    private val navController: NavController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(fragmentContainerId) as NavHostFragment
         navHostFragment.navController
@@ -50,15 +48,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     @get:IdRes
     open val fragmentContainerId: Int = R.id.fl_for_fragment
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            finish()
-            if (!supportFragmentManager.popBackStackImmediate()) {
-                finish()
-            }
-        }
-    }
-
     /**
      * Called to do initial creation of a fragment.
      * <p>
@@ -73,7 +62,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         performDataBinding()
-        onBackPressedDispatcher.addCallback(this,onBackPressedCallback)
     }
 
     /**
