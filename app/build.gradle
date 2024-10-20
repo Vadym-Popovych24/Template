@@ -15,8 +15,8 @@ android {
     defaultConfig {
         applicationId "com.android.template"
         minSdkVersion 23
-        compileSdk 34
-        targetSdkVersion 34
+        compileSdk 35
+        targetSdkVersion 35
         versionCode 12
         versionName "2.0"
 
@@ -63,7 +63,7 @@ android {
 
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.0'
+        kotlinCompilerExtensionVersion '1.5.14'
     }
     packagingOptions {
         resources {
@@ -93,8 +93,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation project(':validator')
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
@@ -123,7 +122,6 @@ dependencies {
      */
     // Basic Dagger 2 (required)
     implementation "com.google.dagger:dagger:${dagger2_version}"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
 
     // dagger.android package (optional)
@@ -233,23 +231,33 @@ dependencies {
     //SignalR Java client
 //    implementation "com.microsoft.signalr:signalr:${signalR_version}"
 
-    // Compose
-    // Integration with activities
-    implementation "androidx.activity:activity-compose:$compose_activity_version"
+    // Compose BOM
+    implementation platform("androidx.compose:compose-bom:$compose_bom")  // Bom version
+
+    // Compose dependencies
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    // Integration compose with activities
+    implementation "androidx.activity:activity-compose"
+
     // Compose Material Design
-    implementation "androidx.compose.material:material:$compose_tooling_version"
+    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.material:material-icons-extended"
     // Animations
-    implementation "androidx.compose.animation:animation:$compose_tooling_version"
+    implementation "androidx.compose.animation:animation"
     // Tooling support (Previews, etc.)
-    implementation "androidx.compose.ui:ui-tooling:$compose_tooling_version"
+    implementation "androidx.compose.ui:ui-tooling"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
+
+
     // Tooling support loading Image from url
     implementation "io.coil-kt:coil-compose:$compose_loading_image_version"
     // Integration with ViewModels
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_lifecycle_viewmodel_version"
-    // UI Tests Compose
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_tooling_version"
 
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
