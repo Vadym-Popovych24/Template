@@ -18,6 +18,7 @@ import com.android.template.ui.base.BaseActivityWithMenuPublic
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.base.Stub
 import com.android.template.ui.compose.ComposeFragment
+import com.android.template.ui.coroutine.CoroutineFragment
 import com.android.template.ui.home.HomeFragment
 import com.android.template.ui.menu1.MenuItem1Fragment
 import com.android.template.ui.menu2.MenuItem2Fragment
@@ -94,7 +95,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         R.id.navigation_menu_item_2 -> showFragment(MenuItem2Fragment())
         R.id.navigation_menu_item_3 -> showFragment(MenuItem3Fragment())
         R.id.navigation_menu_item_4 -> showFragment(MenuItem4Fragment())
-        R.id.navigation_coroutines -> showFragment(ComposeFragment())
+        R.id.navigation_coroutines -> showFragment(CoroutineFragment())
         R.id.navigation_compose -> showFragment(ComposeFragment())
         R.id.navigation_settings -> showFragment(SettingsFragment())
 
