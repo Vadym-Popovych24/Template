@@ -16,7 +16,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservableFields()
-        initToolbar()
 
         binding.password.setOnActionDoneCallback {
             viewModel.loginClick()
@@ -29,8 +28,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         binding.forgotPassword.setOnClickListener {
             navController.navigate(R.id.resetPasswordFragment)
         }
-
-        binding.signUp.setTextColor(R.color.colorAccent.getColorFromResource())
     }
 
     private fun subscribeToObservableFields() {
@@ -41,10 +38,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             }
             requireActivity().finish()
         }
-    }
-
-    private fun initToolbar() {
-        requireActivity().window.statusBarColor = Color.argb(255, 255, 255, 255)
     }
 
     private fun onlyForRefreshToken(): Boolean =

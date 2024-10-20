@@ -39,23 +39,23 @@
                 android:id="@+id/signUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:padding="@dimen/default_padding"
                 android:text="@string/sign_up"
-                android:textColor="@color/green_approved_text"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:background="@android:color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,8 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/email"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    app:error="@{viewModel.emailError}">
+                    app:boxBackgroundColor="@android:color/transparent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -126,27 +125,10 @@
                     android:text="@string/forgot_password"
                     android:textColor="@color/green_approved_text" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/xxxsmall_padding">
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/medium_item_size"
-                        android:backgroundTint="@color/green_approved_text"
-                        android:onClick="@{() -> viewModel.loginClick()}"
-                        android:text="@string/login"
-                        android:textColor="@color/white"
-                        android:visibility="@{safeUnbox(!viewModel.isLoading()) ? View.VISIBLE : View.GONE}" />
-
-                    <ProgressBar
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="@{safeUnbox(viewModel.isLoading()) ? View.VISIBLE : View.GONE}" />
-                </FrameLayout>
+                <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+                    android:id="@+id/btn_sign_in"
+                    style="@style/primary_сircular_progress_button"
+                    android:text="@string/login" />
 
             </LinearLayout>
         </ScrollView>

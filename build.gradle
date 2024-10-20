@@ -49,6 +49,7 @@ buildscript {
         security_crypto_version = '1.0.0'
         retrofit_version = '2.9.0'
         okhttpLogging_version = '4.9.0'
+        loading_button_version = '2.3.0'
     }
 
     repositories {

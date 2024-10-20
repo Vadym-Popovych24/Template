@@ -104,4 +104,32 @@
         <item name="android:contentDescription">@string/none</item>
         <item name="android:padding">10dp</item>
     </style>
+
+    <style name="primary_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/standard_button_height</item>
+        <item name="android:background">@drawable/circular_green_border_shape</item>
+        <item name="android:layout_marginStart">@dimen/default_padding</item>
+        <item name="android:layout_marginEnd">@dimen/default_padding</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="primary_сircular_progress_button" parent="primary_button">
+        <item name="spinning_bar_color">@android:color/white</item>
+        <item name="spinning_bar_padding">3dp</item>
+        <item name="spinning_bar_width">2dp</item>
+    </style>
+
+    <style name="circular_reject_button" parent="primary_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/standard_button_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/circular_lite_red_border_shape</item>
+        <item name="android:textColor">@color/reject_red</item>
+        <item name="spinning_bar_color">@color/reject_red</item>
+        <item name="spinning_bar_padding">3dp</item>
+        <item name="spinning_bar_width">2dp</item>
+    </style>
+
 </resources>

@@ -38,4 +38,6 @@
     <color name="bg_message_attachment">#FDF6F6</color>
     <color name="green_approved_text">#109326</color>
     <color name="red_rejected_text">#DD2F3C</color>
+    <color name="reject_red">#DC3131</color>
+    <color name="green_btn">#0AB10A</color>
 </resources>

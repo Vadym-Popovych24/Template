@@ -264,4 +264,7 @@ dependencies {
 
     // Security-crypto
     implementation "androidx.security:security-crypto:$security_crypto_version"
+
+    // loading button
+    implementation "com.github.leandroborgesferreira:loading-button-android:$loading_button_version"
 }
