@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,7 +35,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
+import com.rule.validator.formvalidator.FormValidator
 import java.io.File
+import java.util.regex.Pattern
 
 
 /** START Glide **/
@@ -240,6 +243,35 @@ fun String.isEmail(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 fun String.isPhoneNumber(): Boolean = Patterns.PHONE.matcher(this).matches()
 
+fun String.isValidPassword(lengthMin: Int = 6, lengthMax: Int = 64): Boolean =
+    Pattern.compile(
+        "^" +
+                "(?=.*[0-9])" +
+                "(?=.*[a-z])" +
+                "(?=.*[A-Z])" +
+                "(?=.*[a-zA-Z])" +
+                ".{$lengthMin,$lengthMax}" +
+                "$"
+    ).matcher(this).matches()
+
+fun String.isValidName(): Boolean {
+
+    val allowedSign = arrayListOf('-', '\'')
+
+    return when {
+        !this.toCharArray().all { char ->
+            char.isLetter()
+                    || char.isWhitespace()
+                    || allowedSign.any { sing -> sing == char }
+        } -> {
+            false
+        }
+        else -> {
+            true
+        }
+    }
+}
+
 fun String.removeHtml() = "<[^>]*>".toRegex().replace(this, "")
 
 fun RecyclerView.scrollToEnd() {
@@ -326,3 +358,19 @@ fun File.encryptedFile(): EncryptedFile {
         EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
     ).build()
 }
+
+fun Button.setOnClickListenerWithPreValidation(formValidator: FormValidator, onClick: () -> Unit) {
+    setOnClickListener {
+        if (formValidator.preValidateAllFields()) {
+            onClick()
+        }
+    }
+}
+
+fun EditText.setOnActionDoneCallbackWithPreValidation(formValidator: FormValidator, callback: () -> Unit) =
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE && formValidator.preValidateAllFields()) {
+            callback()
+        }
+        false
+    }

@@ -21,6 +21,7 @@ import com.android.template.BR
 import com.android.template.R
 import com.android.template.databinding.LeftHandMenuHeaderBinding
 import com.android.template.ui.navigation.viewmodel.NavigationHeaderViewModel
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
 import java.io.File
 import java.text.DateFormatSymbols
 import java.util.*
@@ -211,6 +212,15 @@ object BindingUtils {
             "$monthName $year"
         }
         view.setText(text)
+    }
+
+    @JvmStatic
+    @BindingAdapter("loading")
+    fun loadingCircularProgressButton(button: CircularProgressButton, loading: Boolean) {
+        if (loading)
+            button.startAnimation()
+        else
+            button.revertAnimation()
     }
 
 }

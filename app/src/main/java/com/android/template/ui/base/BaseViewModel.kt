@@ -16,6 +16,7 @@ import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INTERNAL_SERVER_ERROR
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INVALID_USERNAME_OR_PASSWORD
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.NOT_FOUND
+import com.microsoft.appcenter.utils.HandlerUtils
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,6 +44,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private var job: Job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job + NonCancellable)
+    var loadingCallback: ((Boolean) -> Unit)? = null
 
     override fun onCleared() {
         compositeDisposable.dispose()
@@ -61,9 +63,15 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> makeRx(single: Single<T>, callback: (T) -> Unit) {
         isLoading.set(true)
         compositeDisposable.add(
-            single.doFinally {
-                isLoading.set(false)
-            }.subscribeOn(Schedulers.io())
+            single
+                .doOnSubscribe {
+                    isLoading.set(true)
+                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(true) }
+                }
+                .doFinally {
+                    isLoading.set(false)
+                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(false) }
+                }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     callback(it)
@@ -76,15 +84,45 @@ abstract class BaseViewModel : ViewModel() {
     fun makeRx(completable: Completable, completeCallback: (() -> Unit)? = null) {
         isLoading.set(true)
         compositeDisposable.add(
-            completable.doFinally {
-                isLoading.set(false)
-            }.subscribeOn(Schedulers.io())
+            completable
+                .doOnSubscribe {
+                    isLoading.set(true)
+                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(true) }
+                }
+                .doFinally {
+                    isLoading.set(false)
+                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(false) }
+                }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     completeCallback?.invoke()
                 }, {
                     handleError(it)
                 })
+        )
+    }
+
+    fun <T> makeRxInvisible(single: Single<T>, callback: (T) -> Unit) {
+        isLoading.set(true)
+        compositeDisposable.add(
+            single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    callback(it)
+                }, {})
+        )
+    }
+
+    fun makeRxInvisible(completable: Completable, completeCallback: (() -> Unit)? = null) {
+        isLoading.set(true)
+        compositeDisposable.add(
+            completable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    completeCallback?.invoke()
+                }, {})
         )
     }
 

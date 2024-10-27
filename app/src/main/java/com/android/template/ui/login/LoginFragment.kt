@@ -1,6 +1,5 @@
 package com.android.template.ui.login
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.android.template.R
@@ -8,40 +7,97 @@ import com.android.template.databinding.FragmentLoginBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.viewmodel.LoginViewModel
 import com.android.template.ui.navigation.NavigationActivity
-import com.android.template.utils.getColorFromResource
-import com.android.template.utils.setOnActionDoneCallback
+import com.android.template.utils.BindingUtils
+import com.android.template.utils.getStringFromResource
+import com.android.template.utils.isEmail
+import com.android.template.utils.isValidPassword
+import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
+import com.android.template.utils.setOnClickListenerWithPreValidation
+import com.rule.validator.formvalidator.Validator
+import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
+import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
 
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservableFields()
+        setupValidations()
+        bindViews()
 
-        binding.password.setOnActionDoneCallback {
-            viewModel.loginClick()
+    }
+
+    private fun bindViews() {
+
+        binding.inputPassword.setOnActionDoneCallbackWithPreValidation(viewModel.formValidator) {
+            viewModel.login {
+                moveToMainActivity()
+            }
         }
 
-        binding.signUp.setOnClickListener {
+        binding.tvSignUp.setOnClickListener {
             navController.navigate(R.id.signUpFragment)
         }
 
-        binding.forgotPassword.setOnClickListener {
+        binding.tvForgotPassword.setOnClickListener {
             navController.navigate(R.id.resetPasswordFragment)
+        }
+
+        binding.btnSignIn.setOnClickListenerWithPreValidation(viewModel.formValidator) {
+            viewModel.login {
+                moveToMainActivity()
+            }
         }
     }
 
+
     private fun subscribeToObservableFields() {
-        viewModel.authCompleteCallback = {
-            if (!onlyForRefreshToken()) {
-                hideKeyboard()
-                moveToActivity(NavigationActivity.newIntent(requireContext()))
-            }
-            requireActivity().finish()
+        viewModel.loadingCallback = { loading ->
+            BindingUtils.loadingCircularProgressButton(binding.btnSignIn, loading)
         }
+    }
+
+    private fun moveToMainActivity() {
+
+        if (!onlyForRefreshToken()) {
+            hideKeyboard()
+            moveToActivity(NavigationActivity.newIntent(requireContext()))
+        }
+        requireActivity().finish()
     }
 
     private fun onlyForRefreshToken(): Boolean =
         arguments?.getBoolean(EXTRA_ONLY_REFRESH_TOKEN, false) == true
+
+    private fun setupValidations() {
+        viewModel.formValidator.apply {
+            clear()
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutEmail,
+                    Validator.Builder()
+                        .requireRule(R.string.validation_rule_required.getStringFromResource)
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_email.getStringFromResource,
+                            function = {  (binding.inputEmail.text.toString().isEmail()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutPassword,
+                    Validator.Builder()
+                        .requireRule(R.string.validation_rule_required.getStringFromResource)
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_password.getStringFromResource,
+                            function = {  (binding.inputPassword.text.toString().isValidPassword()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+        }
+    }
 
     companion object {
         private const val EXTRA_ONLY_REFRESH_TOKEN = "extra_only_refresh_token"

@@ -8,33 +8,37 @@ import androidx.lifecycle.MutableLiveData
 import com.android.template.R
 import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
-import com.android.template.utils.getStringFromResource
 import com.android.template.utils.getValueOrEmpty
 import com.android.template.utils.helpers.SECOND
-import com.android.template.utils.isEmail
+import com.rule.validator.formvalidator.FormValidator
 import javax.inject.Inject
 
 class PasswordResetViewModel @Inject constructor(private val loginManager: LoginManager) :
     BaseViewModel() {
 
+
     val email = ObservableField<String>()
-    val emailError = ObservableField<String>()
     val emailVisible = ObservableBoolean()
 
     val code = ObservableField<String>()
     val codeVisible = ObservableBoolean()
 
     val passwordFieldsVisible = ObservableBoolean()
-
     val password = ObservableField<String>()
-    val passwordError = ObservableField<String>()
 
     val confirmPassword = ObservableField<String>()
-    val confirmPasswordError = ObservableField<String>()
 
     var actionCallback: (() -> Unit)? = null
-
     var resetPasswordFinishedCallback: (() -> Unit)? = null
+
+    val emailFormValidator = FormValidator(null)
+    val passwordFormValidator = FormValidator(null)
+
+    override fun onCleared() {
+        super.onCleared()
+        emailFormValidator.clear()
+        passwordFormValidator.clear()
+    }
 
     val currentState = object : MutableLiveData<State>() {
         override fun setValue(value: State?) {
@@ -67,7 +71,10 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
         currentState.value = State.SEND_CODE_TO_EMAIL
     }
 
-    fun resendCode(callback: () -> Unit) = makeRx(loginManager.requestResetPasswordCode(email.getValueOrEmpty()), callback)
+    fun resendCode(callback: () -> Unit) {
+        callback.invoke()
+        //makeRx(loginManager.requestResetPasswordCode(email.getValueOrEmpty()), callback)
+    }
 
     fun action() {
         when (currentState.value) {
@@ -81,54 +88,34 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
     }
 
     private fun requestSecureCode() {
-        emailError.set("")
-        val email = email.getValueOrEmpty()
-        if (email.isEmail()) {
-            makeRx(loginManager.requestResetPasswordCode(email)) {
+
+           // makeRx(loginManager.requestResetPasswordCode(email)) {
                 currentState.value = State.RESET_PASSWORD
-            }
-        } else {
-            emailError.set(R.string.invalid_value.getStringFromResource)
-        }
+          //  }
+
     }
 
     private fun confirmSecureCode() {
         val code = code.getValueOrEmpty()
         if (code.length >= SECURE_CODE_SIZE) {
-            makeRx(loginManager.sendResetPasswordCode(email.getValueOrEmpty(), code)) {
+           // makeRx(loginManager.sendResetPasswordCode(email.getValueOrEmpty(), code)) {
                 currentState.setValue(State.SAVE_NEW_PASSWORD)
-            }
+           // }
         } else {
             showMessage(R.string.invalid_value)
         }
     }
 
     private fun saveNewPassword() {
-        if (isPasswordsValid()) {
-            makeRx(
+            /*makeRx(
                 loginManager.resetPassword(
                     email.getValueOrEmpty(),
                     code.getValueOrEmpty(),
                     password.getValueOrEmpty()
                 )
-            ) {
+            ) {*/
                 resetPasswordFinishedCallback?.invoke()
-            }
-        }
-    }
-
-    private fun isPasswordsValid(): Boolean = when {
-        checkIfEmpty(password, passwordError) -> {
-            false
-        }
-        checkIfEmpty(confirmPassword, confirmPasswordError) -> {
-            false
-        }
-        password.getValueOrEmpty() != confirmPassword.getValueOrEmpty() -> {
-            confirmPasswordError.set(R.string.passwords_not_match.getStringFromResource)
-            false
-        }
-        else -> true
+       // }
     }
 
     override fun handleError(it: Throwable) {

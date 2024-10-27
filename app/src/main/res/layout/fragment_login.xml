@@ -36,7 +36,7 @@
                 android:textColor="@android:color/black" />
 
             <TextView
-                android:id="@+id/signUp"
+                android:id="@+id/tv_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
@@ -72,13 +72,16 @@
                     app:srcCompat="@drawable/logo" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/email"
-                    app:boxBackgroundColor="@android:color/transparent">
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:hintTextColor="@color/green_btn">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
@@ -91,16 +94,17 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/password"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:error="@{viewModel.passwordError}"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:hintTextColor="@color/green_btn">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/password"
+                        android:id="@+id/input_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
@@ -113,7 +117,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/forgotPassword"
+                    android:id="@+id/tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -127,6 +131,7 @@
 
                 <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                     android:id="@+id/btn_sign_in"
+                    android:layout_gravity="center_horizontal"
                     style="@style/primary_сircular_progress_button"
                     android:text="@string/login" />
 

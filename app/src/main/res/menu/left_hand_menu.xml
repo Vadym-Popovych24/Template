@@ -30,12 +30,6 @@
             android:title="@string/menu_item_4" />
 
         <item
-            android:id="@+id/navigation_settings"
-            android:icon="@drawable/ic_settings"
-            android:checkable="false"
-            android:title="@string/settings" />
-
-        <item
             android:id="@+id/navigation_coroutines"
             android:icon="@drawable/ic_trending_up"
             android:checkable="false"
@@ -46,6 +40,13 @@
             android:icon="@drawable/ic_core_behavior"
             android:checkable="false"
             android:title="@string/compose" />
+
+        <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/ic_settings"
+            android:checkable="false"
+            android:title="@string/settings" />
+
     </group>
 
 <!--    <group-->

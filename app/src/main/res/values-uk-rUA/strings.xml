@@ -84,6 +84,21 @@
     <string name="timeout_error">Час виконання запита вийшов</string>
     <string name="not_found">404 Не знайдено</string>
     <string name="invalid_username_or_password">Не вірний логін або пароль</string>
+    <string name="verification_code_rule">Код підтвердження повинен складатись з 6 цифр</string>
+
+    // validations
+    <string name="validation.rule.required">Будь ласка, введіть значення</string>
+    <string name="validation.rule.regex">Будь ласка, введіть дійсне значення</string>
+    <string name="validation.rule.minLength">Введіть %d або більше символів</string>
+    <string name="validation.rule.minMaxLength" formatted="false">Введіть значення від %1$d до %2$d</string>
+    <string name="validation.rule.email">Будь ласка, введіть правильну електронну адресу</string>
+    <string name="validation.rule.password">Будь ласка, введіть дійсний пароль (від 6 до 64 символів) Пароль має містити цифру, малі та великі латинські літери</string>
+    <string name="validation.rule.firstName">Ім\'я має містити принаймні 2 і не більше 64 символів</string>
+    <string name="validation.rule.lastName">Прізвище має містити принаймні 2 і не більше 64 символів</string>
+    <string name="validation.rule.preferredName">Будь ласка, введіть правильну бажану назву</string>
+    <string name="validation.rule.invalidCharacter" formatted="false">Ви ввели недійсний символ %s</string>
+    <string name="validation.rule.minDouble" formatted="false">Будь ласка, введіть значення %s або більше</string>
+    <string name="validation.rule.maxDouble" formatted="false">Будь ласка, введіть значення %s або менше</string>
 
     <!--    ???-->
     <string name="publicc">Відкритий</string>
@@ -193,6 +208,7 @@
     <string name="phone_confirmed"><![CDATA[<b>Номер телефону</b> підтверджено]]></string>
 
     <string name="confirm">Підтвердити</string>
+    <string name="continue_btn">Продовжити</string>
 
     <string name="ago">тому</string>
     <string name="just_now">Щойно</string>

@@ -113,6 +113,21 @@
     <string name="timeout_error">Request timeout</string>
     <string name="not_found">404 Not Found</string>
     <string name="invalid_username_or_password">Іnvalid username or password</string>
+    <string name="verification_code_rule">The verification code must consist of 6 digits</string>
+
+    // validations
+    <string name="validation.rule.required">Please enter a value</string>
+    <string name="validation.rule.regex">Please enter a valid value</string>
+    <string name="validation.rule.minLength">Please enter %d or more character</string>
+    <string name="validation.rule.minMaxLength" formatted="false">Please enter a value between %1$d and %2$d</string>
+    <string name="validation.rule.email">Please enter a proper email</string>
+    <string name="validation.rule.password">Please enter a valid password (from 6 to 64 characters) Password must contain a number, small and large latin letters</string>
+    <string name="validation.rule.firstName">The First Name must be at least 2 and at max 64 characters long</string>
+    <string name="validation.rule.lastName">The Last Name must be at least 2 and at max 64 characters long</string>
+    <string name="validation.rule.preferredName">Please enter a correct preferred name</string>
+    <string name="validation.rule.invalidCharacter" formatted="false">You\'ve entered an invalid character %s</string>
+    <string name="validation.rule.minDouble" formatted="false">Please enter a value of %s or more</string>
+    <string name="validation.rule.maxDouble" formatted="false">Please enter a value of %s or less</string>
 
     <!--    ???-->
 
@@ -217,6 +232,7 @@
     <string name="phone_confirmed"><![CDATA[<b>Phone</b> is confirmed]]></string>
 
     <string name="confirm">Confirm</string>
+    <string name="continue_btn">Confirm</string>
 
     <string name="city">City</string>
 

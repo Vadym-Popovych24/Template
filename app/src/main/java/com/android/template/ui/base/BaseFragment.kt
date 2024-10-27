@@ -246,6 +246,12 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         }
     }
 
+    protected fun showToast(@StringRes message: Int) {
+        context?.let {
+            Toast.makeText(it, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
     protected fun moveToCrash() {
         startActivity(CrashActivity.newIntent(requireContext()))
     }

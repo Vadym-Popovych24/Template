@@ -1,39 +1,33 @@
 package com.android.template.ui.login.viewmodel
 
 import androidx.databinding.ObservableField
-import com.android.template.R
-import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
-import com.android.template.utils.getStringFromResource
-import com.android.template.utils.getValueOrEmpty
-import com.android.template.utils.isEmail
+import com.rule.validator.formvalidator.FormValidator
+import io.reactivex.Single
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val loginManager: LoginManager) : BaseViewModel() {
+class LoginViewModel @Inject constructor() : BaseViewModel() {
     val email = ObservableField<String>()
-    val emailError = ObservableField<String>()
     val password = ObservableField<String>()
-    val passwordError = ObservableField<String>()
-    var authCompleteCallback: (() -> Unit)? = null
 
     init {
         email.set("vadympopovychn24@gmail.com")
-        password.set("1234567Q")
+        password.set("1234567qQ")
     }
 
-    fun loginClick() {
-        if (isCredentialsValid()) {
-            authCompleteCallback?.invoke()
-        }
+    val formValidator = FormValidator(null)
+
+    override fun onCleared() {
+        super.onCleared()
+        formValidator.clear()
     }
 
-    private fun isCredentialsValid(): Boolean {
-        val email = email.getValueOrEmpty()
-        emailError.set("")
-        return if (!email.isEmail()) {
-            emailError.set(R.string.invalid_value.getStringFromResource)
-            false
-        } else !checkIfEmpty(password, passwordError)
+    fun login(completableCallback: ((String) -> Unit)) {
+        // Implement sign in
+        makeRx(Single.just("Login successfully").map {
+            it
+        }.delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
 }
