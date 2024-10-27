@@ -17,8 +17,8 @@ android {
         minSdkVersion 23
         compileSdk 35
         targetSdkVersion 35
-        versionCode 12
-        versionName "2.0"
+        versionCode 13
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -249,9 +249,8 @@ dependencies {
     implementation "androidx.compose.animation:animation"
     // Tooling support (Previews, etc.)
     implementation "androidx.compose.ui:ui-tooling"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_junit4"
 
     // Tooling support loading Image from url
     implementation "io.coil-kt:coil-compose:$compose_loading_image_version"
