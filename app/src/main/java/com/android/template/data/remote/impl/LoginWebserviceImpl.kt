@@ -51,7 +51,17 @@ class LoginWebserviceImpl @Inject constructor(
             }
 
     override fun sendResetPasswordCode(email: String, code: String): Completable =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_SUBMIT_CODE)
+        if (code == "123456") {
+            Completable.complete()
+        } else {
+            Completable.error(
+                IllegalArgumentException(
+                    R.string.wrong_secure_code_error.getStringFromResource
+                )
+            )
+        }
+        // Uncomment it for real call
+        /*Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_SUBMIT_CODE)
             .addHeaders(contentType, contentTypeValue)
             .addBodyParameter("email", email)
             .addBodyParameter("code", code)
@@ -63,7 +73,7 @@ class LoginWebserviceImpl @Inject constructor(
                         R.string.wrong_secure_code_error.getStringFromResource
                     )
                 )
-            }
+            }*/
 
     override fun resetPassword(
         email: String,

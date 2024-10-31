@@ -5,13 +5,13 @@ object AppConstants {
     private const val BASE_URL = ""
     private const val BASE_URL_LOGIN = ""
 
-    const val ENDPOINT_SERVER_LOGIN = "$BASE_URL_LOGIN/Token"
-    const val ENDPOINT_DEVICE_LOGIN = "$BASE_URL/api/accounts/user-device"
-    const val ENDPOINT_SIGN_UP = "$BASE_URL_LOGIN/Token/Register"
-    const val ENDPOINT_RESET_PASSWORD = "$BASE_URL_LOGIN/Token/ResetPassword"
-    const val ENDPOINT_RESET_PASSWORD_GET_CODE = "$BASE_URL_LOGIN/Token/ResetEmailPasswordCode"
-    const val ENDPOINT_RESET_PASSWORD_SUBMIT_CODE = "$BASE_URL_LOGIN/Token/ResetPasswordCode"
-    const val ENDPOINT_CHANGE_PASSWORD = "$BASE_URL/api/accounts"
+    const val ENDPOINT_SERVER_LOGIN = "$BASE_URL_LOGIN/Login"
+    const val ENDPOINT_DEVICE_LOGIN = "$BASE_URL/api/LoginDevice"
+    const val ENDPOINT_SIGN_UP = "$BASE_URL_LOGIN/SignUp"
+    const val ENDPOINT_RESET_PASSWORD = "$BASE_URL_LOGIN/Login/ResetPassword"
+    const val ENDPOINT_RESET_PASSWORD_GET_CODE = "$BASE_URL_LOGIN/Login/ResetEmailPasswordCode"
+    const val ENDPOINT_RESET_PASSWORD_SUBMIT_CODE = "$BASE_URL_LOGIN/Login/ResetPasswordCode"
+    const val ENDPOINT_CHANGE_PASSWORD = "$BASE_URL/api/ChangePassword"
 
 
     /**

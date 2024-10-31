@@ -40,7 +40,7 @@ class TemplateApp : Application(), HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        //
+
         component = DaggerAppComponent.builder()
             .application(this)
             .context(this)

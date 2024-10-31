@@ -98,9 +98,9 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
     private fun confirmSecureCode() {
         val code = code.getValueOrEmpty()
         if (code.length >= SECURE_CODE_SIZE) {
-           // makeRx(loginManager.sendResetPasswordCode(email.getValueOrEmpty(), code)) {
+            makeRx(loginManager.sendResetPasswordCode(email.getValueOrEmpty(), code)) {
                 currentState.setValue(State.SAVE_NEW_PASSWORD)
-           // }
+            }
         } else {
             showMessage(R.string.invalid_value)
         }
