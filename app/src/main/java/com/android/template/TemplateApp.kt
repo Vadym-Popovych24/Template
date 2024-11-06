@@ -3,11 +3,13 @@ package com.android.template
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.di.component.AppComponent
 import com.android.template.di.component.DaggerAppComponent
 import com.android.template.ui.login.LoginActivity
+import com.android.template.utils.interceptors.AuthDataInterceptor
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor
-import com.android.template.utils.interceptors.RefreshTokenInterceptor
+import com.android.template.utils.interceptors.TokenAuthenticator
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.gsonparserfactory.GsonParserFactory
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
@@ -31,6 +33,9 @@ class TemplateApp : Application(), HasAndroidInjector {
     @Inject
     lateinit var gson: Gson
 
+    @Inject
+    lateinit var preferences: PreferencesHelper
+
     init {
         appContext = this
     }
@@ -50,11 +55,12 @@ class TemplateApp : Application(), HasAndroidInjector {
 
         val okHttpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(RefreshTokenInterceptor() {
-              //  moveToLogin()
+            .authenticator(TokenAuthenticator(preferences) {
+                moveToLogin()
             })
             .addInterceptor(ErrorHandlerInterceptor())
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+            .addInterceptor(AuthDataInterceptor(preferences))
             .build()
 
         AppCenter.start(this, "1bf327aa-96f7-4b4a-b896-f0784b76f684",

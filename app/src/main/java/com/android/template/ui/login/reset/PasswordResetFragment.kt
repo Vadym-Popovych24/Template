@@ -2,6 +2,7 @@ package com.android.template.ui.login.reset
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.android.template.R
 import com.android.template.databinding.FragmentResetPasswordBinding
 import com.android.template.ui.base.BaseFragment
@@ -30,6 +31,19 @@ class PasswordResetFragment :
     }
 
     private fun subscribeToObservableFields() {
+
+        viewModel.emailVisibilityCallback = {
+            binding.includeEmail.containerEnterEmail.isVisible = it
+        }
+
+        viewModel.codeVisibilityCallback = {
+            binding.includeConfirmCode.containerEnterCode.isVisible = it
+        }
+
+        viewModel.passwordVisibilityCallback = {
+            binding.includePassword.containerEnterPassword.isVisible = it
+        }
+
         viewModel.resetPasswordFinishedCallback = {
             requireActivity().finish()
             hideKeyboard()
@@ -68,10 +82,10 @@ class PasswordResetFragment :
         }
 
         binding.includeEmail.inputEmail.setOnActionDoneCallbackWithPreValidation(viewModel.emailFormValidator) {
-            viewModel.action()
+            viewModel.requestSecureCode(binding.includeEmail.inputEmail.text.toString())
         }
         binding.includeEmail.btnConfirmEmail.setOnClickListenerWithPreValidation(viewModel.emailFormValidator) {
-            viewModel.action()
+            viewModel.requestSecureCode(binding.includeEmail.inputEmail.text.toString())
         }
         binding.includeConfirmCode.btnConfirmCode.setOnClickListener {
             validateOtpCode(binding.includeConfirmCode.codeView.text.toString())
@@ -89,11 +103,21 @@ class PasswordResetFragment :
         }
 
         binding.includePassword.inputConfirmPassword.setOnActionDoneCallbackWithPreValidation(viewModel.passwordFormValidator) {
-            viewModel.action()
+            viewModel.saveNewPassword(
+                email = binding.includeEmail.inputEmail.text.toString(),
+                code = binding.includeConfirmCode.codeView.text.toString(),
+                password = binding.includePassword.inputPassword.text.toString()
+            )
         }
         binding.includePassword.btnLogin.setOnClickListenerWithPreValidation(viewModel.passwordFormValidator) {
-            viewModel.action()
+            viewModel.saveNewPassword(
+                email = binding.includeEmail.inputEmail.text.toString(),
+                code = binding.includeConfirmCode.codeView.text.toString(),
+                password = binding.includePassword.inputPassword.text.toString()
+            )
         }
+
+        viewModel.currentState.value = State.SEND_CODE_TO_EMAIL
     }
 
     private fun showSendAgainButton() =
@@ -156,7 +180,10 @@ class PasswordResetFragment :
 
     private fun validateOtpCode(otpCode: String?) {
         if (otpCode?.length == CODE_LENGTH) {
-            viewModel.action()
+            viewModel.confirmSecureCode(
+                email = binding.includeEmail.inputEmail.text.toString(),
+                code = binding.includeConfirmCode.codeView.text.toString()
+            )
         } else {
             showToast(R.string.verification_code_rule)
         }

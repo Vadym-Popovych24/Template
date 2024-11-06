@@ -88,8 +88,7 @@
                         android:inputType="textEmailAddress"
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
-                        android:singleLine="true"
-                        android:text="@={viewModel.email}" />
+                        android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,8 +110,7 @@
                         android:inputType="textPassword"
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
-                        android:singleLine="true"
-                        android:text="@={viewModel.password}" />
+                        android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

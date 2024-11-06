@@ -2,6 +2,7 @@ package com.android.template.ui.login
 
 import android.os.Bundle
 import android.view.View
+import com.android.template.BuildConfig
 import com.android.template.R
 import com.android.template.databinding.FragmentLoginBinding
 import com.android.template.ui.base.BaseFragment
@@ -13,6 +14,7 @@ import com.android.template.utils.isEmail
 import com.android.template.utils.isValidPassword
 import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
 import com.android.template.utils.setOnClickListenerWithPreValidation
+import com.android.template.utils.toEditable
 import com.rule.validator.formvalidator.Validator
 import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
 import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
@@ -24,15 +26,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         subscribeToObservableFields()
         setupValidations()
         bindViews()
-
     }
 
     private fun bindViews() {
 
+        if (BuildConfig.DEBUG) {
+            binding.inputEmail.text = "vadympopovychn24@gmail.com".toEditable()
+            binding.inputPassword.text = "1234567qQ".toEditable()
+        }
+
         binding.inputPassword.setOnActionDoneCallbackWithPreValidation(viewModel.formValidator) {
-            viewModel.login {
-                moveToMainActivity()
-            }
+            login()
         }
 
         binding.tvSignUp.setOnClickListener {
@@ -44,9 +48,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
 
         binding.btnSignIn.setOnClickListenerWithPreValidation(viewModel.formValidator) {
-            viewModel.login {
-                moveToMainActivity()
-            }
+            login()
+        }
+
+    }
+
+    private fun login() {
+        viewModel.login(
+            username = binding.inputEmail.text.toString(),
+            password = binding.inputPassword.text.toString()
+        ) {
+            moveToMainActivity()
         }
     }
 

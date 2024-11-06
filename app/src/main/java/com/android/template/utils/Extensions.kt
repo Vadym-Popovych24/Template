@@ -374,3 +374,5 @@ fun EditText.setOnActionDoneCallbackWithPreValidation(formValidator: FormValidat
         }
         false
     }
+
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

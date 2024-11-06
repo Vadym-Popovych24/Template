@@ -28,6 +28,13 @@ class LoginRepositoryImpl @Inject constructor(
         preferences.getEmail() ?: ""
     }
 
+    override fun signUp(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String
+    ): Completable = loginWebservice.signUp(firstName, lastName, email, password).saveAuthData()
+
     override fun requestResetPasswordCode(email: String): Completable =
         loginWebservice.requestResetPasswordCode(email)
 
@@ -41,12 +48,8 @@ class LoginRepositoryImpl @Inject constructor(
         loginWebservice.loginApiCall(username, password).saveAuthData()
 
     private fun Single<LoginResponse>.saveAuthData() = flatMap { response ->
-        response.getToken()?.let { token -> preferences.setToken(token) }
-        response.getRefreshToken()
-            ?.let { refreshToken -> preferences.setRefreshToken(refreshToken) }
-        response.getValidityPeriod()
-            ?.let { validityPeriod -> preferences.setValidityPeriod(validityPeriod) }
-        preferences.setValidityStart(System.currentTimeMillis())
+        preferences.setToken(response.accessToken)
+        preferences.setRefreshToken(response.refreshToken)
 
         initUUID()
 
@@ -54,10 +57,10 @@ class LoginRepositoryImpl @Inject constructor(
             DeviceLoginRequest(
                 preferences.getUUID(),
                 preferences.getFCMToken()
-            ), response.getToken().toString()
+            ), response.accessToken
         ).andThen(Single.just(response))
     }.flatMapCompletable {
-        val jwt = it.getToken().toString().substring("Bearer ".length)
+        val jwt = it.accessToken.substring("Bearer ".length)
         decodeAndSave(jwt)
     }
 

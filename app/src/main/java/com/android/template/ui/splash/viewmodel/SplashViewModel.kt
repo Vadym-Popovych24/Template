@@ -13,8 +13,6 @@ class SplashViewModel @Inject constructor(private val mPreferencesHelper: Prefer
         when {
             !mPreferencesHelper.getToken().isNullOrEmpty() ->
                 loggedInMode.set(LoggedInMode.LOGGED_IN_MODE_SERVER.getType())
-            mPreferencesHelper.getCurrentWorkspaceId() > 0 ->
-                loggedInMode.set(LoggedInMode.LOGGED_IN_MODE_SERVER_WITH_SELECTED_WORKSPACE_ID.getType())
             else -> loggedInMode.set(LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType())
         }
     }

@@ -13,12 +13,6 @@ interface PreferencesHelper {
     fun getRefreshToken(): String?
     fun setRefreshToken(refreshToken: String?)
 
-    fun getValidityPeriod(): Int
-    fun setValidityPeriod(minutes: Int)
-
-    fun getValidityStart(): Long
-    fun setValidityStart(tokenCreated: Long)
-
     fun setFCMToken(token: String)
     fun getFCMToken(): String
 
@@ -27,9 +21,6 @@ interface PreferencesHelper {
 
     fun setMainNotificationChannelId(id: String)
     fun getMainNotificationChannelId(): String
-
-    fun getCurrentWorkspaceId(): Int
-    fun setCurrentWorkspaceId(workspaceId: Int)
 
     fun getUserName(): String?
     fun setUserName(userName: String?)

@@ -2,13 +2,11 @@ package com.android.template.ui.login.reset.viewmodel
 
 import android.util.Log
 import androidx.annotation.StringRes
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.android.template.R
 import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
-import com.android.template.utils.getValueOrEmpty
 import com.android.template.utils.helpers.SECOND
 import com.rule.validator.formvalidator.FormValidator
 import javax.inject.Inject
@@ -16,17 +14,11 @@ import javax.inject.Inject
 class PasswordResetViewModel @Inject constructor(private val loginManager: LoginManager) :
     BaseViewModel() {
 
-
-    val email = ObservableField<String>()
-    val emailVisible = ObservableBoolean()
+    var emailVisibilityCallback: ((Boolean) -> Unit)? = null
+    var codeVisibilityCallback: ((Boolean) -> Unit)? = null
+    var passwordVisibilityCallback: ((Boolean) -> Unit)? = null
 
     val code = ObservableField<String>()
-    val codeVisible = ObservableBoolean()
-
-    val passwordFieldsVisible = ObservableBoolean()
-    val password = ObservableField<String>()
-
-    val confirmPassword = ObservableField<String>()
 
     var actionCallback: (() -> Unit)? = null
     var resetPasswordFinishedCallback: (() -> Unit)? = null
@@ -46,22 +38,22 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
             actionCallback?.invoke()
             when (value) {
                 State.SEND_CODE_TO_EMAIL -> {
-                    codeVisible.set(false)
-                    passwordFieldsVisible.set(false)
-                    emailVisible.set(true)
+                    emailVisibilityCallback?.invoke(true)
+                    codeVisibilityCallback?.invoke(false)
+                    passwordVisibilityCallback?.invoke(false)
                 }
                 State.RESET_PASSWORD -> {
-                    codeVisible.set(true)
-                    passwordFieldsVisible.set(false)
-                    emailVisible.set(false)
+                    emailVisibilityCallback?.invoke(false)
+                    codeVisibilityCallback?.invoke(true)
+                    passwordVisibilityCallback?.invoke(false)
                 }
                 State.SAVE_NEW_PASSWORD -> {
-                    codeVisible.set(false)
-                    passwordFieldsVisible.set(true)
-                    emailVisible.set(false)
+                    emailVisibilityCallback?.invoke(false)
+                    codeVisibilityCallback?.invoke(false)
+                    passwordVisibilityCallback?.invoke(true)
                 }
                 else -> {
-                    Log.i("currentState", "else case")
+                    Log.i("currentState reset password", "else case")
                 }
             }
         }
@@ -76,29 +68,16 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
         //makeRx(loginManager.requestResetPasswordCode(email.getValueOrEmpty()), callback)
     }
 
-    fun action() {
-        when (currentState.value) {
-            State.SEND_CODE_TO_EMAIL -> requestSecureCode()
-            State.RESET_PASSWORD -> confirmSecureCode()
-            State.SAVE_NEW_PASSWORD -> saveNewPassword()
-            else -> {
-                Log.i("action", "else case")
-            }
-        }
-    }
-
-    private fun requestSecureCode() {
-
+    fun requestSecureCode(email: String) {
            // makeRx(loginManager.requestResetPasswordCode(email)) {
                 currentState.value = State.RESET_PASSWORD
           //  }
 
     }
 
-    private fun confirmSecureCode() {
-        val code = code.getValueOrEmpty()
+    fun confirmSecureCode(email: String, code: String) {
         if (code.length >= SECURE_CODE_SIZE) {
-            makeRx(loginManager.sendResetPasswordCode(email.getValueOrEmpty(), code)) {
+            makeRx(loginManager.sendResetPasswordCode(email, code)) {
                 currentState.setValue(State.SAVE_NEW_PASSWORD)
             }
         } else {
@@ -106,7 +85,7 @@ class PasswordResetViewModel @Inject constructor(private val loginManager: Login
         }
     }
 
-    private fun saveNewPassword() {
+    fun saveNewPassword(email: String, code: String, password: String) {
             /*makeRx(
                 loginManager.resetPassword(
                     email.getValueOrEmpty(),

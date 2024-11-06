@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.android.template.data.local.TemplateDatabase
 import com.android.template.data.prefs.AppPreferencesHelper
 import com.android.template.data.prefs.PreferencesHelper
-import com.android.template.data.remote.impl.Authenticator
 import com.android.template.di.qualifiers.PreferenceInfo
 import com.android.template.utils.AppConstants
 import com.android.template.utils.Connectivity
 import com.android.template.utils.ViewModelProviderFactory
+import com.android.template.utils.interceptors.AuthDataInterceptor
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,13 +29,11 @@ import javax.inject.Singleton
 class GeneralModule {
     @Provides
     @Singleton
-    fun provideHttpClientWithBasicLogger(): OkHttpClient = OkHttpClient()
-        .newBuilder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
-        .readTimeout(10, TimeUnit.SECONDS)
-        .writeTimeout(10, TimeUnit.SECONDS)
-        .connectTimeout(10, TimeUnit.SECONDS)
-        .build()
+    fun provideHttpClientWithBasicLogger(preferences: PreferencesHelper): OkHttpClient =
+        OkHttpClient().newBuilder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+            .addInterceptor(AuthDataInterceptor(preferences)).readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS).build()
 
     @Provides
     @Singleton
@@ -55,10 +53,6 @@ class GeneralModule {
         Log.d("myLogs", "Context = " + context::class.java.name)
         return TemplateDatabase.getInstance(context)
     }
-
-    @Provides
-    @Singleton
-    fun provideAuthenticator(preferences: PreferencesHelper) = Authenticator(preferences)
 
     @Provides
     @Singleton

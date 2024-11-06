@@ -5,8 +5,6 @@ import android.content.SharedPreferences
 import com.android.template.TemplateApp
 import com.android.template.data.models.enums.Language
 import com.android.template.di.qualifiers.PreferenceInfo
-import com.android.template.data.prefs.KeyStoreKeyGenerator
-import com.android.template.data.prefs.PreferencesHelper
 import javax.inject.Inject
 
 class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: String) :
@@ -15,8 +13,6 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
     private val prefName: String = prefFileName
     private val PREF_KEY_TOKEN = "PREF_KEY_TOKEN"
     private val PREF_KEY_REFRESH_TOKEN = "PREF_KEY_REFRESH_TOKEN"
-    private val PREF_KEY_VALIDITY_PERIOD = "PREF_KEY_VALIDITY_PERIOD"
-    private val PREF_KEY_VALIDITY_START = "PREF_KEY_VALIDITY_START"
     private val PREF_KEY_CURRENT_WORKSPACE_ID = "PREF_KEY_CURRENT_WORKSPACE_ID"
     private val PREF_KEY_USER_NAME = "PREF_KEY_USER_NAME"
     private val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"
@@ -65,24 +61,6 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
 
     override fun setRefreshToken(refreshToken: String?) {
         preferences.edit().putString(PREF_KEY_REFRESH_TOKEN, refreshToken).apply()
-    }
-
-    override fun getValidityPeriod(): Int = preferences.getInt(PREF_KEY_VALIDITY_PERIOD, 0)
-
-    override fun setValidityPeriod(minutes: Int) =
-        preferences.edit().putInt(PREF_KEY_VALIDITY_PERIOD, minutes).apply()
-
-    override fun getValidityStart(): Long = preferences.getLong(PREF_KEY_VALIDITY_START, 0)
-
-    override fun setValidityStart(tokenCreated: Long) =
-        preferences.edit().putLong(PREF_KEY_VALIDITY_START, tokenCreated).apply()
-
-    override fun getCurrentWorkspaceId(): Int {
-        return preferences.getInt(PREF_KEY_CURRENT_WORKSPACE_ID, 0)
-    }
-
-    override fun setCurrentWorkspaceId(workspaceId: Int) {
-        preferences.edit().putInt(PREF_KEY_CURRENT_WORKSPACE_ID, workspaceId).apply()
     }
 
     override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {

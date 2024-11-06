@@ -8,6 +8,8 @@ import io.reactivex.Single
 interface LoginWebservice {
     fun loginApiCall(username: String, password: String): Single<LoginResponse>
 
+    fun signUp(firstName: String, lastName: String, email: String, password: String): Single<LoginResponse>
+
     fun loginDevice(request: DeviceLoginRequest, token: String): Completable
 
     fun requestResetPasswordCode(email: String): Completable

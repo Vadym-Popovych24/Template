@@ -1,20 +1,12 @@
 package com.android.template.ui.login.viewmodel
 
-import androidx.databinding.ObservableField
+import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
 import com.rule.validator.formvalidator.FormValidator
-import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor() : BaseViewModel() {
-    val email = ObservableField<String>()
-    val password = ObservableField<String>()
-
-    init {
-        email.set("vadympopovychn24@gmail.com")
-        password.set("1234567qQ")
-    }
+class LoginViewModel @Inject constructor(private val loginManager: LoginManager) : BaseViewModel() {
 
     val formValidator = FormValidator(null)
 
@@ -23,11 +15,9 @@ class LoginViewModel @Inject constructor() : BaseViewModel() {
         formValidator.clear()
     }
 
-    fun login(completableCallback: ((String) -> Unit)) {
+    fun login(username: String, password: String, completableCallback: (() -> Unit)) {
         // Implement sign in
-        makeRx(Single.just("Login successfully").map {
-            it
-        }.delay(2, TimeUnit.SECONDS), completableCallback)
+        makeRx(loginManager.auth(username, password).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
 }

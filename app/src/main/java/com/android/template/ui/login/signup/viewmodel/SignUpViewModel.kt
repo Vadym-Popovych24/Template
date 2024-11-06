@@ -2,15 +2,14 @@ package com.android.template.ui.login.signup.viewmodel
 
 import androidx.databinding.ObservableField
 import com.android.template.data.models.exception.SignUpException
+import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
 import com.android.template.utils.getStringFromResource
 import com.rule.validator.formvalidator.FormValidator
-import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor() :
-    BaseViewModel() {
+class SignUpViewModel @Inject constructor(private val loginManager: LoginManager) : BaseViewModel() {
 
     val firstName = ObservableField<String>()
     val lastName = ObservableField<String>()
@@ -27,11 +26,14 @@ class SignUpViewModel @Inject constructor() :
         formValidator.clear()
     }
 
-    fun signUp(completableCallback: ((String) -> Unit)) {
+    fun signUp(firstName: String, lastName: String, email: String, password: String, completableCallback: (() -> Unit)) {
         // Implement sign up
-        makeRx(Single.just("Registered successfully").map {
-            it
-        }.delay(2, TimeUnit.SECONDS), completableCallback)
+        makeRx(loginManager.signUp(
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            password = password,
+        ).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
     override fun handleError(it: Throwable) {

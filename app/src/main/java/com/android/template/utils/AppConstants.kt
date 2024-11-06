@@ -17,7 +17,6 @@ object AppConstants {
     /**
      * Login
      */
-    const val SCOPE_LOGIN = "openid offline_access email phone profile template_api"
     const val CLIENT_ID = ""
     const val CLIENT_SECRET = ""
     const val GRANT_TYPE_HEADER = "grant_type"

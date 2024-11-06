@@ -12,6 +12,13 @@ class LoginManagerImpl @Inject constructor(private val loginRepository: LoginRep
     override fun auth(username: String, password: String): Completable =
             loginRepository.auth(username, password)
 
+    override fun signUp(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String
+    ): Completable = loginRepository.signUp(firstName, lastName, email, password)
+
     override fun getCachedEmail(): Single<String> =
         loginRepository.getCachedEmail()
 

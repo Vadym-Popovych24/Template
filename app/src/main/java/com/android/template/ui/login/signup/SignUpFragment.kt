@@ -33,17 +33,24 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
         binding.toolbar.initUpNavigation()
 
         binding.inputConfirmPassword.setOnActionDoneCallbackWithPreValidation(viewModel.formValidator) {
-            viewModel.signUp {
-                viewModel.signUpFinishedCallback?.invoke()
-            }
+            signUp()
         }
 
         binding.btnSignup.setOnClickListenerWithPreValidation(viewModel.formValidator) {
-            viewModel.signUp {
-                viewModel.signUpFinishedCallback?.invoke()
-            }
+            signUp()
         }
 
+    }
+
+    private fun signUp() {
+        viewModel.signUp(
+            firstName = binding.inputFirstName.text.toString(),
+            lastName = binding.inputLastName.text.toString(),
+            email = binding.inputEmail.text.toString(),
+            password = binding.inputPassword.text.toString()
+        ) {
+            viewModel.signUpFinishedCallback?.invoke()
+        }
     }
 
     private fun subscribeToObservableFields() {
