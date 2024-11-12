@@ -40,11 +40,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
 
         binding.tvSignUp.setOnClickListener {
-            navController.navigate(R.id.signUpFragment)
+            navController.navigate(R.id.navigationSignUp)
         }
 
         binding.tvForgotPassword.setOnClickListener {
-            navController.navigate(R.id.resetPasswordFragment)
+            navController.navigate(R.id.navigationResetEmail)
         }
 
         binding.btnSignIn.setOnClickListenerWithPreValidation(viewModel.formValidator) {

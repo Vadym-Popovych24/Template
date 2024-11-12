@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/navigationProfile"
         android:name="com.android.template.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
@@ -26,19 +26,19 @@
 
 
     <fragment
-        android:id="@+id/changeAvatarFragment"
+        android:id="@+id/navigationChangeAvatar"
         android:name="com.android.template.ui.profile.avatar.ChangeAvatarFragment"
         android:label="ChangeAvatarFragment"
         tools:layout="@layout/fragment_change_avatar" />
 
     <fragment
-        android:id="@+id/profileSettings"
+        android:id="@+id/navigationProfileSettings"
         android:name="com.android.template.ui.settings.profile.ProfileSettingsFragment"
         android:label="ProfileSettingsFragment"
         tools:layout="@layout/fragment_profile_settings" />
 
     <fragment
-        android:id="@+id/changePasswordSettings"
+        android:id="@+id/navigationChangePasswordSettings"
         android:name="com.android.template.ui.settings.password.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_passwords" />
@@ -100,7 +100,7 @@
     <fragment
         android:id="@+id/navigationMenuCompose"
         android:name="com.android.template.ui.compose.ComposeFragment"
-        android:label="ComposeActivityt"
+        android:label="ComposeActivity"
         tools:layout="@layout/fragment_compose"/>
 
 </navigation>

@@ -41,8 +41,8 @@
                 android:layout_marginEnd="@dimen/xlarge_padding">
 
                 <include
-                    android:id="@+id/include_password"
-                    layout="@layout/reset_password_enter_password" />
+                    android:id="@+id/include_confirm_code"
+                    layout="@layout/reset_password_enter_code" />
 
             </FrameLayout>
 

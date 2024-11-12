@@ -3,23 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/navigationLogin">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/navigationLogin"
         android:name="com.android.template.ui.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login" />
 
     <fragment
-        android:id="@+id/signUpFragment"
+        android:id="@+id/navigationSignUp"
         android:name="com.android.template.ui.login.signup.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"/>
+        tools:layout="@layout/fragment_sign_up" />
 
     <fragment
-        android:id="@+id/resetPasswordFragment"
-        android:name="com.android.template.ui.login.reset.PasswordResetFragment"
-        android:label="PasswordResetFragment"
-        tools:layout="@layout/fragment_reset_password"/>
+        android:id="@+id/navigationResetEmail"
+        android:name="com.android.template.ui.login.reset.ResetEmailFragment"
+        android:label="ResetEmailFragment"
+        tools:layout="@layout/fragment_reset_email">
+
+        <action
+            android:id="@+id/actionFromRestEmailToConfirmationCode"
+            app:destination="@id/navigationResetConfirmationCode">
+            <argument
+                android:name="email"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationResetConfirmationCode"
+        android:name="com.android.template.ui.login.reset.ResetConfirmationCodeFragment"
+        android:label="ResetConfirmationCodeFragment"
+        tools:layout="@layout/fragment_reset_confirmation_code">
+        <argument
+            android:name="email"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/actionFromConfirmationCodeToResetPassword"
+            app:destination="@id/navigationResetPassword">
+            <argument
+                android:name="email"
+                app:argType="string" />
+            <argument
+                android:name="code"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationResetPassword"
+        android:name="com.android.template.ui.login.reset.ResetPasswordFragment"
+        android:label="ResetPasswordFragment"
+        tools:layout="@layout/fragment_reset_password">
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="code"
+            app:argType="string" />
+
+    </fragment>
 </navigation>

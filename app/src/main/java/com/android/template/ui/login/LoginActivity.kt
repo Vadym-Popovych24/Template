@@ -21,7 +21,7 @@ class LoginActivity : DaggerAppCompatActivity() {
 
         if (savedInstanceState == null) {
             navController.navigate(
-                R.id.loginFragment,
+                R.id.navigationLogin,
                 LoginFragment.initArgs(ACTION_REFRESH_TOKEN.equals(intent?.action))
             )
         }
