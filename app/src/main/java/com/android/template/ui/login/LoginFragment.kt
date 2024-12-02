@@ -7,7 +7,6 @@ import com.android.template.R
 import com.android.template.databinding.FragmentLoginBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.viewmodel.LoginViewModel
-import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.utils.BindingUtils
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.isEmail
@@ -32,7 +31,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
         if (BuildConfig.DEBUG) {
             binding.inputEmail.text = "vadympopovychn24@gmail.com".toEditable()
-            binding.inputPassword.text = "1234567qQ".toEditable()
+            binding.inputPassword.text = "Test12".toEditable()
         }
 
         binding.inputPassword.setOnActionDoneCallbackWithPreValidation(viewModel.formValidator) {
@@ -62,24 +61,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
-
     private fun subscribeToObservableFields() {
         viewModel.loadingCallback = { loading ->
             BindingUtils.loadingCircularProgressButton(binding.btnSignIn, loading)
         }
     }
-
-    private fun moveToMainActivity() {
-
-        if (!onlyForRefreshToken()) {
-            hideKeyboard()
-            moveToActivity(NavigationActivity.newIntent(requireContext()))
-        }
-        requireActivity().finish()
-    }
-
-    private fun onlyForRefreshToken(): Boolean =
-        arguments?.getBoolean(EXTRA_ONLY_REFRESH_TOKEN, false) == true
 
     private fun setupValidations() {
         viewModel.formValidator.apply {
@@ -108,14 +94,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                         .build(), ValidationStyle.ON_FOCUS_LOST
                 )
             )
-        }
-    }
-
-    companion object {
-        private const val EXTRA_ONLY_REFRESH_TOKEN = "extra_only_refresh_token"
-
-        fun initArgs(onlyRefreshToken: Boolean) = Bundle().apply {
-            putBoolean(EXTRA_ONLY_REFRESH_TOKEN, onlyRefreshToken)
         }
     }
 }

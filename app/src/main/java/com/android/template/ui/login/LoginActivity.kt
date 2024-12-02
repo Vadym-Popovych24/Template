@@ -21,22 +21,16 @@ class LoginActivity : DaggerAppCompatActivity() {
 
         if (savedInstanceState == null) {
             navController.navigate(
-                R.id.navigationLogin,
-                LoginFragment.initArgs(ACTION_REFRESH_TOKEN.equals(intent?.action))
+                R.id.navigationLogin
             )
         }
     }
 
     companion object {
 
-        private const val ACTION_REFRESH_TOKEN = "ACTION_REFRESH_TOKEN"
-
         fun newIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
-
-        fun newIntentToRefreshToken(context: Context) =
-            newIntent(context).apply { action = ACTION_REFRESH_TOKEN }
 
     }
 }

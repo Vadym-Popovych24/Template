@@ -18,7 +18,9 @@ import javax.inject.Singleton
         ManagerModule::class,
         RepositoryModule::class,
         WebServiceModule::class,
-        StorageModule::class]
+        StorageModule::class,
+        ApiModule::class
+    ]
 )
 interface AppComponent {
     fun inject(app: TemplateApp)

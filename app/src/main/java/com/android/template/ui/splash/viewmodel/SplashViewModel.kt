@@ -11,7 +11,7 @@ class SplashViewModel @Inject constructor(private val mPreferencesHelper: Prefer
 
     internal fun decideNextActivity() {
         when {
-            !mPreferencesHelper.getToken().isNullOrEmpty() ->
+            !mPreferencesHelper.getRequestToken().isNullOrEmpty() ->
                 loggedInMode.set(LoggedInMode.LOGGED_IN_MODE_SERVER.getType())
             else -> loggedInMode.set(LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType())
         }

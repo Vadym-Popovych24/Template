@@ -19,9 +19,8 @@ class ResetConfirmationCodeViewModel @Inject constructor(private val loginManage
         }
     }
 
-    fun resendCode(callback: () -> Unit) {
-        callback.invoke()
-        //makeRx(loginManager.requestResetPasswordCode(email.getValueOrEmpty()), callback)
+    fun resendCode(email: String, callback: () -> Unit) {
+        makeRx(loginManager.requestResetPasswordCode(email), callback)
     }
 
     companion object {

@@ -3,13 +3,12 @@ package com.android.template.utils.interceptors
 import android.util.Log
 import com.android.template.data.models.api.response.LoginResponse
 import com.android.template.data.prefs.PreferencesHelper
-import com.android.template.utils.AppConstants
-import com.androidnetworking.error.ANError
-import com.rx2androidnetworking.Rx2AndroidNetworking
+import com.android.template.data.remote.api.ApiEndpoints
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import retrofit2.HttpException
 
 class TokenAuthenticator constructor(
     private val preferences: PreferencesHelper,
@@ -37,27 +36,21 @@ class TokenAuthenticator constructor(
     }
 
     private fun refreshToken(refreshToken: String): String {
-        return Rx2AndroidNetworking.post(AppConstants.ENDPOINT_SERVER_LOGIN)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
-            .addBodyParameter("refresh_token", refreshToken)
-            .addBodyParameter("grant_type", AppConstants.GRANT_REFRESH_TOKEN)
-            .addBodyParameter("client_id", AppConstants.CLIENT_ID)
-            .addBodyParameter("client_secret", AppConstants.CLIENT_SECRET)
-            .build()
-            .getObjectSingle(LoginResponse::class.java)
+        return ""
+        /* TODO Here you can implement API request - fun refreshLogin(): Single<LoginResponse>
             .map { loginResponse ->
                 preferences.setToken(loginResponse.accessToken)
                 preferences.setRefreshToken(loginResponse.refreshToken)
-
                 loginResponse.accessToken
             }
             .onErrorReturn { error ->
-                if (error is ANError && error.errorBody.contains("invalid_grant")) {
+                if (error is HttpException && error.message.contains("invalid_grant")) {
                     ""
                 } else {
                     throw error
                 }
             }
             .blockingGet()
+    }*/
     }
 }

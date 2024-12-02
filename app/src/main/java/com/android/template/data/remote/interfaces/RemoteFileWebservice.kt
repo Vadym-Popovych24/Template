@@ -1,7 +1,6 @@
 package com.android.template.data.remote.interfaces
 
-
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 interface RemoteFileWebservice {
 

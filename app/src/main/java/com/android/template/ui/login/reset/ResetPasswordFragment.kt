@@ -7,7 +7,6 @@ import com.android.template.R
 import com.android.template.databinding.FragmentResetPasswordBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.reset.viewmodel.ResetPasswordViewModel
-import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.isValidPassword
 import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
@@ -22,22 +21,8 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding, ResetPa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeToObservableFields()
         setupValidations()
         bindViews()
-    }
-
-    private fun subscribeToObservableFields() {
-
-        viewModel.resetPasswordFinishedCallback = {
-            requireActivity().finish()
-            hideKeyboard()
-            moveToActivity(NavigationActivity.newIntent(requireContext()))
-        }
-
-        viewModel.actionCallback = {
-            hideKeyboard()
-        }
     }
 
     private fun bindViews() {
@@ -56,7 +41,9 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding, ResetPa
             email = args.email,
             code = args.code,
             password = binding.includePassword.inputPassword.text.toString()
-        )
+        ) {
+            moveToMainActivity()
+        }
     }
 
     private fun setupValidations() {

@@ -2,17 +2,22 @@ package com.android.template.data.repository.impl
 
 import android.util.Base64
 import android.util.Log
+import com.android.template.data.local.interfaces.ProfileStorage
+import com.android.template.data.models.api.model.SignUpProfileData
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.android.template.data.models.api.model.UserModel
-import com.android.template.data.models.api.request.DeviceLoginRequest
 import com.android.template.data.models.api.response.LoginResponse
+import com.android.template.data.models.api.response.RequestKeyResponse
+import com.android.template.data.models.db.ProfileEntity
+import com.android.template.data.models.exception.SignInException
+import com.android.template.data.models.exception.UserAlreadyExistException
 import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.LoginWebservice
 import com.android.template.data.remote.interfaces.ProfileWebservice
 import com.android.template.data.repository.interfaces.LoginRepository
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import java.io.UnsupportedEncodingException
 import java.util.*
 import javax.inject.Inject
@@ -21,13 +26,78 @@ import kotlin.jvm.Throws
 class LoginRepositoryImpl @Inject constructor(
     private val loginWebservice: LoginWebservice,
     private val profileWebservice: ProfileWebservice,
-    private val preferences: PreferencesHelper
+    private val preferences: PreferencesHelper,
+    private val profileStorage: ProfileStorage
 ) : BaseRepositoryImpl(), LoginRepository {
 
-    override fun getCachedEmail(): Single<String> = Single.just(preferences).map {
-        preferences.getEmail() ?: ""
+    override fun requestToken(email: String): Single<RequestKeyResponse> =
+        profileStorage.getProfileByEmailIgnoreEmpty(email)
+            .flatMap { profileEntity ->
+                if (profileEntity.email == email) {
+                    Single.error(UserAlreadyExistException())
+                } else {
+                    loginWebservice.requestToken()
+                }
+            }
+
+
+    override fun authenticateAccount(
+        requestToken: String, signUpProfileData: SignUpProfileData
+    ): Completable =
+        loginWebservice.approveRequestToken(requestToken)
+            .andThen(loginWebservice.createSession(requestToken)
+                .flatMap { profileWebservice.getAccount(it.sessionId) })
+            .flatMapCompletable { accountResponseWithSession ->
+                Completable.fromAction {
+                    ProfileEntity.mapTo(
+                        requestToken = requestToken,
+                        signUpProfileData = signUpProfileData,
+                        accountWithSession = accountResponseWithSession
+                    ).let { newProfileEntity ->
+                        profileStorage.insertProfile(newProfileEntity)
+                        savePreferences(
+                            requestToken = requestToken,
+                            email = signUpProfileData.email,
+                            userName = "${signUpProfileData.firstName} ${signUpProfileData.lastName}",
+                            avatarPath = accountResponseWithSession.accountResponse.avatar.tmdb.avatarPath
+                        )
+                    }
+                }
+            }
+
+    private fun savePreferences(
+        requestToken: String,
+        email: String,
+        userName: String,
+        avatarPath: String?
+    ) {
+        preferences.setRequestToken(requestToken)
+        preferences.setEmail(email)
+        preferences.setUserName(userName)
+        preferences.setUserAvatar(avatarPath)
     }
 
+    override fun authByDB(email: String, password: String): Completable =
+        profileStorage.getProfileByEmail(email).flatMapCompletable { profileEntity ->
+            if (profileEntity.email == email && profileEntity.password == password) {
+                Completable.fromAction {
+                    savePreferences(
+                        requestToken = profileEntity.requestToken,
+                        email = profileEntity.email,
+                        userName = "${profileEntity.firstName} ${profileEntity.lastName}",
+                        avatarPath = profileEntity.avatarPath
+                    )
+                }
+            } else {
+                Completable.error(SignInException())
+            }
+        }
+
+    // Use for Login by API
+    override fun auth(email: String, password: String): Completable =
+        loginWebservice.loginApiCall(email, password).saveAuthData()
+
+    // Use for Sign Up by API
     override fun signUp(
         firstName: String,
         lastName: String,
@@ -35,30 +105,11 @@ class LoginRepositoryImpl @Inject constructor(
         password: String
     ): Completable = loginWebservice.signUp(firstName, lastName, email, password).saveAuthData()
 
-    override fun requestResetPasswordCode(email: String): Completable =
-        loginWebservice.requestResetPasswordCode(email)
-
-    override fun sendResetPasswordCode(email: String, code: String): Completable =
-        loginWebservice.sendResetPasswordCode(email, code)
-
-    override fun resetPassword(email: String, code: String, password: String): Completable =
-        loginWebservice.resetPassword(email, code, password).saveAuthData()
-
-    override fun auth(username: String, password: String): Completable =
-        loginWebservice.loginApiCall(username, password).saveAuthData()
-
     private fun Single<LoginResponse>.saveAuthData() = flatMap { response ->
         preferences.setToken(response.accessToken)
         preferences.setRefreshToken(response.refreshToken)
-
         initUUID()
-
-        loginWebservice.loginDevice(
-            DeviceLoginRequest(
-                preferences.getUUID(),
-                preferences.getFCMToken()
-            ), response.accessToken
-        ).andThen(Single.just(response))
+        Single.just(response)
     }.flatMapCompletable {
         val jwt = it.accessToken.substring("Bearer ".length)
         decodeAndSave(jwt)
@@ -113,5 +164,14 @@ class LoginRepositoryImpl @Inject constructor(
         val decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE)
         return String(decodedBytes, charset("UTF-8"))
     }
+
+    override fun requestResetPasswordCode(email: String): Completable =
+        loginWebservice.requestResetPasswordCode(email)
+
+    override fun sendResetPasswordCode(email: String, code: String): Completable =
+        loginWebservice.sendResetPasswordCode(email, code)
+
+    override fun resetPassword(email: String, code: String, password: String): Completable =
+        loginWebservice.resetPassword(email, code, password).saveAuthData()
 
 }

@@ -5,8 +5,8 @@ import androidx.room.Relation
 
 class ProfileAndAvatar {
     @Embedded
-    var post: Profile? = null
+    var profileEntity: ProfileEntity? = null
 
     @Relation(parentColumn = "id", entityColumn = "profile_id", entity = ProfileAvatar::class)
-    var postPictures: List<ProfileAvatar>? = null
+    var profilePictures: List<ProfileAvatar>? = null
 }

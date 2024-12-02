@@ -18,19 +18,19 @@ class ChangeAvatarFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeAva
         binding.toolbar.inflateMenu(R.menu.menu_confirm_blue)
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.confirm) {
-                confirmCropAndUploadAvatar()
+             //   confirmCropAndUploadAvatar()
                 return@setOnMenuItemClickListener true
             }
             false
         }
         arguments?.getString(EXTRA_IMAGE_PATH)?.let {
-            binding.cropImageView.loadAsCompletable(Uri.fromFile(File(it)))?.let { completable ->
-                viewModel.makeRx(completable)
-            }
+         //   binding.cropImageView.loadAsCompletable(Uri.fromFile(File(it)))?.let { completable ->
+                TODO( "change to new cropper lib viewModel.makeRx(completable)")
+         //   }
         }
     }
 
-    private fun confirmCropAndUploadAvatar() = binding.cropImageView.cropAsSingle()?.let {
+ /*   private fun confirmCropAndUploadAvatar() = binding.cropImageView.cropAsSingle()?.let {
         val resumeId = arguments?.getString(EXTRA_RESUME_ID)
         if (resumeId.isNullOrEmpty()) {
             viewModel.changeAvatar(it) {
@@ -42,7 +42,7 @@ class ChangeAvatarFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeAva
                 navigateUp()
         //    }
         }
-    }
+    }*/
 
     companion object {
 

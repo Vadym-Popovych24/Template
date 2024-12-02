@@ -14,7 +14,7 @@ import com.android.template.data.models.db.conversation.Attachment
 import com.android.template.data.models.db.conversation.User
 
 @Database(
-    entities = [Profile::class, ProfileAvatar::class, User::class, Attachment::class],
+    entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class],
     version = 5, exportSchema = false
 )
 @TypeConverters(

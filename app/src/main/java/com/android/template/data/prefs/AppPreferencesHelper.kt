@@ -11,9 +11,9 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
     PreferencesHelper {
 
     private val prefName: String = prefFileName
+    private val PREF_KEY_REQUEST_TOKEN = "PREF_KEY_REQUEST_TOKEN"
     private val PREF_KEY_TOKEN = "PREF_KEY_TOKEN"
     private val PREF_KEY_REFRESH_TOKEN = "PREF_KEY_REFRESH_TOKEN"
-    private val PREF_KEY_CURRENT_WORKSPACE_ID = "PREF_KEY_CURRENT_WORKSPACE_ID"
     private val PREF_KEY_USER_NAME = "PREF_KEY_USER_NAME"
     private val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"
     private val PREF_KEY_USER_AVATAR = "PREF_KEY_USER_AVATAR"
@@ -38,17 +38,12 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
         .setSecret(sekrt)
         .createSharedPrefs()
 
-    override fun clearAuthData() = preferences.edit().remove(PREF_KEY_TOKEN)
-        .remove(PREF_KEY_REFRESH_TOKEN)
-        .remove(PREF_KEY_CURRENT_WORKSPACE_ID)
-        .remove(PREF_KEY_USER_AVATAR)
-        .remove(PREF_KEY_EMAIL)
-        .remove(PREF_KEY_IS_PUBLIC)
-        .remove(PREF_KEY_USER_NAME)
-        .remove(PREF_KEY_PROFILE_ID)
-        .remove(PREF_LANGUAGE_CODE)
-        .apply()
+    override fun clearAllPreferences() = preferences.edit().clear().apply()
 
+    override fun getRequestToken(): String? = preferences.getString(PREF_KEY_REQUEST_TOKEN, null)
+
+    override fun setRequestToken(requestToken: String) =
+        preferences.edit().putString(PREF_KEY_REQUEST_TOKEN, requestToken).apply()
 
     override fun getToken() = preferences.getString(PREF_KEY_TOKEN, null)
 

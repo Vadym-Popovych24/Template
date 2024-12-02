@@ -1,6 +1,8 @@
 package com.android.template.ui.login.signup.viewmodel
 
-import androidx.databinding.ObservableField
+import com.android.template.R
+import com.android.template.data.models.api.model.SignUpProfileData
+import com.android.template.data.models.exception.ApproveException
 import com.android.template.data.models.exception.SignUpException
 import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
@@ -11,11 +13,7 @@ import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(private val loginManager: LoginManager) : BaseViewModel() {
 
-    val firstName = ObservableField<String>()
-    val lastName = ObservableField<String>()
-    val email = ObservableField<String>()
-    val password = ObservableField<String>()
-    val confirmPassword = ObservableField<String>()
+    var requestToken: String? = null
 
     var signUpFinishedCallback: (() -> Unit)? = null
 
@@ -26,13 +24,44 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
         formValidator.clear()
     }
 
+    fun requestToken(email: String, completableCallback: ((String) -> Unit)) {
+        makeRx(loginManager.requestToken(email)) {
+            if (it.success) {
+                requestToken = it.requestToken
+                completableCallback.invoke(it.requestToken)
+            } else {
+                showMessage(R.string.failed_request_token)
+            }
+        }
+    }
+
+    fun approveToken(
+        requestToken: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String
+    ) {
+        makeRx(
+            loginManager.authenticateAccount(
+                requestToken = requestToken,
+                signUpProfileData = SignUpProfileData(
+                    firstName = firstName,
+                    lastName = lastName,
+                    email = email,
+                    password = password
+                )
+            ), signUpFinishedCallback
+        )
+    }
+
     fun signUp(firstName: String, lastName: String, email: String, password: String, completableCallback: (() -> Unit)) {
         // Implement sign up
         makeRx(loginManager.signUp(
             firstName = firstName,
             lastName = lastName,
             email = email,
-            password = password,
+            password = password
         ).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
@@ -42,6 +71,8 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
                 val errorMessage = it.errorMessage.getStringFromResource
                 showMessage(errorMessage)
             }
+        } else if (it is ApproveException) {
+            showMessage(R.string.request_token_not_approved)
         } else super.handleError(it)
     }
 

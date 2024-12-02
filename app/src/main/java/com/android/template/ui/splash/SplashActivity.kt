@@ -11,6 +11,7 @@ import com.android.template.data.models.enums.LoggedInMode
 import com.android.template.databinding.ActivitySplashBinding
 import com.android.template.ui.base.BaseActivity
 import com.android.template.ui.login.LoginActivity
+import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.ui.splash.viewmodel.SplashViewModel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
@@ -45,7 +46,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         var intent: Intent? = null
         when (viewModel.loggedInMode.get()) {
             LoggedInMode.LOGGED_IN_MODE_SERVER.getType() -> {
-          //      intent = createNavigationIntent()
+                intent = NavigationActivity.newIntent(this@SplashActivity)
             }
             LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType() -> intent =
                 LoginActivity.newIntent(this@SplashActivity)

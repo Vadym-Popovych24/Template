@@ -5,7 +5,7 @@ import androidx.room.*
 @Entity(tableName = "profile_avatars",
     indices = [Index("profile_id")],
     foreignKeys = [ForeignKey(
-        entity = Profile::class,
+        entity = ProfileEntity::class,
         parentColumns = ["id"],
         childColumns = ["profile_id"],
         onDelete = ForeignKey.CASCADE,

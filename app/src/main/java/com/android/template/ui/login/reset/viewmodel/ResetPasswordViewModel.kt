@@ -8,9 +8,6 @@ import javax.inject.Inject
 class ResetPasswordViewModel @Inject constructor(private val loginManager: LoginManager) :
     BaseViewModel() {
 
-    var actionCallback: (() -> Unit)? = null
-    var resetPasswordFinishedCallback: (() -> Unit)? = null
-
     val passwordFormValidator = FormValidator(null)
 
     override fun onCleared() {
@@ -18,16 +15,14 @@ class ResetPasswordViewModel @Inject constructor(private val loginManager: Login
         passwordFormValidator.clear()
     }
 
-    fun saveNewPassword(email: String, code: String, password: String) {
-            /*makeRx(
-                loginManager.resetPassword(
-                    email.getValueOrEmpty(),
-                    code.getValueOrEmpty(),
-                    password.getValueOrEmpty()
-                )
-            ) {*/
-                resetPasswordFinishedCallback?.invoke()
-       // }
+    fun saveNewPassword(email: String, code: String, password: String, callback: () -> Unit) {
+        makeRx(
+            loginManager.resetPassword(
+                email = email,
+                code = code,
+                password = password
+            ), callback
+        )
     }
 
     override fun handleError(it: Throwable) {

@@ -16,8 +16,7 @@ class LoginViewModel @Inject constructor(private val loginManager: LoginManager)
     }
 
     fun login(username: String, password: String, completableCallback: (() -> Unit)) {
-        // Implement sign in
-        makeRx(loginManager.auth(username, password).delay(2, TimeUnit.SECONDS), completableCallback)
+        makeRx(loginManager.authByDB(username, password).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
 }

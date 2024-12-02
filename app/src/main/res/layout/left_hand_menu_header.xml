@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.moveToProfileClick()}"
         app:layout_constraintTop_toTopOf="parent">
-<!--        android:clickable="@{viewModel.currantLHMScreen != SelectedLHMType.PROFILE}"-->
 
         <TextView
             android:id="@+id/first_name_tv"
@@ -25,7 +24,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/semiboldmyreadpro"
-            android:text="Vadym Popovych"
+            android:text="@{viewModel.userName}"
             android:textColor="@color/black"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:text="vadympopovychn24@gmail.com"
+            android:text="@{viewModel.userEmail}"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/first_name_tv"

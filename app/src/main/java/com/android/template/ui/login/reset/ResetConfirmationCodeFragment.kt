@@ -69,7 +69,7 @@ class ResetConfirmationCodeFragment : BaseFragment<FragmentResetConfirmationCode
             R.string.enter_code_timer_finished_hint.getStringFromResource,
             R.string.enter_code_timer_finished_clickable.getStringFromResource
         ) {
-            viewModel.resendCode {
+            viewModel.resendCode(args.email) {
                 startTimer()
             }
         }

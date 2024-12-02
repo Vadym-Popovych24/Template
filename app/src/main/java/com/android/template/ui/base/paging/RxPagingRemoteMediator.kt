@@ -3,9 +3,9 @@ package com.android.template.ui.base.paging
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxRemoteMediator
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import androidx.paging.rxjava3.RxRemoteMediator
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 @OptIn(ExperimentalPagingApi::class)
 class RxPagingRemoteMediator<T : Any, S : Any>(private val sourceHandler: SourceHandler<S>? = null) :

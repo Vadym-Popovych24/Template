@@ -29,7 +29,6 @@ import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
 import com.android.template.R
 import com.android.template.TemplateApp
-import com.androidnetworking.common.RequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
@@ -321,8 +320,6 @@ inline fun <reified T> Any.takeAs(): T? = if (this is T) {
 } else {
     null
 }
-
-fun <T : RequestBuilder> T.setToken(token: String): T = addHeaders("Authorization", token) as T
 
 fun NavController.setupNavigationButton(view: View?, navigationId: Int, bundle: Bundle?) =
     view?.setOnClickListener { navigate(navigationId, bundle) }

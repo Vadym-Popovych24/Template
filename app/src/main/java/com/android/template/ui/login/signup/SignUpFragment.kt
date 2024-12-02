@@ -1,12 +1,15 @@
 package com.android.template.ui.login.signup
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.android.template.R
+import com.android.template.data.remote.api.ApiEndpoints
 import com.android.template.databinding.FragmentSignUpBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.signup.viewmodel.SignUpViewModel
-import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.utils.BindingUtils
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.isEmail
@@ -43,25 +46,51 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
     }
 
     private fun signUp() {
-        viewModel.signUp(
+        viewModel.requestToken(binding.inputEmail.text.toString()) { requestKey ->
+            moveToApproveRequestKey("${ApiEndpoints.ENDPOINT_WEB_APPROVE}$requestKey")
+        }
+        /*viewModel.signUp(
             firstName = binding.inputFirstName.text.toString(),
             lastName = binding.inputLastName.text.toString(),
             email = binding.inputEmail.text.toString(),
             password = binding.inputPassword.text.toString()
         ) {
             viewModel.signUpFinishedCallback?.invoke()
-        }
+        }*/
     }
+
+    private fun moveToApproveRequestKey(url: String) =
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(url)
+            })
+        } catch (e: ActivityNotFoundException) {
+            showToast(R.string.web_view_open_error.getStringFromResource
+                .format(url))
+        }
 
     private fun subscribeToObservableFields() {
         viewModel.signUpFinishedCallback = {
-            requireActivity().finish()
-            hideKeyboard()
-            moveToActivity(NavigationActivity.newIntent(requireContext()))
+            moveToMainActivity()
         }
 
         viewModel.loadingCallback = { loading ->
             BindingUtils.loadingCircularProgressButton(binding.btnSignup, loading)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.requestToken.isNullOrEmpty().not()) {
+            viewModel.requestToken?.let {
+                viewModel.approveToken(
+                    requestToken = it,
+                    firstName = binding.inputFirstName.text.toString(),
+                    lastName = binding.inputLastName.text.toString(),
+                    email = binding.inputEmail.text.toString(),
+                    password = binding.inputPassword.text.toString()
+                )
+            }
         }
     }
 

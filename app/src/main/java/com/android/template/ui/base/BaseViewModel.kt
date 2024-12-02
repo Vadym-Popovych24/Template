@@ -6,7 +6,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.androidnetworking.error.ANError
 import com.android.template.R
 import com.android.template.data.models.api.ErrorResult
 import com.android.template.data.models.api.Result
@@ -17,14 +16,15 @@ import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INVALID_USERNAME_OR_PASSWORD
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.NOT_FOUND
 import com.microsoft.appcenter.utils.HandlerUtils
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
+import retrofit2.HttpException
 
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
 typealias LiveResult<T> = LiveData<Result<T>>
@@ -35,8 +35,7 @@ abstract class BaseViewModel : ViewModel() {
 
     val isLoading = ObservableBoolean(false)
 
-    lateinit var messageCallback: (message: String?) -> Unit
-    var logoutCallback: (() -> Unit)? = null
+    var messageCallback: ((message: String?) -> Unit)? = null
 
     private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, _ ->
         // you can add some exception handling here
@@ -53,14 +52,14 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun showMessage(message: String) {
-        messageCallback.invoke(message)
+        messageCallback?.invoke(message)
     }
 
     fun showMessage(@StringRes messageId: Int) {
-        messageCallback.invoke(messageId.getStringFromResource)
+        messageCallback?.invoke(messageId.getStringFromResource)
     }
 
-    fun <T> makeRx(single: Single<T>, callback: (T) -> Unit) {
+    fun <T : Any> makeRx(single: Single<T>, callback: (T) -> Unit) {
         isLoading.set(true)
         compositeDisposable.add(
             single
@@ -102,7 +101,7 @@ abstract class BaseViewModel : ViewModel() {
         )
     }
 
-    fun <T> makeRxInvisible(single: Single<T>, callback: (T) -> Unit) {
+    fun <T : Any> makeRxInvisible(single: Single<T>, callback: (T) -> Unit) {
         isLoading.set(true)
         compositeDisposable.add(
             single
@@ -144,37 +143,35 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected open fun handleError(it: Throwable) {
-        if (it is ANError) {
+        if (it is HttpException) {
             when {
-                it.errorCode == FORBIDDEN -> {
+                it.code() == FORBIDDEN -> {
                     showMessage(R.string.forbidden_error)
-                    logoutCallback?.invoke()
                 }
-                it.errorCode == NOT_FOUND -> {
+                it.code() == NOT_FOUND -> {
                     showMessage(R.string.not_found)
-                    logoutCallback?.invoke()
                 }
-                it.errorCode == INTERNAL_SERVER_ERROR -> showMessage(R.string.internal_server_error)
-                it.errorCode == INVALID_USERNAME_OR_PASSWORD -> showMessage(R.string.invalid_username_or_password)
-                it.errorBody != null && it.errorBody?.isNotEmpty()!! -> {
+                it.code() == INTERNAL_SERVER_ERROR -> showMessage(R.string.internal_server_error)
+                it.code() == INVALID_USERNAME_OR_PASSWORD -> showMessage(R.string.invalid_username_or_password)
+                it.message().isNotEmpty() -> {
                     try {
-                        val errorBody = JSONObject(it.errorBody)
+                        val errorBody = JSONObject(it.message())
                         if (errorBody.has("Message")) {
                             showMessage(errorBody.getString("Message"))
                         } else {
-                            showMessage(it.errorBody)
+                            showMessage(it.message())
                         }
                     } catch (e: Exception) {
-                        showMessage(it.errorBody)
+                        showMessage(it.message())
                         e.printStackTrace()
                     }
                 }
                 else -> {
-                    if (it.errorCode !=0) messageCallback.invoke(it.errorCode.toString())
+                    if (it.code() !=0) messageCallback?.invoke(it.code().toString())
                 }
             }
         } else {
-            it.message?.let{ messageCallback }
+            it.message?.let{ messageCallback!!.invoke(it) }
         }
         it.printStackTrace()
     }

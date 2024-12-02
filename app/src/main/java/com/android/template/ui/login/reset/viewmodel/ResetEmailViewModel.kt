@@ -17,8 +17,6 @@ class ResetEmailViewModel @Inject constructor(private val loginManager: LoginMan
     }
 
     fun requestSecureCode(email: String, callback: () -> Unit) {
-        callback.invoke()
-        // makeRx(loginManager.requestResetPasswordCode(email)) {
-        //  }
+        makeRx(loginManager.requestResetPasswordCode(email), callback)
     }
 }

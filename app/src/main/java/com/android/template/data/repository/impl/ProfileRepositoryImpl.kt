@@ -9,13 +9,12 @@ import com.android.template.data.models.api.model.ProfileMenuModel
 import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
-import com.android.template.data.remote.interfaces.LoginWebservice
 import com.android.template.data.remote.interfaces.ProfileWebservice
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.utils.encryptedFile
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import java.io.File
 import javax.inject.Inject
 
@@ -24,7 +23,6 @@ class ProfileRepositoryImpl @Inject constructor(
     private val storage: ProfileStorage,
     private val preferences: PreferencesHelper,
     private val remoteFileWebservice: RemoteFileWebservice,
-    private val loginWebservice: LoginWebservice,
     private val cacheDir: File
 ) : BaseRepositoryImpl(), ProfileRepository {
 
@@ -52,7 +50,7 @@ class ProfileRepositoryImpl @Inject constructor(
     override fun updateProfile(profileSettings: ProfileSettings): Completable =
         //   profileWebservice.updateProfile(profileSettings).doOnComplete {
         Completable.fromAction {
-            storage.saveProfile(profileSettings)
+          //  storage.saveProfile(profileSettings)
             preferences.setLanguageCode(profileSettings.culture)
             preferences.setUserName(profileSettings.userName)
             preferences.setEmail(profileSettings.email)
@@ -60,8 +58,9 @@ class ProfileRepositoryImpl @Inject constructor(
     //   preferences.setLanguageCode(profileSettings.culture)
     //     }
 
-    override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable =
-        profileWebservice.changePassword(changePasswordRequest)
+    override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable {
+        TODO("Not yet implemented")
+    }
 
     override fun uploadAvatar(bitmap: Bitmap): Single<String> {
         val imageFile = File(cacheDir, "cached_avatar.jpg")
@@ -97,5 +96,7 @@ class ProfileRepositoryImpl @Inject constructor(
             path
         }
 
-    override fun logout(): Completable = Completable.complete()
+    override fun logout(): Completable = Completable.fromAction {
+        preferences.clearAllPreferences()
+    }
 }

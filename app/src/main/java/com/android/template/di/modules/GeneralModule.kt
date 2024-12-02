@@ -11,8 +11,6 @@ import com.android.template.di.qualifiers.PreferenceInfo
 import com.android.template.utils.AppConstants
 import com.android.template.utils.Connectivity
 import com.android.template.utils.ViewModelProviderFactory
-import com.android.template.utils.interceptors.AuthDataInterceptor
-import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -20,6 +18,7 @@ import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -29,11 +28,19 @@ import javax.inject.Singleton
 class GeneralModule {
     @Provides
     @Singleton
-    fun provideHttpClientWithBasicLogger(preferences: PreferencesHelper): OkHttpClient =
-        OkHttpClient().newBuilder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
-            .addInterceptor(AuthDataInterceptor(preferences)).readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS).build()
+    fun provideHttpClientWithBasicLogger(): OkHttpClient =
+        OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            /*.authenticator(TokenAuthenticator(preferences) {
+                moveToLogin()
+            })*/
+            //.addInterceptor(ErrorHandlerInterceptor())
+            // .addInterceptor(AuthDataInterceptor(preferences))
+            .build()
 
     @Provides
     @Singleton

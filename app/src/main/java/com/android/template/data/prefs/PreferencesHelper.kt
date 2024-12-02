@@ -5,7 +5,10 @@ import android.content.SharedPreferences
 interface PreferencesHelper {
     fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener)
 
-    fun clearAuthData()
+    fun clearAllPreferences()
+
+    fun getRequestToken(): String?
+    fun setRequestToken(requestToken: String)
 
     fun getToken(): String?
     fun setToken(token: String)

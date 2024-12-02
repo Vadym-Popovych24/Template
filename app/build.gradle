@@ -14,9 +14,9 @@ android {
 
     defaultConfig {
         applicationId "com.android.template"
-        minSdkVersion 23
-        compileSdk 35
-        targetSdkVersion 35
+        minSdkVersion min_sdk
+        compileSdk target_sdk
+        targetSdkVersion target_sdk
         versionCode 13
         versionName "3.0"
 
@@ -88,7 +88,6 @@ sonarqube {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
@@ -108,14 +107,19 @@ dependencies {
     // App dependencies
     implementation "com.google.code.gson:gson:$gson_version"
 
-    //Fast Android Networking
-    implementation "com.amitshekhar.android:android-networking:$fast_android_networking_version"
-    implementation "com.amitshekhar.android:rx2-android-networking:$fast_android_networking_version"
+    /**
+     * Reactive Programing library
+     */
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLogging_version"
+    // RxJava Adapter for Retrofit
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+
 
     /**
      * di Dagger 2
@@ -137,7 +141,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // optional - RxJava support for Room
-    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
@@ -151,13 +155,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     /**
-     * Reactive Programing library
-     */
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
-
-    /**
      * KeyStore
      */
     implementation "in.co.ophio:secure-preferences:$secure_preferences_version"
@@ -166,12 +163,13 @@ dependencies {
      * Pagination Library
      */
     implementation "androidx.paging:paging-runtime-ktx:$pagination_version"
-    implementation "androidx.paging:paging-rxjava2-ktx:$pagination_version"
+    implementation "androidx.paging:paging-rxjava3:$pagination_version"
 
     /**
      * Picasso fot image
      */
     implementation "com.squareup.picasso:picasso:$picasso_version"
+
 
     /**
      * * SwipeRefreshLayout
@@ -228,9 +226,6 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-analytics:${app_center_sdk_version}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${app_center_sdk_version}"
 
-    //SignalR Java client
-//    implementation "com.microsoft.signalr:signalr:${signalR_version}"
-
     // Compose BOM
     implementation platform("androidx.compose:compose-bom:$compose_bom")  // Bom version
 
@@ -257,6 +252,8 @@ dependencies {
     // Integration with ViewModels
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_lifecycle_viewmodel_version"
 
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version" // Optional for logging
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"

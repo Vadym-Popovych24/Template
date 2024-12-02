@@ -1,32 +1,51 @@
 package com.android.template.data.remote.impl
 
 import com.android.template.R
-import com.android.template.data.models.api.request.DeviceLoginRequest
+import com.android.template.data.models.api.request.SessionRequest
 import com.android.template.data.models.api.response.LoginResponse
-import com.android.template.data.models.api.response.SignUpErrorResponse
-import com.android.template.data.models.exception.SignUpException
+import com.android.template.data.models.api.response.RequestKeyResponse
+import com.android.template.data.models.api.response.SessionResponse
+import com.android.template.data.models.exception.ApproveException
+import com.android.template.data.remote.api.ApiEndpoints
+import com.android.template.data.remote.api.LoginApi
+import com.android.template.data.remote.api.WebApi
 import com.android.template.data.remote.interfaces.LoginWebservice
-import com.android.template.utils.AppConstants
+import com.android.template.di.qualifiers.BaseRetrofit
+import com.android.template.di.qualifiers.WebRetrofit
 import com.android.template.utils.getStringFromResource
-import com.androidnetworking.error.ANError
-import com.google.gson.Gson
-import com.rx2androidnetworking.Rx2AndroidNetworking
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import retrofit2.Retrofit
 import javax.inject.Inject
 
-class LoginWebserviceImpl @Inject constructor(private val gson: Gson) : LoginWebservice {
+class LoginWebserviceImpl @Inject constructor(
+    @BaseRetrofit baseRetrofit: Retrofit,
+    @WebRetrofit webRetrofit: Retrofit
+) : LoginWebservice {
 
-    override fun loginApiCall(username: String, password: String): Single<LoginResponse> =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_SERVER_LOGIN)
-            .addHeaders(contentType, contentTypeValue)
-            .addBodyParameter("UserName", username)
-            .addBodyParameter("password", password)
-            .addBodyParameter("grant_type", AppConstants.GRANT_PASSWORD)
-            .addBodyParameter("client_id", AppConstants.CLIENT_ID)
-            .addBodyParameter("client_secret", AppConstants.CLIENT_SECRET)
-            .build()
-            .getObjectSingle(LoginResponse::class.java)
+    private val loginApi = baseRetrofit.create(LoginApi::class.java)
+    private val webApi = webRetrofit.create(WebApi::class.java)
+
+    override fun requestToken(): Single<RequestKeyResponse> =
+        loginApi.requestToken(ApiEndpoints.API_KEY)
+
+    override fun approveRequestToken(requestToken: String): Completable =
+        webApi.approveRequestToken(requestToken)
+        .onErrorResumeNext { throwable ->
+            Completable.create {
+                if (throwable is retrofit2.HttpException && throwable.code() == 401) {
+                    it.onError(ApproveException())
+                } else {
+                    it.onError(throwable)
+                }
+            }
+        }
+
+    override fun createSession(requestToken: String): Single<SessionResponse> =
+        loginApi.createSession(ApiEndpoints.API_KEY, SessionRequest(requestToken))
+
+    override fun loginApiCall(email: String, password: String): Single<LoginResponse> =
+        TODO("Change it by yours api request")
 
     override fun signUp(
         firstName: String,
@@ -34,23 +53,14 @@ class LoginWebserviceImpl @Inject constructor(private val gson: Gson) : LoginWeb
         email: String,
         password: String
     ): Single<LoginResponse> =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_SIGN_UP)
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
-            .addBodyParameter("firstName", firstName)
-            .addBodyParameter("lastName", lastName)
-            .addBodyParameter("email", email)
-            .addBodyParameter("password", password)
-            .addBodyParameter("grant_type", AppConstants.GRANT_PASSWORD)
-            .addBodyParameter("client_id", AppConstants.CLIENT_ID)
-            .addBodyParameter("client_secret", AppConstants.CLIENT_SECRET)
-            .build()
-            .getObjectSingle(LoginResponse::class.java)
-            .onErrorResumeNext { throwable ->
+        TODO("Change it by yours api request")
+        // Below example how to handle custom error response from server
+        /*.onErrorResumeNext { throwable ->
                 Single.create {
-                    if (throwable is ANError) {
+                    if (throwable is HttpException) {
                         try {
                             val signUpErrorResponse = gson.fromJson(
-                                throwable.errorBody, SignUpErrorResponse::class.java
+                                throwable.message, SignUpErrorResponse::class.java
                             )
                             if (signUpErrorResponse != null) {
                                 it.onError(SignUpException(signUpErrorResponse.getFormattedErrors()))
@@ -66,30 +76,10 @@ class LoginWebserviceImpl @Inject constructor(private val gson: Gson) : LoginWeb
                         it.onError(throwable)
                     }
                 }
-            }
-
-    override fun loginDevice(request: DeviceLoginRequest, token: String): Completable =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_DEVICE_LOGIN)
-            .addApplicationJsonBody(request)
-            .addHeaders("Authorization", "Bearer $token")
-            .build()
-            .stringCompletable
+            }*/
 
     override fun requestResetPasswordCode(email: String): Completable =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_GET_CODE)
-            .addHeaders(contentType, contentTypeValue)
-            .addBodyParameter("email", email)
-            .build()
-            .stringCompletable
-            .onErrorResumeNext {
-                Completable.error(
-                    IllegalArgumentException(
-                        R.string.no_user_with_email_error.getStringFromResource.format(
-                            email
-                        )
-                    )
-                )
-            }
+        Completable.complete() // TODO Change it by yours api request
 
     override fun sendResetPasswordCode(email: String, code: String): Completable =
         if (code == "123456") {
@@ -100,47 +90,19 @@ class LoginWebserviceImpl @Inject constructor(private val gson: Gson) : LoginWeb
                     R.string.wrong_secure_code_error.getStringFromResource
                 )
             )
-        }
-        // Uncomment and edit it for your real API call
-        /*Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD_SUBMIT_CODE)
-            .addHeaders(contentType, contentTypeValue)
-            .addBodyParameter("email", email)
-            .addBodyParameter("code", code)
-            .build()
-            .stringCompletable
-            .onErrorResumeNext {
-                Completable.error(
-                    IllegalArgumentException(
-                        R.string.wrong_secure_code_error.getStringFromResource
-                    )
-                )
-            }*/
+        } // TODO Change it by yours api request
 
     override fun resetPassword(
         email: String,
         code: String,
         password: String
     ): Single<LoginResponse> =
-        Rx2AndroidNetworking.post(AppConstants.ENDPOINT_RESET_PASSWORD)
-            .addHeaders(contentType, contentTypeValue)
-            .addBodyParameter("email", email)
-            .addBodyParameter("code", code)
-            .addBodyParameter("password", password)
-            .addBodyParameter("grant_type", AppConstants.GRANT_PASSWORD)
-            .addBodyParameter("client_id", AppConstants.CLIENT_ID)
-            .addBodyParameter("client_secret", AppConstants.CLIENT_SECRET)
-            .build()
-            .getObjectSingle(LoginResponse::class.java)
-            .onErrorResumeNext {
+        Single.just(LoginResponse("", 0,"")) // TODO Change it by yours api request
+   .onErrorResumeNext {
                 Single.error(
                     IllegalArgumentException(
                         R.string.wrong_password_error.getStringFromResource
                     )
                 )
             }
-
-    companion object {
-       private const val contentType = "Content-Type"
-       private const val contentTypeValue = "application/x-www-form-urlencoded"
-    }
 }

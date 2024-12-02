@@ -26,8 +26,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.android.template.R
-import com.android.template.TemplateApp
 import com.android.template.ui.crash.CrashActivity
+import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.ui.navigation.NavigationActivityCallback
 import com.android.template.utils.ViewModelProviderFactory
 import com.android.template.utils.getGenericClassExtends
@@ -160,16 +160,10 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             }
         )
 
-        viewModel.logoutCallback = {
-            TemplateApp.instance.moveToLogin()
-        }
-
-
         viewModel.messageCallback = { message ->
            showToast(message)
         }
     }
-
 
     private fun provideViewModel(clazz: Class<V>): V {
         return ViewModelProvider(requireActivity(), mVMFactory).get(clazz)
@@ -331,6 +325,12 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                 }
             )
         }
+    }
+
+    protected fun moveToMainActivity() {
+        requireActivity().finish()
+        hideKeyboard()
+        moveToActivity(NavigationActivity.newIntent(requireContext()))
     }
 
     open fun navigateUp() {

@@ -7,8 +7,8 @@ import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.manager.interfaces.ProfileManager
 import com.android.template.ui.base.BaseViewModel
 import com.android.template.utils.getStringFromResource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class ChangePasswordViewModel @Inject constructor(private val profileManager: ProfileManager) :
@@ -31,7 +31,6 @@ class ChangePasswordViewModel @Inject constructor(private val profileManager: Pr
             compositeDisposable.add(
                 profileManager.changePassword(
                     ChangePasswordRequest(
-                        confirmNewPassword.get().toString(),
                         newPassword.get().toString(),
                         oldPassword.get().toString()
                     )
