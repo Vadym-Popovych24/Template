@@ -5,25 +5,25 @@
     <item
         android:id="@+id/bottom_menu_item_recommendations"
         android:icon="@drawable/ic_timeline"
-        android:title="@string/recommendations"
+        android:title="@string/popular"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/bottom_menu_item_liked"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_like"
-        android:title="@string/liked" />
+        android:title="@string/bottom_menu_2" />
 
     <item
         android:id="@+id/bottom_menu_item_history"
         android:icon="@drawable/ic_timeline"
-        android:title="@string/history"
+        android:title="@string/bottom_menu_3"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/bottom_menu_item_home"
         android:icon="@drawable/svg_home"
-        android:title="@string/home"
+        android:title="@string/bottom_menu_4"
         app:showAsAction="ifRoom" />
 
 </menu>

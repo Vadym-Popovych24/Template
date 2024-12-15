@@ -43,11 +43,10 @@
     <string name="channel_description" translatable="false">Template Main Channel</string>
 
     <!--    bottom menu jobs-->
-    <string name="dashboard">Dashboard</string>
-    <string name="recommendations">Recommendations</string>
-    <string name="liked">Liked</string>
-    <string name="history">History</string>
-    <string name="home">Home</string>
+    <string name="popular">Popular</string>
+    <string name="bottom_menu_2">Bottom menu 2</string>
+    <string name="bottom_menu_3">Bottom menu 3</string>
+    <string name="bottom_menu_4">Bottom menu 4</string>
     <!--    bottom menu jobs end-->
 
     <!--    left hand menu jobs-->

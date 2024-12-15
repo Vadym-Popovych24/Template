@@ -11,12 +11,11 @@
     <string name="sign_up">Реєстрація</string>
 
     <!--    bottom menu jobs-->
-    <!--    todo how to translate-->
-    <string name="dashboard">Dashboard</string>
-    <string name="recommendations">Рекомендації</string>
-    <string name="liked">Збережені</string>
-    <string name="history">Історія</string>
-    <string name="home">Дім</string>
+
+    <string name="popular">Популярні фільми</string>
+    <string name="bottom_menu_2">Нижнє меню 2</string>
+    <string name="bottom_menu_3">Нижнє меню 3</string>
+    <string name="bottom_menu_4">Нижнє меню 4</string>
     <!--    bottom menu jobs end-->
 
     <!--    left hand menu jobs-->

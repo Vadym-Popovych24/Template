@@ -4,7 +4,6 @@ object ApiEndpoints {
 
     const val API_KEY = "272381ea875be07ab116a0c117c7c86b"
     const val BASE_URL = "https://api.themoviedb.org/3/" // TODO BuildConfig.API_SERVER_BASE_URL
-    private const val BASE_URL_LOGIN = ""
     const val WEB_URL = "https://www.themoviedb.org/"
     const val NEWS_URL = "https://newsapi.org/v2/"
 

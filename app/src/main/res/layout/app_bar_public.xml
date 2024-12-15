@@ -57,7 +57,7 @@
             app:itemTextAppearanceInactive="@style/BottomNavigationView"
             app:itemTextColor="@drawable/bottom_navigation_menu_enable_disable_item"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/navigation_public" />
+            app:menu="@menu/bottom_menu" />
 
 
     </LinearLayout>
