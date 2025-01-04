@@ -9,7 +9,6 @@ import com.android.template.data.models.api.model.ProfileMenuModel
 import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
-import com.android.template.data.remote.interfaces.ProfileWebservice
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.utils.encryptedFile
@@ -19,7 +18,6 @@ import java.io.File
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val profileWebservice: ProfileWebservice,
     private val storage: ProfileStorage,
     private val preferences: PreferencesHelper,
     private val remoteFileWebservice: RemoteFileWebservice,
@@ -32,31 +30,29 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getProfileSettings(): Single<ProfileSettings> =
-        profileWebservice.getProfileInfo(preferences.getProfileId().toString()).map {
-            preferences.setLanguageCode(it.culture)
+        storage.getProfileByEmail(preferences.getEmail().toString()).map {
+            it.culture?.let { culture -> preferences.setLanguageCode(culture) }
             ProfileSettings(
-                it.firstName,
-                it.lastName,
-                it.birthday ?: "",
-                it.email,
-                it.phoneNumber,
-                it.userName,
-                it.gender,
-                it.culture,
-                preferences.getProfileId()
+                firstName = it.firstName,
+                lastName = it.lastName,
+                birthday = it.birthday ?: "",
+                email = it.email,
+                phoneNumber = it.phoneNumber,
+                userName = it.userName,
+                gender = it.gender,
+                culture = it.culture,
+                profileId = it.profileId
             )
         }
 
     override fun updateProfile(profileSettings: ProfileSettings): Completable =
-        //   profileWebservice.updateProfile(profileSettings).doOnComplete {
         Completable.fromAction {
-          //  storage.saveProfile(profileSettings)
-            preferences.setLanguageCode(profileSettings.culture)
+            storage.updateProfile(profileSettings, preferences.getEmail().toString())
+            profileSettings.culture?.let { preferences.setLanguageCode(it) }
             preferences.setUserName(profileSettings.userName)
             preferences.setEmail(profileSettings.email)
+            profileSettings.culture?.let { preferences.setLanguageCode(it) }
         }
-    //   preferences.setLanguageCode(profileSettings.culture)
-    //     }
 
     override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable {
         TODO("Not yet implemented")

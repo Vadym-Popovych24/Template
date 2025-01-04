@@ -1,7 +1,6 @@
 package com.android.template.data.remote.impl
 
 import com.android.template.data.models.api.model.AccountWithSession
-import com.android.template.data.models.api.model.ProfileModel
 import com.android.template.data.remote.api.AccountApi
 import com.android.template.data.remote.api.ApiEndpoints
 import com.android.template.data.remote.interfaces.ProfileWebservice
@@ -21,7 +20,4 @@ class ProfileWebserviceImpl @Inject constructor(
             AccountWithSession(it, sessionId)
         }
 
-    override fun getProfileInfo(profileId: String): Single<ProfileModel> {
-        TODO("Not yet implemented")
-    }
 }

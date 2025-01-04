@@ -10,7 +10,7 @@ enum class GenderType(val code: Int, @StringRes val localizedTitle: Int) {
 
     companion object {
 
-        fun getGenderByCode(code: Int) = values().firstOrNull { it.code == code } ?: UNSPECIFIED
+        fun getGenderByCode(code: Int) = entries.firstOrNull { it.code == code } ?: UNSPECIFIED
 
     }
 }

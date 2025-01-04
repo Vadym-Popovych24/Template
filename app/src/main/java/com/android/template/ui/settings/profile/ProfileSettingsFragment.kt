@@ -5,14 +5,26 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import com.android.template.R
+import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.enums.GenderType
 import com.android.template.data.models.enums.Language
 import com.android.template.databinding.FragmentProfileSettingsBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.settings.profile.viewmodel.ProfileSettingsViewModel
+import com.android.template.utils.BindingUtils
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.helpers.DatePickerCallback
+import com.android.template.utils.helpers.convert
 import com.android.template.utils.helpers.defaultDateFormat
+import com.android.template.utils.helpers.simpleDateFormat
+import com.android.template.utils.isEmail
+import com.android.template.utils.isPhoneNumber
+import com.android.template.utils.isValidName
+import com.android.template.utils.setOnClickListenerWithPreValidation
+import com.android.template.utils.toEditable
+import com.rule.validator.formvalidator.Validator
+import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
+import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
 import java.text.ParseException
 import java.util.*
 
@@ -21,7 +33,7 @@ class ProfileSettingsFragment :
 
     private var datePickerDialog: DatePickerDialog? = null
     private val datePickerCallback = DatePickerCallback {
-        viewModel.birthDay.set(defaultDateFormat.format(it))
+        binding.inputBirthDay.text = defaultDateFormat.format(it).toEditable()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,19 +45,61 @@ class ProfileSettingsFragment :
         initGenderDropdown()
         initLanguageDropdown()
 
-        binding.birthDay.setOnClickListener {
+        binding.inputBirthDay.setOnClickListener {
             showBirthdaySelector()
         }
 
-      //  viewModel.loadData()
+        viewModel.loadingCallback = { loading ->
+            BindingUtils.loadingCircularProgressButton(binding.btnSave, loading)
+        }
+
+        setupValidations()
+        viewModel.loadData { profileSettings ->
+            showData(profileSettings)
+        }
+
+        binding.btnSave.setOnClickListenerWithPreValidation(viewModel.formValidator) {
+            viewModel.save(
+                ProfileSettings(
+                    firstName = binding.inputFirstName.text.toString(),
+                    lastName = binding.inputLastName.text.toString(),
+                    birthday = binding.inputBirthDay.text.toString(),
+                    email = binding.inputEmail.text.toString(),
+                    phoneNumber = binding.inputPhone.text.toString(),
+                    userName = "${binding.inputFirstName.text} ${binding.inputLastName.text}",
+                    gender = GenderType.getGenderByCode(viewModel.getGender() ?: -1).code,
+                    culture = viewModel.getLanguageCode()
+                        ?.let { Language.getLanguageByCode(it).code },
+                    profileId = viewModel.getProfileId()
+                )
+            )
+        }
+
+    }
+
+    private fun showData(profileSettings: ProfileSettings) {
+        binding.apply {
+            inputFirstName.text = profileSettings.firstName.toEditable()
+            inputLastName.text = profileSettings.lastName.toEditable()
+            inputEmail.text = profileSettings.email.toEditable()
+            inputPhone.text = profileSettings.phoneNumber?.toEditable()
+            inputBirthDay.text = convert(profileSettings.birthday, simpleDateFormat, defaultDateFormat).toEditable()
+            inputGenderDropdown.text = profileSettings.gender?.let { GenderType.getGenderByCode(it).localizedTitle.getStringFromResource.toEditable() }
+        }
+        viewModel.setGender(profileSettings.gender?.let { gender ->
+            GenderType.getGenderByCode(gender)
+        })
+        viewModel.setLanguage(profileSettings.culture?.let { culture ->
+            Language.getLanguageByCode(culture)
+        })
     }
 
     private val onUploadCallback: (() -> Unit) = {
         showToast(getString(R.string.data_saved))
     }
 
-    private fun initGenderDropdown() = binding.genderDropdown.apply {
-        val genders = GenderType.values()
+    private fun initGenderDropdown() = binding.inputGenderDropdown.apply {
+        val genders = GenderType.entries.toTypedArray()
         val genderLabels = Array(genders.size) {
             genders[it].localizedTitle.getStringFromResource
         }
@@ -57,8 +111,8 @@ class ProfileSettingsFragment :
         }
     }
 
-    private fun initLanguageDropdown() = binding.languageDropdown.apply {
-        val languages = Language.values()
+    private fun initLanguageDropdown() = binding.inputLanguageDropdown.apply {
+        val languages = Language.entries.toTypedArray()
         val languageLabels = Array(languages.size) {
             languages[it].localizedTitle.getStringFromResource
         }
@@ -73,7 +127,7 @@ class ProfileSettingsFragment :
         val c = Calendar.getInstance()
 
         try {
-            viewModel.birthDay.get()?.let {
+            binding.inputBirthDay.text.toString().let {
                 defaultDateFormat.parse(it)?.let { birthDayDate ->
                     c.time = birthDayDate
                 }
@@ -95,5 +149,60 @@ class ProfileSettingsFragment :
             datePickerDialog?.setOnCancelListener { hideKeyboard() }
         }
         datePickerDialog?.show()
+    }
+
+    private fun setupValidations() {
+        viewModel.formValidator.apply {
+            clear()
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutFirstName,
+                    Validator.Builder()
+                        .requireRule(R.string.validation_rule_required.getStringFromResource)
+                        .minMaxLength(minLength = 2, maxLength = 64, R.string.validation_rule_firstName.getStringFromResource)
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_regex.getStringFromResource,
+                            function = { (binding.inputFirstName.text.toString().isValidName()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutLastName,
+                    Validator.Builder()
+                        .requireRule(R.string.validation_rule_required.getStringFromResource)
+                        .minMaxLength(minLength = 2, maxLength = 64, R.string.validation_rule_lastName.getStringFromResource)
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_regex.getStringFromResource,
+                            function = { (binding.inputLastName.text.toString().isValidName()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutEmail,
+                    Validator.Builder()
+                        .requireRule(R.string.validation_rule_required.getStringFromResource)
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_email.getStringFromResource,
+                            function = { (binding.inputEmail.text.toString().isEmail()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+
+            registerValidator(
+                TextInputLayoutValidatableFormItem(
+                    binding.inputLayoutPhone,
+                    Validator.Builder()
+                        .customRule(isRequired = true,
+                            errorString = R.string.validation_rule_phone.getStringFromResource,
+                            function = { (binding.inputPhone.text.toString().isPhoneNumber() || binding.inputPhone.text.toString().isEmpty()) })
+                        .build(), ValidationStyle.ON_FOCUS_LOST
+                )
+            )
+        }
     }
 }

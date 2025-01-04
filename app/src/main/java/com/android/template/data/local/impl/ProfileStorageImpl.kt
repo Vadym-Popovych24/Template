@@ -18,8 +18,18 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
         database.profileDao().insert(profileEntity)
     }
 
-    override fun updateProfile(model: ProfileSettings) {
-        // TODO implement update profile
+    override fun updateProfile(profileSettings: ProfileSettings, originalEmail: String) {
+        database.profileDao().updateProfile(
+            firstName = profileSettings.firstName,
+            lastName = profileSettings.lastName,
+            birthday = profileSettings.birthday,
+            email = profileSettings.email,
+            phoneNumber = profileSettings.phoneNumber,
+            userName = profileSettings.userName,
+            gender = profileSettings.gender,
+            culture = profileSettings.culture,
+            originalEmail = originalEmail
+        )
     }
 
     override fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar> =

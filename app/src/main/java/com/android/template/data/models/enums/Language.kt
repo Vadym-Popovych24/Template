@@ -10,7 +10,7 @@ enum class Language(val code: Int, @StringRes val localizedTitle: Int, val tag: 
 
     companion object {
 
-        fun getLanguageByCode(code: Int) = values().firstOrNull { it.code == code } ?: EN
+        fun getLanguageByCode(code: Int) = entries.firstOrNull { it.code == code } ?: EN
 
     }
 }

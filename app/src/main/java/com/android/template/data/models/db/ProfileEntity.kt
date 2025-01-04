@@ -21,7 +21,7 @@ data class ProfileEntity(
     val phoneNumber: String? = null,
 
     @ColumnInfo(name = "gender")
-    val gender: String? = null,
+    val gender: Int? = null,
 
     @ColumnInfo(name = "culture")
     val culture: Int? = null,

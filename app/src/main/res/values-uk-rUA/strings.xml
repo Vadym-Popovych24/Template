@@ -94,6 +94,7 @@
     <string name="validation.rule.minLength">Введіть %d або більше символів</string>
     <string name="validation.rule.minMaxLength" formatted="false">Введіть значення від %1$d до %2$d</string>
     <string name="validation.rule.email">Будь ласка, введіть правильну електронну адресу</string>
+    <string name="validation.rule.phone">Будь ласка, введіть дійсний номер телефону</string>
     <string name="validation.rule.password">Будь ласка, введіть дійсний пароль (від 6 до 64 символів) Пароль має містити цифру, малі та великі латинські літери</string>
     <string name="validation.rule.firstName">Ім\'я має містити принаймні 2 і не більше 64 символів</string>
     <string name="validation.rule.lastName">Прізвище має містити принаймні 2 і не більше 64 символів</string>
@@ -101,6 +102,7 @@
     <string name="validation.rule.invalidCharacter" formatted="false">Ви ввели недійсний символ %s</string>
     <string name="validation.rule.minDouble" formatted="false">Будь ласка, введіть значення %s або більше</string>
     <string name="validation.rule.maxDouble" formatted="false">Будь ласка, введіть значення %s або менше</string>
+    <string name="validation.rule.date">Будь ласка, виберіть дійсну дату</string>
 
     <!--    ???-->
     <string name="publicc">Відкритий</string>
@@ -123,6 +125,7 @@
     <string name="surname_label">Прізвище</string>
     <string name="email_label">Електронна пошта</string>
     <string name="phone_label">Телефон</string>
+    <string name="phone_number">Номер телефону</string>
     <string name="working_now">Працює</string>
     <string name="attachment_label">Вкладення</string>
     <string name="name_error">Будь ласка, вкажіть своє Ім\'я</string>

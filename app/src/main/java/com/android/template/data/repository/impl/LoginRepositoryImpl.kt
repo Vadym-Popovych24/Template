@@ -51,8 +51,8 @@ class LoginRepositoryImpl @Inject constructor(
                 Completable.fromAction {
                     ProfileEntity.mapTo(
                         requestToken = requestToken,
-                        signUpProfileData = signUpProfileData,
-                        accountWithSession = accountResponseWithSession
+                        accountWithSession = accountResponseWithSession,
+                        signUpProfileData = signUpProfileData
                     ).let { newProfileEntity ->
                         profileStorage.insertProfile(newProfileEntity)
                         savePreferences(
@@ -149,16 +149,12 @@ class LoginRepositoryImpl @Inject constructor(
         email: String,
         avatarUrl: String,
         profileId: Int
-    ) = profileWebservice.getProfileInfo(profileId.toString())
-        .flatMapCompletable {
-            Completable.fromAction {
-                preferences.setUserName(userName)
-                preferences.setUserAvatar(avatarUrl)
-                preferences.setEmail(email)
-                preferences.setProfileId(profileId)
-                preferences.setLanguageCode(it.culture)
-            }
-        }
+    ) = Completable.fromAction {
+        preferences.setUserName(userName)
+        preferences.setUserAvatar(avatarUrl)
+        preferences.setEmail(email)
+        preferences.setProfileId(profileId)
+    }
 
     private fun getJson(strEncoded: String): String {
         val decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE)

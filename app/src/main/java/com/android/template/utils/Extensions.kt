@@ -253,6 +253,11 @@ fun String.isValidPassword(lengthMin: Int = 6, lengthMax: Int = 64): Boolean =
                 "$"
     ).matcher(this).matches()
 
+fun String.isValidDateFormat(): Boolean {
+    val regex = Regex("""\d{2}/\d{2}/\d{4}""")
+    return regex.matches(this)
+}
+
 fun String.isValidName(): Boolean {
 
     val allowedSign = arrayListOf('-', '\'')
