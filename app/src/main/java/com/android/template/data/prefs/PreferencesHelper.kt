@@ -34,8 +34,8 @@ interface PreferencesHelper {
     fun getUserAvatar(): String?
     fun setUserAvatar(avatar: String?)
 
-    fun getProfileId(): Int
-    fun setProfileId(profileId: Int)
+    fun getProfileId(): Long
+    fun setProfileId(profileId: Long)
 
     fun getIsPublic(): Boolean
     fun setIsPublic(isPublic: Boolean)
@@ -45,4 +45,7 @@ interface PreferencesHelper {
 
     fun setNewNotificationsCount(count: Int)
     fun getNewNotificationsCount(): Int
+
+    fun getDBProfileId(): Long
+    fun setDBProfileId(localProfileId: Long)
 }

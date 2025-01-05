@@ -35,8 +35,8 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
     override fun updatePassword(oldPassword: String, newPassword: String): Single<Int> =
         database.profileDao().updatePassword(oldPassword, newPassword)
 
-    override fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar> =
-        database.profileDao().getProfileById(profileId)
+    override fun getProfileLiveDataById(id: Long): LiveData<ProfileAndAvatar> =
+        database.profileDao().getProfileLiveDataById(id)
 
     override fun getProfileByEmail(email: String): Single<ProfileEntity> =
         database.profileDao().getProfileByEmail(email)
@@ -53,5 +53,8 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
             .onErrorReturn {
                 ProfileEntity.getEmptyProfileEntity()
             }
+
+    override fun getProfileIdByEmail(email: String): Long =
+        database.profileDao().getProfileIdByEmail(email)
 
 }

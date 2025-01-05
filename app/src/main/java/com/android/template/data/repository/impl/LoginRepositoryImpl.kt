@@ -55,11 +55,13 @@ class LoginRepositoryImpl @Inject constructor(
                         signUpProfileData = signUpProfileData
                     ).let { newProfileEntity ->
                         profileStorage.insertProfile(newProfileEntity)
+                        val id = profileStorage.getProfileIdByEmail(signUpProfileData.email)
                         savePreferences(
                             requestToken = requestToken,
                             email = signUpProfileData.email,
                             userName = "${signUpProfileData.firstName} ${signUpProfileData.lastName}",
-                            avatarPath = accountResponseWithSession.accountResponse.avatar.tmdb.avatarPath
+                            avatarPath = accountResponseWithSession.accountResponse.avatar.tmdb.avatarPath,
+                            id = id
                         )
                     }
                 }
@@ -69,23 +71,27 @@ class LoginRepositoryImpl @Inject constructor(
         requestToken: String,
         email: String,
         userName: String,
-        avatarPath: String?
+        avatarPath: String?,
+        id: Long
     ) {
         preferences.setRequestToken(requestToken)
         preferences.setEmail(email)
         preferences.setUserName(userName)
         preferences.setUserAvatar(avatarPath)
+        preferences.setDBProfileId(id)
     }
 
     override fun authByDB(email: String, password: String): Completable =
         profileStorage.getProfileByEmail(email).flatMapCompletable { profileEntity ->
             if (profileEntity.email == email && profileEntity.password == password) {
                 Completable.fromAction {
+                    val id = profileStorage.getProfileIdByEmail(email)
                     savePreferences(
                         requestToken = profileEntity.requestToken,
                         email = profileEntity.email,
                         userName = "${profileEntity.firstName} ${profileEntity.lastName}",
-                        avatarPath = profileEntity.avatarPath
+                        avatarPath = profileEntity.avatarPath,
+                        id = id
                     )
                 }
             } else {
@@ -148,7 +154,7 @@ class LoginRepositoryImpl @Inject constructor(
         userName: String,
         email: String,
         avatarUrl: String,
-        profileId: Int
+        profileId: Long
     ) = Completable.fromAction {
         preferences.setUserName(userName)
         preferences.setUserAvatar(avatarUrl)

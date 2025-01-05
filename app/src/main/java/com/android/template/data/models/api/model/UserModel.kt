@@ -7,7 +7,7 @@ data class UserModel(
     val email: String,
 
     @Expose
-    val profileId: Int,
+    val profileId: Long,
 
     @Expose
     val avatarUrl: String,

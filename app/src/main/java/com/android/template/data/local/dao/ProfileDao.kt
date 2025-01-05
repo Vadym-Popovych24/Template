@@ -11,8 +11,8 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 interface ProfileDao: BaseDao<ProfileEntity> {
     @Transaction
-    @Query("SELECT * FROM profiles WHERE id =:profileId")
-    fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar>
+    @Query("SELECT * FROM profiles WHERE id =:id")
+    fun getProfileLiveDataById(id: Long): LiveData<ProfileAndAvatar>
 
     @Transaction
     @Query("SELECT * FROM profiles WHERE email =:email")
@@ -29,4 +29,8 @@ interface ProfileDao: BaseDao<ProfileEntity> {
     @Transaction
     @Query("UPDATE profiles SET password=:newPassword WHERE password =:oldPassword")
     fun updatePassword(oldPassword: String, newPassword: String): Single<Int>
+
+    @Transaction
+    @Query("SELECT id FROM profiles WHERE email =:email")
+    fun getProfileIdByEmail(email: String): Long
 }

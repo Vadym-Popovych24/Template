@@ -24,6 +24,7 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
     private val PREF_MAIN_NOTIIFICATION_CHANNEL_ID = "MAIN_NOTIFICATION_CHANNEL_ID"
     private val PREF_LANGUAGE_CODE = "PREF_LANGUAGE_CODE"
     private val PREF_KEY_NEW_NOTIFICATIONS = "PREF_KEY_NEW_NOTIFICATIONS"
+    private val PREF_KEY_DB_PROFILE_ID = "PREF_KEY_DB_PROFILE_ID"
 
     /**
      * KeyGenerator
@@ -86,12 +87,12 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
         preferences.edit().putString(PREF_KEY_USER_AVATAR, avatar).apply()
     }
 
-    override fun getProfileId(): Int {
-        return preferences.getInt(PREF_KEY_PROFILE_ID, 0)
+    override fun getProfileId(): Long {
+        return preferences.getLong(PREF_KEY_PROFILE_ID, 0)
     }
 
-    override fun setProfileId(profileId: Int) {
-        preferences.edit().putInt(PREF_KEY_PROFILE_ID, profileId).apply()
+    override fun setProfileId(profileId: Long) {
+        preferences.edit().putLong(PREF_KEY_PROFILE_ID, profileId).apply()
     }
 
     override fun getIsPublic(): Boolean {
@@ -132,4 +133,12 @@ class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: Str
     override fun setNewNotificationsCount(count: Int) =
         preferences.edit().putInt(PREF_KEY_NEW_NOTIFICATIONS, count)
             .apply()
+
+    override fun getDBProfileId(): Long {
+        return preferences.getLong(PREF_KEY_DB_PROFILE_ID, 0)
+    }
+
+    override fun setDBProfileId(localProfileId: Long) {
+        preferences.edit().putLong(PREF_KEY_DB_PROFILE_ID, localProfileId).apply()
+    }
 }

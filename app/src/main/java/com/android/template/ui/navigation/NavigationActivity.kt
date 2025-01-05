@@ -62,6 +62,12 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         initBottomMenu()
         openFirstAvailableScreenInBottomMenu()
         handleOnBackPressed()
+
+        viewModel.getProfileDataFromDB().observe(this) { profileAndAvatar ->
+            viewModel.userName.set("${profileAndAvatar?.profileEntity?.firstName}  ${profileAndAvatar.profileEntity?.lastName}")
+            viewModel.userEmail.set(profileAndAvatar?.profileEntity?.email)
+            viewModel.userAvatar.set(profileAndAvatar?.profileEntity?.avatarPath)
+        }
     }
 
     private fun initBottomMenu() {

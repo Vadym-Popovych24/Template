@@ -24,8 +24,8 @@ class ProfileRepositoryImpl @Inject constructor(
 ) : BaseRepositoryImpl(), ProfileRepository {
 
     override fun getProfile(): LiveData<ProfileAndAvatar> {
-        val id = preferences.getProfileId()
-        return storage.getProfileById(id)
+        val id = preferences.getDBProfileId()
+        return storage.getProfileLiveDataById(id)
     }
 
     override fun getProfileSettings(): Single<ProfileSettings> =
