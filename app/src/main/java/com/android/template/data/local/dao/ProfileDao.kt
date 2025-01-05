@@ -24,5 +24,9 @@ interface ProfileDao: BaseDao<ProfileEntity> {
         firstName: String, lastName: String, birthday: String, email: String,
         phoneNumber: String?, userName: String, gender: Int?, culture: Int?,
         originalEmail: String
-    )
+    ): Int
+
+    @Transaction
+    @Query("UPDATE profiles SET password=:newPassword WHERE password =:oldPassword")
+    fun updatePassword(oldPassword: String, newPassword: String): Single<Int>
 }

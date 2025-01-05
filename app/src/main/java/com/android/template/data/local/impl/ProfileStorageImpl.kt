@@ -32,6 +32,9 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
         )
     }
 
+    override fun updatePassword(oldPassword: String, newPassword: String): Single<Int> =
+        database.profileDao().updatePassword(oldPassword, newPassword)
+
     override fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar> =
         database.profileDao().getProfileById(profileId)
 

@@ -85,6 +85,7 @@ class ProfileSettingsFragment :
             inputPhone.text = profileSettings.phoneNumber?.toEditable()
             inputBirthDay.text = convert(profileSettings.birthday, simpleDateFormat, defaultDateFormat).toEditable()
             inputGenderDropdown.text = profileSettings.gender?.let { GenderType.getGenderByCode(it).localizedTitle.getStringFromResource.toEditable() }
+            inputLanguageDropdown.text = profileSettings.culture?.let {  Language.getLanguageByCode(it).localizedTitle.getStringFromResource.toEditable() }
         }
         viewModel.setGender(profileSettings.gender?.let { gender ->
             GenderType.getGenderByCode(gender)

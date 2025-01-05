@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Single
 interface ProfileStorage {
     fun insertProfile(profileEntity: ProfileEntity)
     fun updateProfile(profileSettings: ProfileSettings, originalEmail: String)
+    fun updatePassword(oldPassword: String, newPassword: String): Single<Int>
     fun getProfileById(profileId: Int): LiveData<ProfileAndAvatar>
     fun getProfileByEmail(email: String): Single<ProfileEntity>
     fun getProfileByEmailIgnoreEmpty(email: String): Single<ProfileEntity>

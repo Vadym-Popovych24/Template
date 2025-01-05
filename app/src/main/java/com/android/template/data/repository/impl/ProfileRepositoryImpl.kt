@@ -6,7 +6,6 @@ import androidx.security.crypto.EncryptedFile
 import com.android.template.data.local.interfaces.ProfileStorage
 import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.api.model.ProfileMenuModel
-import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
@@ -54,9 +53,9 @@ class ProfileRepositoryImpl @Inject constructor(
             profileSettings.culture?.let { preferences.setLanguageCode(it) }
         }
 
-    override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun changePassword(oldPassword: String, newPassword: String): Single<Int> =
+        storage.updatePassword(oldPassword, newPassword)
+
 
     override fun uploadAvatar(bitmap: Bitmap): Single<String> {
         val imageFile = File(cacheDir, "cached_avatar.jpg")

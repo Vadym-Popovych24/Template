@@ -198,6 +198,7 @@
     <string name="enter_code_timer_finished_hint">Якщо ви не отримали код, перевірте спам, або ми надішлемо його вам ще раз</string>
     <string name="enter_code_timer_finished_clickable">ще раз</string>
     <string name="cancel_password_reset_confirmation_message">Ви впевнені, що хочете скасувати відновлення доступу до облікового запису?</string>
+    <string name="wrong_old_password_error">Неправильний старий пароль</string>
 
     <string name="sign_up_duplicate_error">Електронна адреса користувача %s уже зайнята.</string>
     <string name="sign_up_duplicate_error_simple">Електронна адреса користувача вже зайнята.</string>

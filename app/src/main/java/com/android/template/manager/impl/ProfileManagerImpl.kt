@@ -6,7 +6,6 @@ import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.api.model.CoverPicture
 import com.android.template.data.models.api.model.PictureValue
 import com.android.template.data.models.api.model.ProfileMenuModel
-import com.android.template.data.models.api.request.ChangePasswordRequest
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.manager.interfaces.ProfileManager
@@ -28,8 +27,8 @@ class ProfileManagerImpl @Inject constructor(
     override fun updateProfile(profileSettings: ProfileSettings): Completable =
         profileRepository.updateProfile(profileSettings)
 
-    override fun changePassword(changePasswordRequest: ChangePasswordRequest): Completable =
-        profileRepository.changePassword(changePasswordRequest)
+    override fun changePassword(oldPassword: String, newPassword: String): Single<Int> =
+        profileRepository.changePassword(oldPassword, newPassword)
 
     override fun getProfileHeader(): Single<ProfileMenuModel> =
         profileRepository.getProfileHeader()
