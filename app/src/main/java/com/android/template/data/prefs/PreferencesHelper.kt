@@ -1,9 +1,6 @@
 package com.android.template.data.prefs
 
-import android.content.SharedPreferences
-
 interface PreferencesHelper {
-    fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener)
 
     fun clearAllPreferences()
 
@@ -36,9 +33,6 @@ interface PreferencesHelper {
 
     fun getProfileId(): Long
     fun setProfileId(profileId: Long)
-
-    fun getIsPublic(): Boolean
-    fun setIsPublic(isPublic: Boolean)
 
     fun setLanguageCode(languageCode: Int)
     fun getLanguageCode(): Int

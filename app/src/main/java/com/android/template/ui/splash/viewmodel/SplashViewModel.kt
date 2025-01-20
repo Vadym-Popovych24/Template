@@ -17,8 +17,4 @@ class SplashViewModel @Inject constructor(private val mPreferencesHelper: Prefer
         }
     }
 
-    fun isSelectedPublicPref(): Boolean {
-        return mPreferencesHelper.getIsPublic()
-    }
-
 }

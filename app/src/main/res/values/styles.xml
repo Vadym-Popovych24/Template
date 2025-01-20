@@ -22,15 +22,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="FilePicker" parent="NNF_BaseTheme">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/blue</item>
-        <item name="colorAccent">@android:color/white</item>
-        <item name="nnf_list_item_divider">?android:attr/listDivider</item>
-
-    </style>
-
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>

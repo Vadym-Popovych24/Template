@@ -1,144 +1,204 @@
 package com.android.template.data.prefs
 
-import `in`.co.ophio.secure.core.ObscuredPreferencesBuilder
-import android.content.SharedPreferences
-import com.android.template.TemplateApp
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.android.template.data.models.enums.Language
 import com.android.template.di.qualifiers.PreferenceInfo
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class AppPreferencesHelper @Inject constructor(@PreferenceInfo prefFileName: String) :
-    PreferencesHelper {
+class AppPreferencesHelper @Inject constructor(
+    @PreferenceInfo prefFileName: String, private val context: Context
+) : PreferencesHelper {
 
     private val prefName: String = prefFileName
-    private val PREF_KEY_REQUEST_TOKEN = "PREF_KEY_REQUEST_TOKEN"
-    private val PREF_KEY_TOKEN = "PREF_KEY_TOKEN"
-    private val PREF_KEY_REFRESH_TOKEN = "PREF_KEY_REFRESH_TOKEN"
-    private val PREF_KEY_USER_NAME = "PREF_KEY_USER_NAME"
-    private val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"
-    private val PREF_KEY_USER_AVATAR = "PREF_KEY_USER_AVATAR"
-    private val PREF_KEY_PROFILE_ID = "PREF_KEY_PROFILE_ID"
-    private val PREF_KEY_IS_PUBLIC = "PREF_KEY_IS_PUBLIC"
-    private val PREF_UUID = "PREF_UUID"
-    private val PREF_FCM_TOKEN = "PREF_FCM_TOKEN"
-    private val PREF_MAIN_NOTIIFICATION_CHANNEL_ID = "MAIN_NOTIFICATION_CHANNEL_ID"
-    private val PREF_LANGUAGE_CODE = "PREF_LANGUAGE_CODE"
-    private val PREF_KEY_NEW_NOTIFICATIONS = "PREF_KEY_NEW_NOTIFICATIONS"
-    private val PREF_KEY_DB_PROFILE_ID = "PREF_KEY_DB_PROFILE_ID"
 
-    /**
-     * KeyGenerator
-     */
-    private var sekrt = KeyStoreKeyGenerator[TemplateApp.instance].loadOrGenerateKeys()
+    private val prefRequestKeyToken = stringPreferencesKey("PREF_KEY_REQUEST_TOKEN")
+    private val prefKeyToken = stringPreferencesKey("PREF_KEY_TOKEN")
+    private val prefKeyRefreshToken = stringPreferencesKey("PREF_KEY_REFRESH_TOKEN")
+    private val prefKeyUserName = stringPreferencesKey("PREF_KEY_USER_NAME")
+    private val prefKeyEmail = stringPreferencesKey("PREF_KEY_EMAIL")
+    private val prefKeyUserAvatar = stringPreferencesKey("PREF_KEY_USER_AVATAR")
+    private val prefKeyProfileId = longPreferencesKey("PREF_KEY_PROFILE_ID")
+    private val prefKeyUUID = stringPreferencesKey("PREF_UUID")
+    private val prefKeyFCMToken = stringPreferencesKey("PREF_FCM_TOKEN")
+    private val prefKeyMainNotificationChannelId =
+        stringPreferencesKey("PREF_MAIN_NOTIIFICATION_CHANNEL_ID")
+    private val prefKeyNewNotifications = intPreferencesKey("PREF_KEY_NEW_NOTIFICATIONS")
+    private val prefKeyLanguageCode = intPreferencesKey("PREF_LANGUAGE_CODE")
+    private val prefKeyLocalProfileId = longPreferencesKey("PREF_KEY_LOCAL_PROFILE_ID")
 
-    private var preferences = ObscuredPreferencesBuilder()
-        .setApplication(TemplateApp.instance)
-        .obfuscateValue(true)
-        .obfuscateKey(true)
-        .setSharePrefFileName(prefName)
-        .setSecret(sekrt)
-        .createSharedPrefs()
+    // init Data Store
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = prefName)
 
-    override fun clearAllPreferences() = preferences.edit().clear().apply()
+    override fun clearAllPreferences() {
+        runBlocking {
+            context.dataStore.edit { prefs ->
+                prefs.clear()
+            }
+        }
+    }
 
-    override fun getRequestToken(): String? = preferences.getString(PREF_KEY_REQUEST_TOKEN, null)
+    override fun getRequestToken(): String? = runBlocking { // Fetches the value synchronously
+        context.dataStore.data.first()[prefRequestKeyToken]
+    }
 
-    override fun setRequestToken(requestToken: String) =
-        preferences.edit().putString(PREF_KEY_REQUEST_TOKEN, requestToken).apply()
+    override fun setRequestToken(requestToken: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyToken] = requestToken
+            }
+        }
+    }
 
-    override fun getToken() = preferences.getString(PREF_KEY_TOKEN, null)
+    override fun getToken(): String? = runBlocking { // Fetches the value synchronously
+        context.dataStore.data.first()[prefKeyToken]
+    }
 
-    override fun setToken(token: String) =
-        preferences.edit().putString(PREF_KEY_TOKEN, "Bearer $token").apply()
+    override fun setToken(token: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyToken] = "Bearer $token"
+            }
+        }
+    }
 
-    override fun getRefreshToken(): String? {
-        return preferences.getString(PREF_KEY_REFRESH_TOKEN, null)
+    override fun getRefreshToken(): String? = runBlocking {
+        context.dataStore.data.first()[prefKeyRefreshToken]
     }
 
     override fun setRefreshToken(refreshToken: String?) {
-        preferences.edit().putString(PREF_KEY_REFRESH_TOKEN, refreshToken).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyRefreshToken] = refreshToken ?: ""
+            }
+        }
     }
 
-    override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-        preferences.registerOnSharedPreferenceChangeListener(listener)
-    }
-
-    override fun getUserName(): String? {
-        return preferences.getString(PREF_KEY_USER_NAME, null)
+    override fun getUserName(): String? = runBlocking {
+        context.dataStore.data.first()[prefKeyUserName]
     }
 
     override fun setUserName(userName: String?) {
-        preferences.edit().putString(PREF_KEY_USER_NAME, userName).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyUserName] = userName ?: ""
+            }
+        }
     }
 
-    override fun getEmail(): String? {
-        return preferences.getString(PREF_KEY_EMAIL, null)
+    override fun getEmail(): String? = runBlocking {
+        context.dataStore.data.first()[prefKeyEmail]
     }
 
     override fun setEmail(email: String?) {
-        preferences.edit().putString(PREF_KEY_EMAIL, email).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyEmail] = email ?: ""
+            }
+        }
     }
 
-    override fun getUserAvatar(): String? {
-        return preferences.getString(PREF_KEY_USER_AVATAR, null)
+    override fun getUserAvatar(): String? = runBlocking {
+        context.dataStore.data.first()[prefKeyUserAvatar]
     }
 
     override fun setUserAvatar(avatar: String?) {
-        preferences.edit().putString(PREF_KEY_USER_AVATAR, avatar).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyUserAvatar] = avatar ?: ""
+            }
+        }
     }
 
-    override fun getProfileId(): Long {
-        return preferences.getLong(PREF_KEY_PROFILE_ID, 0)
+    override fun getProfileId(): Long = runBlocking {
+        context.dataStore.data.first()[prefKeyProfileId] ?: 0
     }
 
     override fun setProfileId(profileId: Long) {
-        preferences.edit().putLong(PREF_KEY_PROFILE_ID, profileId).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyProfileId] = profileId
+            }
+        }
     }
 
-    override fun getIsPublic(): Boolean {
-        return preferences.getBoolean(PREF_KEY_IS_PUBLIC, true)
+    override fun getUUID(): String = runBlocking {
+        context.dataStore.data.first()[prefKeyUUID] ?: ""
     }
 
-    override fun setIsPublic(isPublic: Boolean) {
-        preferences.edit().putBoolean(PREF_KEY_IS_PUBLIC, isPublic).apply()
+    override fun setUUID(uuid: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyUUID] = uuid
+            }
+        }
     }
 
-    override fun getUUID(): String =
-        preferences.getString(PREF_UUID, "") ?: ""
+    override fun getFCMToken(): String = runBlocking {
+        context.dataStore.data.first()[prefKeyFCMToken] ?: ""
+    }
 
-    override fun setUUID(uuid: String) =
-        preferences.edit().putString(PREF_UUID, uuid).apply()
+    override fun setFCMToken(token: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyFCMToken] = token
+            }
+        }
+    }
 
-    override fun getFCMToken(): String =
-        preferences.getString(PREF_FCM_TOKEN, "") ?: ""
+    override fun getMainNotificationChannelId(): String = runBlocking {
+        context.dataStore.data.first()[prefKeyMainNotificationChannelId] ?: ""
+    }
 
-    override fun setFCMToken(token: String) =
-        preferences.edit().putString(PREF_FCM_TOKEN, token).apply()
+    override fun setMainNotificationChannelId(id: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyMainNotificationChannelId] = id
+            }
+        }
+    }
 
-    override fun getMainNotificationChannelId(): String =
-        preferences.getString(PREF_MAIN_NOTIIFICATION_CHANNEL_ID, "").toString()
+    override fun getLanguageCode(): Int = runBlocking {
+        context.dataStore.data.first()[prefKeyLanguageCode] ?: Language.EN.code
+    }
 
-    override fun setMainNotificationChannelId(id: String) =
-        preferences.edit().putString(PREF_MAIN_NOTIIFICATION_CHANNEL_ID, id).apply()
+    override fun setLanguageCode(languageCode: Int) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyLanguageCode] = languageCode
+            }
+        }
+    }
 
-    override fun getLanguageCode(): Int =
-        preferences.getInt(PREF_LANGUAGE_CODE, Language.EN.code)
+    override fun getNewNotificationsCount(): Int = runBlocking {
+        context.dataStore.data.first()[prefKeyNewNotifications] ?: 0
+    }
 
-    override fun setLanguageCode(languageCode: Int) =
-        preferences.edit().putInt(PREF_LANGUAGE_CODE, languageCode).apply()
+    override fun setNewNotificationsCount(count: Int) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyNewNotifications] = count
+            }
+        }
+    }
 
-    override fun getNewNotificationsCount(): Int =
-        preferences.getInt(PREF_KEY_NEW_NOTIFICATIONS, 0)
-
-    override fun setNewNotificationsCount(count: Int) =
-        preferences.edit().putInt(PREF_KEY_NEW_NOTIFICATIONS, count)
-            .apply()
-
-    override fun getDBProfileId(): Long {
-        return preferences.getLong(PREF_KEY_DB_PROFILE_ID, 0)
+    override fun getDBProfileId(): Long = runBlocking {
+        context.dataStore.data.first()[prefKeyLocalProfileId] ?: 0
     }
 
     override fun setDBProfileId(localProfileId: Long) {
-        preferences.edit().putLong(PREF_KEY_DB_PROFILE_ID, localProfileId).apply()
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyLocalProfileId] = localProfileId
+            }
+        }
     }
 }
