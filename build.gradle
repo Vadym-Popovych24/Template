@@ -25,7 +25,6 @@ buildscript {
         glide_version = '4.14.2'
         androidx_support_version = '1.0.0'
         expandable_layout_version = '2.9.2'
-        simplecrop_view_version = '1.1.8'
         pin_view_version = '1.4.4'
         firebase_bom_version = '28.3.1'
         month_year_picker = '1.0.2'
@@ -52,6 +51,8 @@ buildscript {
         retrofit_version = '2.9.0'
         okhttp_version = '4.10.0'
         loading_button_version = '2.3.0'
+        image_cropper_version = '4.6.0'
+        stfalcon_image_viewer_version = 'v1.0.1'
     }
 
     repositories {

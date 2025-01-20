@@ -132,4 +132,10 @@
         <item name="spinning_bar_width">2dp</item>
     </style>
 
+    <style name="fullImageDescriptionText" parent="AppTheme">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>

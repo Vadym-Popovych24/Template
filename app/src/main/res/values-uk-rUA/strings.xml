@@ -177,6 +177,7 @@
     <string name="invalid_phone">Введіть валідний номер телефону</string>
 
     <string name="upload_avatar">Оновити Аватар</string>
+    <string name="profile_avatar">Аватар профілю</string>
     <string name="list_title_placeholder">%s в м.%s</string>
     <string name="default_location_placeholder">%s в Україні</string>
     <string name="auth_error">Невірний логін чи пароль</string>
@@ -225,8 +226,15 @@
     <string name="city">Місто</string>
 
     <string name="from">Від</string>
-
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="coroutines">Корутини</string>
     <string name="compose">Compose</string>
-
+    <string name="themoviedb">Themoviedb інформація:</string>
+    <string name="themoviedb_url">https://developer.themoviedb.org</string>
+    <string name="request_token">Маркер запиту:</string>
+    <string name="session_id">Ідентифікатор сеансу:</string>
+    <string name="username">Ім\'я користувача:</string>
+    <string name="image_saved">Зображення успішно збережено</string>
+    <string name="image_save_failed">Не вдалося зберегти зображення</string>
 </resources>

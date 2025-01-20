@@ -40,4 +40,5 @@
     <color name="red_rejected_text">#DD2F3C</color>
     <color name="reject_red">#DC3131</color>
     <color name="green_btn">#0AB10A</color>
+    <color name="background_dark_transparent">#551e272b</color>
 </resources>

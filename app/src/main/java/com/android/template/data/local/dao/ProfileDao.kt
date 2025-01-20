@@ -19,16 +19,24 @@ interface ProfileDao: BaseDao<ProfileEntity> {
     fun getProfileByEmail(email: String): Single<ProfileEntity>
 
     @Transaction
-    @Query("UPDATE profiles SET first_name=:firstName, last_name =:lastName, username=:userName, email =:email, birthday =:birthday, phone_number =:phoneNumber, culture =:culture, gender =:gender WHERE email =:originalEmail")
+    @Query("UPDATE profiles SET first_name=:firstName, last_name =:lastName, email =:email, birthday =:birthday, phone_number =:phoneNumber, culture =:culture, gender =:gender WHERE email =:originalEmail")
     fun updateProfile(
         firstName: String, lastName: String, birthday: String, email: String,
-        phoneNumber: String?, userName: String, gender: Int?, culture: Int?,
+        phoneNumber: String?, gender: Int?, culture: Int?,
         originalEmail: String
     ): Int
 
     @Transaction
     @Query("UPDATE profiles SET password=:newPassword WHERE password =:oldPassword")
     fun updatePassword(oldPassword: String, newPassword: String): Single<Int>
+
+    @Transaction
+    @Query("UPDATE profiles SET avatar_path=:avatarPath WHERE id =:id")
+    fun updateAvatar(avatarPath: String, id: Long): Single<Int>
+
+    @Transaction
+    @Query("UPDATE profiles SET cover_path=:coverPath WHERE id =:id")
+    fun updateCover(coverPath: String, id: Long): Single<Int>
 
     @Transaction
     @Query("SELECT id FROM profiles WHERE email =:email")

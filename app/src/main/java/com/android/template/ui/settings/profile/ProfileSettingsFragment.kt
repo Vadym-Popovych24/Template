@@ -66,7 +66,6 @@ class ProfileSettingsFragment :
                     birthday = binding.inputBirthDay.text.toString(),
                     email = binding.inputEmail.text.toString(),
                     phoneNumber = binding.inputPhone.text.toString(),
-                    userName = "${binding.inputFirstName.text} ${binding.inputLastName.text}",
                     gender = GenderType.getGenderByCode(viewModel.getGender() ?: -1).code,
                     culture = viewModel.getLanguageCode()
                         ?.let { Language.getLanguageByCode(it).code },

@@ -14,6 +14,8 @@ interface ProfileRepository : BaseRepository {
     fun getProfileHeader(): Single<ProfileMenuModel>
     fun updateProfile(profileSettings: ProfileSettings): Completable
     fun changePassword(oldPassword: String, newPassword: String): Single<Int>
+    fun updateAvatar(avatarPath: String): Single<Int>
+    fun updateCover(coverPath: String): Single<Int>
     fun uploadAvatar(bitmap: Bitmap): Single<String>
     fun logout(): Completable
 }

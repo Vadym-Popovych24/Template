@@ -15,7 +15,7 @@ import com.android.template.data.models.db.conversation.User
 
 @Database(
     entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class],
-    version = 5, exportSchema = false
+    version = 6, exportSchema = false
 )
 @TypeConverters(
     DateConverter::class,

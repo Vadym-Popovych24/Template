@@ -25,7 +25,6 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
             birthday = profileSettings.birthday,
             email = profileSettings.email,
             phoneNumber = profileSettings.phoneNumber,
-            userName = profileSettings.userName,
             gender = profileSettings.gender,
             culture = profileSettings.culture,
             originalEmail = originalEmail
@@ -34,6 +33,12 @@ class ProfileStorageImpl @Inject constructor(private val database: TemplateDatab
 
     override fun updatePassword(oldPassword: String, newPassword: String): Single<Int> =
         database.profileDao().updatePassword(oldPassword, newPassword)
+
+    override fun updateAvatar(avatarPath: String, id: Long): Single<Int> =
+        database.profileDao().updateAvatar(avatarPath, id)
+
+    override fun updateCover(coverPath: String, id: Long): Single<Int> =
+        database.profileDao().updateCover(coverPath, id)
 
     override fun getProfileLiveDataById(id: Long): LiveData<ProfileAndAvatar> =
         database.profileDao().getProfileLiveDataById(id)

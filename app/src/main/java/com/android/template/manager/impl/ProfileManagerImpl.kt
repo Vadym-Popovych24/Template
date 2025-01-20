@@ -30,6 +30,12 @@ class ProfileManagerImpl @Inject constructor(
     override fun changePassword(oldPassword: String, newPassword: String): Single<Int> =
         profileRepository.changePassword(oldPassword, newPassword)
 
+    override fun updateAvatar(avatarPath: String): Single<Int> =
+        profileRepository.updateAvatar(avatarPath)
+
+    override fun updateCover(coverPath: String): Single<Int> =
+        profileRepository.updateCover(coverPath)
+
     override fun getProfileHeader(): Single<ProfileMenuModel> =
         profileRepository.getProfileHeader()
 

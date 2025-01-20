@@ -81,10 +81,8 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent?.let {
-        }
     }
 
     override fun onItemSelected(item: MenuItem): Boolean {

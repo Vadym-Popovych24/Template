@@ -37,7 +37,6 @@ class ProfileRepositoryImpl @Inject constructor(
                 birthday = it.birthday ?: "",
                 email = it.email,
                 phoneNumber = it.phoneNumber,
-                userName = it.userName,
                 gender = it.gender,
                 culture = it.culture,
                 profileId = it.profileId
@@ -48,7 +47,6 @@ class ProfileRepositoryImpl @Inject constructor(
         Completable.fromAction {
             storage.updateProfile(profileSettings, preferences.getEmail().toString())
             profileSettings.culture?.let { preferences.setLanguageCode(it) }
-            preferences.setUserName(profileSettings.userName)
             preferences.setEmail(profileSettings.email)
             profileSettings.culture?.let { preferences.setLanguageCode(it) }
         }
@@ -56,6 +54,15 @@ class ProfileRepositoryImpl @Inject constructor(
     override fun changePassword(oldPassword: String, newPassword: String): Single<Int> =
         storage.updatePassword(oldPassword, newPassword)
 
+    override fun updateAvatar(avatarPath: String): Single<Int> {
+        val id = preferences.getDBProfileId()
+        return storage.updateAvatar(avatarPath, id)
+    }
+
+    override fun updateCover(coverPath: String): Single<Int> {
+        val id = preferences.getDBProfileId()
+        return storage.updateCover(coverPath, id)
+    }
 
     override fun uploadAvatar(bitmap: Bitmap): Single<String> {
         val imageFile = File(cacheDir, "cached_avatar.jpg")

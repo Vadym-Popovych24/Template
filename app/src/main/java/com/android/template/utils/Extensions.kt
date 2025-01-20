@@ -3,7 +3,10 @@ package com.android.template.utils
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -18,6 +21,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
@@ -36,6 +40,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.rule.validator.formvalidator.FormValidator
 import java.io.File
+import java.io.InputStream
 import java.util.regex.Pattern
 
 
@@ -378,3 +383,53 @@ fun EditText.setOnActionDoneCallbackWithPreValidation(formValidator: FormValidat
     }
 
 fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+fun Uri.writeFileContent(context: Context): String? {
+    val fileBrowserCacheDir = "CertCache"
+    val certCacheDir = File(context.getExternalFilesDir(null), fileBrowserCacheDir)
+
+    if (!certCacheDir.exists() && !certCacheDir.mkdirs()) {
+        return null
+    }
+
+    val filePath = this.getFileDisplayName(context)?.let { File(certCacheDir, it).absolutePath }
+
+    val selectedFileInputStream: InputStream? = try {
+        context.contentResolver?.openInputStream(this)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+    val selectedFileOutPutStream = filePath?.let { File(it).outputStream() }
+
+    selectedFileInputStream?.use { input ->
+        selectedFileOutPutStream.use { output ->
+            output?.let { input.copyTo(it, bufferSize = 1024) }
+        }
+    }
+
+    return filePath
+}
+
+fun Uri.getFileDisplayName(context: Context): String? {
+    var displayName: String? = null
+    context.contentResolver
+        .query(this, null, null, null, null, null).use { cursor ->
+            if (cursor != null && cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                displayName = cursor.getString(columnIndex)
+            }
+        }
+    if (displayName.isNullOrEmpty()) {
+        val path = this.toString()
+        val cut: Int = path.lastIndexOf('/')
+        if (cut != -1) {
+            displayName = path.substring(cut + 1)
+        }
+    }
+    return displayName
+}
+
+fun Context.getDrawableCompat(@DrawableRes drawableRes: Int): Drawable? {
+    return AppCompatResources.getDrawable(this, drawableRes)
+}

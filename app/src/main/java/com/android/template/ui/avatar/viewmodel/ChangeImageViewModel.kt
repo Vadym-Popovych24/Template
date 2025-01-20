@@ -1,15 +1,14 @@
-package com.android.template.ui.profile.viewmodel
+package com.android.template.ui.avatar.viewmodel
 
-import androidx.lifecycle.LiveData
-import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.models.enums.ChangeImageType
 import com.android.template.manager.interfaces.ProfileManager
 import com.android.template.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(
+class ChangeImageViewModel @Inject constructor(
     private val profileManager: ProfileManager
 ) : BaseViewModel() {
+
     private var changeAvatarType = ChangeImageType.UNSPECIFIED
 
     fun setChangeAvatarType(type: ChangeImageType) {
@@ -18,7 +17,12 @@ class ProfileViewModel @Inject constructor(
 
     fun getChangeAvatarType() = changeAvatarType
 
-    fun getProfile(): LiveData<ProfileAndAvatar> =
-        profileManager.getProfile()
+    fun updateAvatar(avatarPath: String) {
+        makeRx(profileManager.updateAvatar(avatarPath)) {}
+    }
+
+    fun updateCover(coverPath: String) {
+        makeRx(profileManager.updateCover(coverPath)) {}
+    }
 
 }

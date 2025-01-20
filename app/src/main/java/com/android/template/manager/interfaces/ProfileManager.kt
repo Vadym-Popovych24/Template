@@ -17,5 +17,7 @@ interface ProfileManager: BaseManager {
     fun updateProfile(profileSettings: ProfileSettings): Completable
     fun uploadAvatar(bitmap: Bitmap): Single<String>
     fun changePassword(oldPassword: String, newPassword: String): Single<Int>
+    fun updateAvatar(avatarPath: String): Single<Int>
+    fun updateCover(coverPath: String): Single<Int>
     fun logout(): Completable
 }

@@ -63,6 +63,7 @@
     <!--    Profile-->
     <string name="profile">Profile</string>
     <string name="upload_avatar">Upload Avatar</string>
+    <string name="profile_avatar">Profile avatar</string>
 
     <!--    post action-->
     <string name="like">Like</string>
@@ -251,5 +252,11 @@
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="coroutines">Coroutines</string>
     <string name="compose">Compose</string>
-
+    <string name="themoviedb">Themoviedb info:</string>
+    <string name="themoviedb_url">https://developer.themoviedb.org</string>
+    <string name="request_token">Request Token:</string>
+    <string name="session_id">Session Id:</string>
+    <string name="username">Username:</string>
+    <string name="image_saved">Image successfully saved</string>
+    <string name="image_save_failed">Failed to save image</string>
 </resources>

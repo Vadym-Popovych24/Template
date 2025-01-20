@@ -1,5 +1,6 @@
 package com.android.template.di.modules
 
+import com.android.template.ui.avatar.di.ChangeAvatarProvider
 import com.android.template.ui.compose.di.ComposeProvider
 import com.android.template.ui.coroutine.di.CoroutineProvider
 import com.android.template.ui.crash.CrashActivity
@@ -48,6 +49,7 @@ abstract class ActivityModule {
         modules = [NavigationActivityPublicModule::class,
             ProfileModule::class,
             ProfileProvider::class,
+            ChangeAvatarProvider::class,
             SettingsProvider::class,
             HomeProvider::class,
             RecommendationsProvider::class,

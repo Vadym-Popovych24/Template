@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigationChangeAvatar"
-        android:name="com.android.template.ui.profile.avatar.ChangeAvatarFragment"
+        android:name="com.android.template.ui.avatar.ChangeImageFragment"
         android:label="ChangeAvatarFragment"
         tools:layout="@layout/fragment_change_avatar" />
 

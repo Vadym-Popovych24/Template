@@ -44,8 +44,8 @@ data class ProfileEntity(
     @ColumnInfo(name = "avatar_path")
     val avatarPath: String? = null,
 
-    @ColumnInfo(name = "cover_picture")
-    val coverPicture: String? = null,
+    @ColumnInfo(name = "cover_path")
+    val coverPath: String? = null,
 
     @ColumnInfo(name = "request_token")
     val requestToken: String,
@@ -87,7 +87,7 @@ data class ProfileEntity(
             userName = "",
             password = "",
             avatarPath = null,
-            coverPicture = null,
+            coverPath = null,
             requestToken = "",
             sessionId = ""
         )
