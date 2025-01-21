@@ -39,20 +39,44 @@ android {
         }
     }
 
+    flavorDimensions = ["version"]
+    productFlavors {
+        dev {
+            dimension "version"
+            applicationIdSuffix '.dev'
+            buildConfigField "String", "MOVIE_DB_API_ENDPOINT", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
+            buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
+            buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            resValue "string", "app_name", "Template Dev"
+        }
+
+        prod {
+            dimension "version"
+            buildConfigField "String", "MOVIE_DB_API_ENDPOINT", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
+            buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
+            buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            resValue "string", "app_name", "Template"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "API_SERVER_BASE_URL", "\"https://newsapi.org/v2/\"")
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
-            buildConfigField("String", "API_SERVER_BASE_URL", "\"https://newsapi.org/v2/\"")
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     buildFeatures {
         dataBinding = true
+        buildConfig = true
         compose true
     }
 
@@ -79,9 +103,7 @@ android {
         kotlinCompilerExtensionVersion '1.5.14'
     }
     packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        resources.excludes.add("META-INF/*")
     }
     namespace 'com.android.template'
 }
