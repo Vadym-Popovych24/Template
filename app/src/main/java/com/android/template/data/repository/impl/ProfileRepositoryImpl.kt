@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.security.crypto.EncryptedFile
 import com.android.template.data.local.interfaces.ProfileStorage
 import com.android.template.data.models.ProfileSettings
-import com.android.template.data.models.api.model.ProfileMenuModel
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
@@ -79,14 +78,6 @@ class ProfileRepositoryImpl @Inject constructor(
         }.doOnError {
             imageFile.delete()
         }
-    }
-
-    override fun getProfileHeader(): Single<ProfileMenuModel> = Single.just(preferences).map {
-        ProfileMenuModel(
-            it.getEmail().toString(),
-            it.getUserAvatar().toString(),
-            it.getUserName().toString()
-        )
     }
 
     private fun writeAvatarToCache(encryptedFile: EncryptedFile, bitmap: Bitmap, path: String): Single<String> =

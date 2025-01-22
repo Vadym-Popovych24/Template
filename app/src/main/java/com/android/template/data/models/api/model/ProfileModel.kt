@@ -23,12 +23,4 @@ data class ProfilePictureModel(
     val picture: PictureValue?
 )
 
-data class ProfileMenuModel(
-    val email: String,
-    val userAvatar: String,
-    val userName: String
-)
-
 data class PictureValue(val altAttribute: String?)
-
-data class CoverPicture(val offset: Int, val picture: PictureValue)

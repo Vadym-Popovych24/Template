@@ -101,7 +101,7 @@ class LoginRepositoryImpl @Inject constructor(
 
     // Use for Login by API
     override fun auth(email: String, password: String): Completable =
-        loginWebservice.loginApiCall(email, password).saveAuthData()
+        loginWebservice.login(email, password).saveAuthData()
 
     // Use for Sign Up by API
     override fun signUp(

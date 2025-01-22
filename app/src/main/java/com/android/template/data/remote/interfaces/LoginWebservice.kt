@@ -14,7 +14,7 @@ interface LoginWebservice {
 
     fun createSession(requestToken: String): Single<SessionResponse>
 
-    fun loginApiCall(email: String, password: String): Single<LoginResponse>
+    fun login(email: String, password: String): Single<LoginResponse>
 
     fun signUp(firstName: String, lastName: String, email: String, password: String): Single<LoginResponse>
 

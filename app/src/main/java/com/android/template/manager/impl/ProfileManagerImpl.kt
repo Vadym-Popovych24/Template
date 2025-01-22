@@ -3,9 +3,6 @@ package com.android.template.manager.impl
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import com.android.template.data.models.ProfileSettings
-import com.android.template.data.models.api.model.CoverPicture
-import com.android.template.data.models.api.model.PictureValue
-import com.android.template.data.models.api.model.ProfileMenuModel
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.manager.interfaces.ProfileManager
@@ -17,9 +14,6 @@ class ProfileManagerImpl @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : BaseManagerImpl(profileRepository),
     ProfileManager {
-
-    override fun getProfileAPI(): Single<CoverPicture> =
-        Single.just(CoverPicture(1, PictureValue("attr")))
 
     override fun getProfile(): LiveData<ProfileAndAvatar> =
         profileRepository.getProfile()
@@ -35,9 +29,6 @@ class ProfileManagerImpl @Inject constructor(
 
     override fun updateCover(coverPath: String): Single<Int> =
         profileRepository.updateCover(coverPath)
-
-    override fun getProfileHeader(): Single<ProfileMenuModel> =
-        profileRepository.getProfileHeader()
 
     override fun getProfileSettings(): Single<ProfileSettings> =
         profileRepository.getProfileSettings()

@@ -44,7 +44,7 @@ class LoginWebserviceImpl @Inject constructor(
     override fun createSession(requestToken: String): Single<SessionResponse> =
         loginApi.createSession(ApiEndpoints.API_KEY, SessionRequest(requestToken))
 
-    override fun loginApiCall(email: String, password: String): Single<LoginResponse> =
+    override fun login(email: String, password: String): Single<LoginResponse> =
         TODO("Change it by yours api request")
 
     override fun signUp(
