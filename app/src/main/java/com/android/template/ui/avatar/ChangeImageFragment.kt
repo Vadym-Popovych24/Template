@@ -10,7 +10,7 @@ import com.android.template.data.models.enums.ChangeImageType
 import com.android.template.databinding.FragmentChangeAvatarBinding
 import com.android.template.ui.avatar.viewmodel.ChangeImageViewModel
 import com.android.template.ui.base.BaseFragment
-import com.canhub.cropper.CropImageContract
+import com.android.template.utils.bitmapToUri
 import com.canhub.cropper.CropImageView
 import java.io.File
 import java.io.FileOutputStream
@@ -25,9 +25,18 @@ class ChangeImageFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeImag
             ChangeImageType.getChangeImageType(arguments?.getInt(EXTRA_IMAGE_TYPE) ?: -1)
         viewModel.setChangeAvatarType(imageType)
         when (imageType) {
-            ChangeImageType.AVATAR -> binding.cropImageView.cropShape = CropImageView.CropShape.OVAL
-            ChangeImageType.COVER -> binding.cropImageView.cropShape =
-                CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
+            ChangeImageType.AVATAR -> {
+                binding.cropImageView.apply {
+                    cropShape = CropImageView.CropShape.OVAL
+                    setFixedAspectRatio(true)
+                }
+            }
+            ChangeImageType.COVER -> {
+                binding.cropImageView.apply {
+                    cropShape = CropImageView.CropShape.RECTANGLE_HORIZONTAL_ONLY
+                    setFixedAspectRatio(false)
+                }
+            }
 
             else -> binding.cropImageView.cropShape = CropImageView.CropShape.OVAL
         }
@@ -38,29 +47,21 @@ class ChangeImageFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeImag
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.confirm) {
 
-                binding.cropImageView.imageUri?.let { saveImageLocally(it) }
+                binding.cropImageView.getCroppedImage()?.let { bitmap -> bitmapToUri(requireContext(), bitmap) }
+                    ?.let { saveImageLocally(it) }
                 return@setOnMenuItemClickListener true
             }
             false
         }
         binding.cropImageView.setImageUriAsync(uri)
 
-        registerForActivityResult(CropImageContract()) { result ->
-            if (result.isSuccessful) {
-                val croppedUri = result.uriContent
-                croppedUri?.let { saveImageLocally(it) }
-            } else {
-                // Handle cropping error
-                val error = result.error
-                error?.printStackTrace()
-            }
-        }
+
     }
 
     private fun saveImageLocally(uri: Uri) {
         val fileName = when (viewModel.getChangeAvatarType()) {
-            ChangeImageType.AVATAR -> "avatar.jpg"
-            ChangeImageType.COVER -> "cover.jpg"
+            ChangeImageType.AVATAR -> "avatar_${System.currentTimeMillis()}.jpg"
+            ChangeImageType.COVER -> "cover_${System.currentTimeMillis()}.jpg"
             else -> "unspecified.jpg"
         }
         val outputDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)

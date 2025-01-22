@@ -40,6 +40,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.rule.validator.formvalidator.FormValidator
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.util.regex.Pattern
 
@@ -432,4 +434,24 @@ fun Uri.getFileDisplayName(context: Context): String? {
 
 fun Context.getDrawableCompat(@DrawableRes drawableRes: Int): Drawable? {
     return AppCompatResources.getDrawable(this, drawableRes)
+}
+
+fun bitmapToUri(context: Context, bitmap: Bitmap): Uri? {
+    return try {
+        // Create a temp file in cache directory
+        val file = File(context.cacheDir, "cropped_image_${System.currentTimeMillis()}.jpg")
+        file.createNewFile()
+
+        // Save the bitmap to file
+        val outputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        // Return the Uri
+        Uri.fromFile(file)
+    } catch (e: IOException) {
+        e.printStackTrace()
+        null
+    }
 }

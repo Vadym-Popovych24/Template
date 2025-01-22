@@ -53,7 +53,7 @@ class AppPreferencesHelper @Inject constructor(
     override fun setRequestToken(requestToken: String) {
         runBlocking {
             context.dataStore.edit { preferences ->
-                preferences[prefKeyToken] = requestToken
+                preferences[prefRequestKeyToken] = requestToken
             }
         }
     }
