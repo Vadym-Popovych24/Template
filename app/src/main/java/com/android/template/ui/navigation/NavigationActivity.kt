@@ -19,16 +19,16 @@ import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.base.Stub
 import com.android.template.ui.compose.ComposeFragment
 import com.android.template.ui.coroutine.CoroutineFragment
-import com.android.template.ui.home.HomeFragment
+import com.android.template.ui.bottom_menu4.BottomMenu4Fragment
 import com.android.template.ui.menu1.MenuItem1Fragment
 import com.android.template.ui.menu2.MenuItem2Fragment
 import com.android.template.ui.menu3.MenuItem3Fragment
 import com.android.template.ui.menu4.MenuItem4Fragment
 import com.android.template.ui.navigation.viewmodel.NavigationHeaderViewModel
 import com.android.template.ui.profile.ProfileFragment
-import com.android.template.ui.recommendations.RecommendationsFragment
-import com.android.template.ui.recommendations.history.HistoryFragment
-import com.android.template.ui.recommendations.liked.LikedFragment
+import com.android.template.ui.popular.PopularFragment
+import com.android.template.ui.bottom_menu3.BottomMenu3Fragment
+import com.android.template.ui.bottom_menu2.BottomMenu2Fragment
 import com.android.template.ui.settings.SettingsFragment
 
 
@@ -41,10 +41,10 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     @get:Synchronized
     @set:Synchronized
     private var activeFragment: Fragment? = null
-    private var recommendationsFragment: RecommendationsFragment? = null
-    private var likedFragment: LikedFragment? = null
-    private var historyFragment: HistoryFragment? = null
-    private var homeFragment: HomeFragment? = null
+    private var popularFragment: PopularFragment? = null
+    private var bottomMenu2Fragment: BottomMenu2Fragment? = null
+    private var bottomMenu3Fragment: BottomMenu3Fragment? = null
+    private var bottomMenu4Fragment: BottomMenu4Fragment? = null
     private var isBottomFragmentsAdded = false
 
     override fun updateBottomNavigation(bottomNavigationVisibility: Int) {
@@ -91,10 +91,10 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
     private fun selectItem(itemId: Int) = when (itemId) {
-        R.id.bottom_menu_item_home -> showHomeFragment()
-        R.id.bottom_menu_item_recommendations -> showRecommendationFragment()
-        R.id.bottom_menu_item_liked -> showLikedFragment()
-        R.id.bottom_menu_item_history -> showHistoryFragment()
+        R.id.bottom_menu_item_popular -> showPopularFragment()
+        R.id.bottom_menu_item_2 -> showBottomMenu2Fragment()
+        R.id.bottom_menu_item_3 -> showBottomMenu3Fragment()
+        R.id.bottom_menu_item_4 -> showBottomMenu4Fragment()
         R.id.navigation_menu_item_1 -> showFragment(MenuItem1Fragment())
         R.id.navigation_menu_item_2 -> showFragment(MenuItem2Fragment())
         R.id.navigation_menu_item_3 -> showFragment(MenuItem3Fragment())
@@ -106,42 +106,42 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         else -> showStub()
     }
 
-    override fun showRecommendationFragment() {
-        recommendationsFragment?.let {
+    override fun showPopularFragment() {
+        popularFragment?.let {
             showFragment(it)
         }
     }
 
-    override fun showLikedFragment() {
-        likedFragment?.let {
+    override fun showBottomMenu2Fragment() {
+        bottomMenu2Fragment?.let {
             showFragment(it)
         }
     }
 
-    override fun showHistoryFragment() {
-        historyFragment?.let {
+    override fun showBottomMenu3Fragment() {
+        bottomMenu3Fragment?.let {
             showFragment(it)
         }
     }
 
-    override fun showHomeFragment() {
-        homeFragment?.let {
+    override fun showBottomMenu4Fragment() {
+        bottomMenu4Fragment?.let {
             showFragment(it)
         }
     }
 
     private fun initFragmentsOfBottomMenu() {
-        if (recommendationsFragment == null) recommendationsFragment = RecommendationsFragment()
-        if (likedFragment == null) likedFragment = LikedFragment()
-        if (historyFragment == null) historyFragment = HistoryFragment()
-        if (homeFragment == null) homeFragment = HomeFragment()
+        if (popularFragment == null) popularFragment = PopularFragment()
+        if (bottomMenu2Fragment == null) bottomMenu2Fragment = BottomMenu2Fragment()
+        if (bottomMenu3Fragment == null) bottomMenu3Fragment = BottomMenu3Fragment()
+        if (bottomMenu4Fragment == null) bottomMenu4Fragment = BottomMenu4Fragment()
     }
 
     private fun addFragmentsOfBottomMenu() {
-        addFragmentOfBottomMenu(recommendationsFragment)
-        addFragmentOfBottomMenu(likedFragment)
-        addFragmentOfBottomMenu(historyFragment)
-        addFragmentOfBottomMenu(homeFragment)
+        addFragmentOfBottomMenu(popularFragment)
+        addFragmentOfBottomMenu(bottomMenu2Fragment)
+        addFragmentOfBottomMenu(bottomMenu3Fragment)
+        addFragmentOfBottomMenu(bottomMenu4Fragment)
     }
 
     private fun addFragmentOfBottomMenu(fragment: Fragment?) {
@@ -166,12 +166,12 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
                     )
                 ) {
                     closeDrawer()
-                } else if (currentFragment::class.java.name == RecommendationsFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
+                } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
                     finish()
                 } else {
                     openFirstAvailableScreenInBottomMenu()
                 }
-            } else if (currentFragment::class.java.name == RecommendationsFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
+            } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
                 finish()
             } else if (viewModel.isLoading.get() && currentFragment::class.java.name == Stub::class.java.name) {
                 /**
@@ -216,7 +216,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
             fragment?.let {
                 activeFragment?.let { active -> hide(active) }
 
-                if (it is RecommendationsFragment || it is LikedFragment || it is HistoryFragment || it is HomeFragment) {
+                if (it is PopularFragment || it is BottomMenu2Fragment || it is BottomMenu3Fragment || it is BottomMenu4Fragment) {
                     activeFragment = it
                     show(it)
                 } else {
@@ -235,20 +235,20 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     override fun setCurrentFragmentOfBottomMenu(fragment: Fragment) {
         activeFragment = fragment
         when (fragment) {
-            is RecommendationsFragment -> {
-                setSelectedMenuItem(R.id.bottom_menu_item_recommendations)
+            is PopularFragment -> {
+                setSelectedMenuItem(R.id.bottom_menu_item_popular)
             }
 
-            is LikedFragment -> {
-                setSelectedMenuItem(R.id.bottom_menu_item_liked)
+            is BottomMenu2Fragment -> {
+                setSelectedMenuItem(R.id.bottom_menu_item_2)
             }
 
-            is HistoryFragment -> {
-                setSelectedMenuItem(R.id.bottom_menu_item_history)
+            is BottomMenu3Fragment -> {
+                setSelectedMenuItem(R.id.bottom_menu_item_3)
             }
 
-            is HomeFragment -> {
-                setSelectedMenuItem(R.id.bottom_menu_item_home)
+            is BottomMenu4Fragment -> {
+                setSelectedMenuItem(R.id.bottom_menu_item_4)
             }
         }
     }
@@ -266,10 +266,10 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     companion object {
 
         private var preventBackPressedFragments = mutableListOf(
-            RecommendationsFragment::class.java.name,
-            LikedFragment::class.java.name,
-            HistoryFragment::class.java.name,
-            HomeFragment::class.java.name
+            PopularFragment::class.java.name,
+            BottomMenu2Fragment::class.java.name,
+            BottomMenu3Fragment::class.java.name,
+            BottomMenu4Fragment::class.java.name
         )
 
         private const val EXTRA_NOTIFICATION_TYPE = "EXTRA_NOTIFICATION_TYPE"

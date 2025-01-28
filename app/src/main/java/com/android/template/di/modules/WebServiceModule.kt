@@ -23,4 +23,8 @@ interface WebServiceModule {
     @Binds
     @Singleton
     fun provideNewsWebservice(webservice: NewsWebserviceImpl): NewsWebservice
+
+    @Binds
+    @Singleton
+    fun provideMovieWebservice(webservice: MovieWebserviceImpl): MovieWebservice
 }

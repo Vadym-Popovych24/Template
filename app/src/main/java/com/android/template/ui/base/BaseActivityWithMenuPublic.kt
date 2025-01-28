@@ -26,7 +26,7 @@ abstract class BaseActivityWithMenuPublic<V : BaseViewModel> :
 
         if (savedInstanceState == null)
             findViewById<BottomNavigationView>(R.id.bottomNavigation).selectedItemId =
-                R.id.bottom_menu_item_recommendations
+                R.id.bottom_menu_item_popular
 
         val toggle = object : ActionBarDrawerToggle(
             this,

@@ -25,6 +25,7 @@ val pickerDateFormat = SimpleDateFormat("EEE MMM d hh:mm:ss z yyyy", Locale.UK)
 val monthDateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
 val messageHoursMinutesFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 val messageYearMonthDayFormat = SimpleDateFormat("yyyy.dd.MM:HH:mm", Locale.getDefault())
+val movieDataFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
 const val SECOND = 1000L
 const val MINUTE = 60 * SECOND

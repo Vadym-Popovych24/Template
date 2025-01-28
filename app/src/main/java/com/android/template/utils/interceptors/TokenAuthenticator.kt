@@ -1,14 +1,11 @@
 package com.android.template.utils.interceptors
 
 import android.util.Log
-import com.android.template.data.models.api.response.LoginResponse
 import com.android.template.data.prefs.PreferencesHelper
-import com.android.template.data.remote.api.ApiEndpoints
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import retrofit2.HttpException
 
 class TokenAuthenticator constructor(
     private val preferences: PreferencesHelper,

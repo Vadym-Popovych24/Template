@@ -11,5 +11,9 @@ interface StorageModule {
 
     @Binds
     @Singleton
-    fun provideProfileStorage(storage: ProfileStorageImpl): ProfileStorage
+    fun provideProfilesStorage(storage: ProfilesStorageImpl): ProfilesStorage
+
+    @Binds
+    @Singleton
+    fun provideMoviesStorage(storage: MoviesStorageImpl): MoviesStorage
 }

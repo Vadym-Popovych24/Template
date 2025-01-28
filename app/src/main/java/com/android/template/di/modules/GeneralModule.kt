@@ -11,6 +11,8 @@ import com.android.template.di.qualifiers.PreferenceInfo
 import com.android.template.utils.AppConstants
 import com.android.template.utils.Connectivity
 import com.android.template.utils.ViewModelProviderFactory
+import com.android.template.utils.interceptors.AuthDataInterceptor
+import com.android.template.utils.interceptors.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -28,16 +30,17 @@ import javax.inject.Singleton
 class GeneralModule {
     @Provides
     @Singleton
-    fun provideHttpClientWithBasicLogger(): OkHttpClient =
+    fun provideHttpClientWithToken(preferences: PreferencesHelper): OkHttpClient =
         OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
+            .addInterceptor(AuthDataInterceptor(preferences))
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-            /*.authenticator(TokenAuthenticator(preferences) {
-                moveToLogin()
-            })*/
+            .authenticator(TokenAuthenticator(preferences) {
+             //   moveToLogin()
+            })
             //.addInterceptor(ErrorHandlerInterceptor())
             // .addInterceptor(AuthDataInterceptor(preferences))
             .build()

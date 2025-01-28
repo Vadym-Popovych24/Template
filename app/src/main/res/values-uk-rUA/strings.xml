@@ -237,4 +237,20 @@
     <string name="username">Ім\'я користувача:</string>
     <string name="image_saved">Зображення успішно збережено</string>
     <string name="image_save_failed">Не вдалося зберегти зображення</string>
+
+    <string name="popular_list_empty_title">Немає популярних фільмів </string>
+    <string name="popular_list_empty_subtitle">Немає популярних фільмів, як тільки вони з\'являються вони будуть відображатись тут</string>
+    <string name="details">Деталі:</string>
+    <string name="genres">Жанри:</string>
+    <string name="budget">Бюджет:</string>
+    <string name="revenue">Дохід:</string>
+    <string name="country">Країна:</string>
+    <string name="companies">Компанії:</string>
+    <string name="language_label">Мова:</string>
+    <string name="popularity">Популярність:</string>
+    <string name="homepage">Домашня сторінка:</string>
+    <string name="tagline">Слоган:</string>
+    <string name="status">Статус:</string>
+    <string name="vote_count">Кількість голосів:</string>
+    <string name="adult">Для дорослих:</string>
 </resources>

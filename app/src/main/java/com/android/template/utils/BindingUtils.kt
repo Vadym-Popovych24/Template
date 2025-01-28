@@ -223,4 +223,19 @@ object BindingUtils {
             button.revertAnimation()
     }
 
+    @JvmStatic
+    @BindingAdapter("loadImageUrl")
+    fun setImageUrl(imageView: ImageView, path: String?) {
+        if (!path.isNullOrEmpty()) {
+            val picasso = Picasso.get()
+            val requestCreator =
+                if (path.isUrl()) {
+                    picasso.load(path)
+                } else {
+                    picasso.load(File(path))
+                }
+            requestCreator.into(imageView)
+        }
+    }
+
 }

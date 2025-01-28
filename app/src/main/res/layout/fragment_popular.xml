@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.popular.viewmodel.PopularViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/white"
+            android:elevation="@dimen/small_padding"
+            app:title="@string/popular" />
+
+        <com.android.template.utils.custom.paging.PagedList
+            android:id="@+id/pagedList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:empty_list_drawable="@drawable/empty_list"
+            app:empty_list_subtitle="@string/popular_list_empty_subtitle"
+            app:empty_list_title="@string/popular_list_empty_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    </LinearLayout>
+</layout>

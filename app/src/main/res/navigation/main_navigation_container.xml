@@ -44,28 +44,34 @@
         tools:layout="@layout/fragment_change_passwords" />
 
     <fragment
-        android:id="@+id/navigationHome"
-        android:name="com.android.template.ui.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        android:id="@+id/navigationBottomMenu4"
+        android:name="com.android.template.ui.bottom_menu4.BottomMenu4Fragment"
+        android:label="BottomMenu4Fragment"
+        tools:layout="@layout/fragment_bottom_menu_four"/>
 
     <fragment
-        android:id="@+id/navigationRecommendations"
-        android:name="com.android.template.ui.recommendations.RecommendationsFragment"
-        android:label="RecommendationsFragment"
-        tools:layout="@layout/fragment_recommendations"/>
+        android:id="@+id/navigationPopular"
+        android:name="com.android.template.ui.popular.PopularFragment"
+        android:label="PopularFragment"
+        tools:layout="@layout/fragment_popular"/>
 
     <fragment
-        android:id="@+id/navigationLiked"
-        android:name="com.android.template.ui.recommendations.liked.LikedFragment"
-        android:label="LikedFragment"
-        tools:layout="@layout/fragment_liked"/>
+        android:id="@+id/navigationMovieDetails"
+        android:name="com.android.template.ui.popular.details.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details" />
 
     <fragment
-        android:id="@+id/navigationHistory"
-        android:name="com.android.template.ui.recommendations.history.HistoryFragment"
-        android:label="HistoryFragment"
-        tools:layout="@layout/fragment_history"/>
+        android:id="@+id/navigationBottomMenu2"
+        android:name="com.android.template.ui.bottom_menu2.BottomMenu2Fragment"
+        android:label="BottomMenu2Fragment"
+        tools:layout="@layout/fragment_bottom_menu_two"/>
+
+    <fragment
+        android:id="@+id/navigationBottomMenu3"
+        android:name="com.android.template.ui.bottom_menu3.BottomMenu3Fragment"
+        android:label="BottomMenu3Fragment"
+        tools:layout="@layout/fragment_bottom_menu_three"/>
 
     <fragment
         android:id="@+id/navigationMenuItem1"

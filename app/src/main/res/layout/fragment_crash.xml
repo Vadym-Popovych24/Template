@@ -25,7 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -33,7 +34,8 @@
                 android:layout_marginTop="@dimen/xxxlarge_padding"
                 android:layout_marginBottom="@dimen/small_padding"
                 android:layout_weight="1"
-                android:src="@drawable/critical_error" />
+                android:src="@drawable/critical_error"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"

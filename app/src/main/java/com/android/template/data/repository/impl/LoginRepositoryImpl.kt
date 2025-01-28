@@ -2,7 +2,7 @@ package com.android.template.data.repository.impl
 
 import android.util.Base64
 import android.util.Log
-import com.android.template.data.local.interfaces.ProfileStorage
+import com.android.template.data.local.interfaces.ProfilesStorage
 import com.android.template.data.models.api.model.SignUpProfileData
 import com.google.gson.Gson
 import com.google.gson.JsonParser
@@ -27,11 +27,11 @@ class LoginRepositoryImpl @Inject constructor(
     private val loginWebservice: LoginWebservice,
     private val profileWebservice: ProfileWebservice,
     private val preferences: PreferencesHelper,
-    private val profileStorage: ProfileStorage
+    private val profilesStorage: ProfilesStorage
 ) : BaseRepositoryImpl(), LoginRepository {
 
     override fun requestToken(email: String): Single<RequestKeyResponse> =
-        profileStorage.getProfileByEmailIgnoreEmpty(email)
+        profilesStorage.getProfileByEmailIgnoreEmpty(email)
             .flatMap { profileEntity ->
                 if (profileEntity.email == email) {
                     Single.error(UserAlreadyExistException())
@@ -54,8 +54,8 @@ class LoginRepositoryImpl @Inject constructor(
                         accountWithSession = accountResponseWithSession,
                         signUpProfileData = signUpProfileData
                     ).let { newProfileEntity ->
-                        profileStorage.insertProfile(newProfileEntity)
-                        val id = profileStorage.getProfileIdByEmail(signUpProfileData.email)
+                        profilesStorage.insertProfile(newProfileEntity)
+                        val id = profilesStorage.getProfileIdByEmail(signUpProfileData.email)
                         savePreferences(
                             requestToken = requestToken,
                             email = signUpProfileData.email,
@@ -82,10 +82,10 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override fun authByDB(email: String, password: String): Completable =
-        profileStorage.getProfileByEmail(email).flatMapCompletable { profileEntity ->
+        profilesStorage.getProfileByEmail(email).flatMapCompletable { profileEntity ->
             if (profileEntity.email == email && profileEntity.password == password) {
                 Completable.fromAction {
-                    val id = profileStorage.getProfileIdByEmail(email)
+                    val id = profilesStorage.getProfileIdByEmail(email)
                     savePreferences(
                         requestToken = profileEntity.requestToken,
                         email = profileEntity.email,

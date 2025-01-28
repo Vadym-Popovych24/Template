@@ -142,7 +142,12 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected open fun handleError(it: Throwable) {
+    open fun handleError(it: Throwable) {
+        if (it.message?.contains(R.string.no_address_associated.getStringFromResource) == true
+        ) {
+            showMessage(R.string.no_internet_error)
+            return
+        }
         if (it is HttpException) {
             when {
                 it.code() == FORBIDDEN -> {

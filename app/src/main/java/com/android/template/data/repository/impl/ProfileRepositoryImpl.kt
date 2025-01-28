@@ -3,7 +3,8 @@ package com.android.template.data.repository.impl
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.security.crypto.EncryptedFile
-import com.android.template.data.local.interfaces.ProfileStorage
+import com.android.template.data.local.TemplateDatabase
+import com.android.template.data.local.interfaces.ProfilesStorage
 import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.db.ProfileAndAvatar
 import com.android.template.data.prefs.PreferencesHelper
@@ -16,10 +17,11 @@ import java.io.File
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val storage: ProfileStorage,
+    private val storage: ProfilesStorage,
     private val preferences: PreferencesHelper,
     private val remoteFileWebservice: RemoteFileWebservice,
-    private val cacheDir: File
+    private val cacheDir: File,
+    private val database: TemplateDatabase,
 ) : BaseRepositoryImpl(), ProfileRepository {
 
     override fun getProfile(): LiveData<ProfileAndAvatar> {
@@ -91,5 +93,6 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override fun logout(): Completable = Completable.fromAction {
         preferences.clearAllPreferences()
+        // TODO uncomment for real project database.clearAllTables()
     }
 }

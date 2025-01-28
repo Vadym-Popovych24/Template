@@ -108,7 +108,7 @@
                     android:layout_marginEnd="@dimen/default_padding"
                     android:hint="@string/birthday"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:startIconDrawable="@drawable/ic_today">
+                    app:startIconDrawable="@drawable/ic_calendar">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_birth_day"
@@ -131,7 +131,7 @@
                     android:layout_marginEnd="@dimen/default_padding"
                     android:hint="@string/phone_number"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:startIconDrawable="@drawable/ic_phone">
+                    app:startIconDrawable="@drawable/common_full_open_on_phone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_phone"

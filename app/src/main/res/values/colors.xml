@@ -41,4 +41,8 @@
     <color name="reject_red">#DC3131</color>
     <color name="green_btn">#0AB10A</color>
     <color name="background_dark_transparent">#551e272b</color>
+    <color name="separate_strip_color">#C4C4C4</color>
+    <color name="background_sub_layout">#F6F6F6</color>
+    <color name="description_sub_text_color">#696969</color>
+    <color name="stroke_color_light">#D8D8D8</color>
 </resources>

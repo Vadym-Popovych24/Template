@@ -31,7 +31,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
         if (BuildConfig.DEBUG) {
             binding.inputEmail.text = "vadympopovychn24@gmail.com".toEditable()
-            binding.inputPassword.text = "Test12".toEditable()
+            binding.inputPassword.text = "Test2025".toEditable()
         }
 
         binding.inputPassword.setOnActionDoneCallbackWithPreValidation(viewModel.formValidator) {

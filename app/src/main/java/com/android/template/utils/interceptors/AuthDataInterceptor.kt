@@ -9,8 +9,6 @@ class AuthDataInterceptor(private val preferences: PreferencesHelper): Intercept
 
         val requestBuilder = chain.request().newBuilder()
 
-        requestBuilder.header("your_header", "value")
-
         preferences.getToken()?.let { accessToken ->
             requestBuilder.header("Authorization", accessToken)
         }

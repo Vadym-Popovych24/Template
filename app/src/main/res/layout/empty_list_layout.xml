@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:ignore="UseCompoundDrawables"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/empty_list_drawable"
+            android:layout_width="265dp"
+            android:layout_height="265dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/none"
+            android:src="@drawable/svg_dashboard" />
+
+        <TextView
+            android:id="@+id/empty_list_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@{title}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="No Leave for approve" />
+
+        <TextView
+            android:id="@+id/empty_list_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textColor="#696969"
+            android:textSize="16sp"
+            tools:text="You will get updates right after the first leave has been created" />
+
+        <Button
+            android:id="@+id/btn_empty_screen"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/medium_item_size"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/xlarge_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:cornerRadius="30dp"
+            tools:text="Знайти"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</layout>

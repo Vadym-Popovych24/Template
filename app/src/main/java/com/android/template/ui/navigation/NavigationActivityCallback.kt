@@ -16,11 +16,11 @@ interface NavigationActivityCallback {
 
     fun showFragment(fragment: Fragment?)
 
-    fun showRecommendationFragment()
+    fun showPopularFragment()
 
-    fun showLikedFragment()
+    fun showBottomMenu2Fragment()
 
-    fun showHistoryFragment()
+    fun showBottomMenu3Fragment()
 
-    fun showHomeFragment()
+    fun showBottomMenu4Fragment()
 }

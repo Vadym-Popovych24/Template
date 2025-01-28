@@ -19,4 +19,8 @@ interface ManagerModule {
     @Binds
     @Singleton
     fun provideNewsManager(manager: NewsManagerImpl): NewsManager
+
+    @Binds
+    @Singleton
+    fun provideMovieManager(manager: MovieManagerImpl): MovieManager
 }

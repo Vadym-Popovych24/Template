@@ -20,4 +20,7 @@ interface RepositoryModule {
     @Singleton
     fun provideNewsRepository(repository: NewsRepositoryImpl): NewsRepository
 
+    @Binds
+    @Singleton
+    fun provideMovieRepository(repository: MovieRepositoryImpl): MovieRepository
 }

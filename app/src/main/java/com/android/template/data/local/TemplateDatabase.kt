@@ -5,22 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.android.template.data.local.converter.DateConverter
-import com.android.template.data.local.converter.ListStringsConverter
-import com.android.template.data.local.converter.PictureConverter
+import com.android.template.data.local.converter.*
 import com.android.template.data.local.dao.*
 import com.android.template.data.models.db.*
 import com.android.template.data.models.db.conversation.Attachment
 import com.android.template.data.models.db.conversation.User
 
 @Database(
-    entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class],
-    version = 6, exportSchema = false
+    entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class,
+        MovieEntity::class],
+    version = 7, exportSchema = false
 )
 @TypeConverters(
     DateConverter::class,
     PictureConverter::class,
-    ListStringsConverter::class
+    ListStringsConverter::class,
+    ListIntConverter::class
 )
 abstract class TemplateDatabase : RoomDatabase() {
 
@@ -42,6 +42,7 @@ abstract class TemplateDatabase : RoomDatabase() {
 
 
     abstract fun profileDao(): ProfileDao
+    abstract fun movieDao(): MovieDao
 
 
 }

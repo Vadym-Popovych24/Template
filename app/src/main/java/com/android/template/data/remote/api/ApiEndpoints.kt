@@ -21,9 +21,20 @@ object ApiEndpoints {
 
     const val ENDPOINT_GET_NEWS = "top-headlines?sources=techcrunch&apiKey=3f76680cbec04560bfb536eaf7eb13b6"
 
+   /**
+    * Movies
+    */
+    const val ENDPOINT_GET_MOVIES = "movie/popular"
+    const val ENDPOINT_GET_MOVIE_DETAILS = "movie/{movieId}"
+
+
+    /**
+     * Movie Images
+     */
+    const val ENDPOINT_MOVIE_IMAGE = "https://image.tmdb.org/t/p/"
 
     /**
      * For Pagination
      */
-    const val GetItemCount = 50
+    const val PAGINATION_COUNT = 20
 }

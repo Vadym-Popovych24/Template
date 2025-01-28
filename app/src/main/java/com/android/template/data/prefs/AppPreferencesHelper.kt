@@ -59,7 +59,9 @@ class AppPreferencesHelper @Inject constructor(
     }
 
     override fun getToken(): String? = runBlocking { // Fetches the value synchronously
-        context.dataStore.data.first()[prefKeyToken]
+        //TODO remove manual value token and get it from pref for real project, that just for ThemovieDB
+        // context.dataStore.data.first()[prefKeyToken]
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNzIzODFlYTg3NWJlMDdhYjExNmEwYzExN2M3Yzg2YiIsIm5iZiI6MTcyMjA5MjYwNy43MzEsInN1YiI6IjY2YTUwYzNmZjYzNjgwNmUwZTdjMTEwMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BbgdmXG7gnQTfdl6nlWhVVyO1b66W5MSrwx-iKpVNp4"
     }
 
     override fun setToken(token: String) {

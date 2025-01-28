@@ -6,7 +6,7 @@ import com.android.template.ui.coroutine.di.CoroutineProvider
 import com.android.template.ui.crash.CrashActivity
 import com.android.template.ui.crash.di.CrashModule
 import com.android.template.ui.crash.di.CrashProvider
-import com.android.template.ui.home.di.HomeProvider
+import com.android.template.ui.bottom_menu4.di.BottomMenu4Provider
 import com.android.template.ui.login.LoginActivity
 import com.android.template.ui.login.di.LoginModule
 import com.android.template.ui.login.di.LoginProvider
@@ -20,9 +20,9 @@ import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.ui.navigation.di.NavigationActivityPublicModule
 import com.android.template.ui.profile.di.ProfileModule
 import com.android.template.ui.profile.di.ProfileProvider
-import com.android.template.ui.recommendations.di.RecommendationsProvider
-import com.android.template.ui.recommendations.history.di.HistoryProvider
-import com.android.template.ui.recommendations.liked.di.LikedProvider
+import com.android.template.ui.popular.di.PopularProvider
+import com.android.template.ui.bottom_menu3.di.BottomMenu3Provider
+import com.android.template.ui.bottom_menu2.di.BottomMenu2Provider
 import com.android.template.ui.settings.di.SettingsProvider
 import com.android.template.ui.splash.SplashActivity
 import com.android.template.ui.splash.di.SplashModule
@@ -51,10 +51,10 @@ abstract class ActivityModule {
             ProfileProvider::class,
             ChangeAvatarProvider::class,
             SettingsProvider::class,
-            HomeProvider::class,
-            RecommendationsProvider::class,
-            LikedProvider::class,
-            HistoryProvider::class,
+            PopularProvider::class,
+            BottomMenu2Provider::class,
+            BottomMenu3Provider::class,
+            BottomMenu4Provider::class,
             MenuItem1Provider::class,
             MenuItem2Provider::class,
             MenuItem3Provider::class,

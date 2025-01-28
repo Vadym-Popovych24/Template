@@ -118,6 +118,7 @@
     <string name="failed_request_token">Failed getting request Token</string>
     <string name="web_view_open_error">Couldn\'t open link %s in webview</string>
     <string name="request_token_not_approved">Authentication request into Themoviedb not approved.Please try again.</string>
+    <string name="no_address_associated">No address associated with hostname</string>
 
     // validations
     <string name="validation.rule.required">Please enter a value</string>
@@ -259,4 +260,21 @@
     <string name="username">Username:</string>
     <string name="image_saved">Image successfully saved</string>
     <string name="image_save_failed">Failed to save image</string>
+
+    // movie
+    <string name="popular_list_empty_title">No popular movies</string>
+    <string name="popular_list_empty_subtitle">There are no popular movies, as soon as they appear they will be displayed here</string>
+    <string name="details">Details</string>
+    <string name="genres">Genres:</string>
+    <string name="budget">Budget:</string>
+    <string name="revenue">Revenue:</string>
+    <string name="country">Country:</string>
+    <string name="companies">Companies:</string>
+    <string name="language_label">Language:</string>
+    <string name="popularity">Popularity:</string>
+    <string name="homepage">Homepage:</string>
+    <string name="tagline">Tagline:</string>
+    <string name="status">Status:</string>
+    <string name="vote_count">Vote Count:</string>
+    <string name="adult">Adult:</string>
 </resources>
