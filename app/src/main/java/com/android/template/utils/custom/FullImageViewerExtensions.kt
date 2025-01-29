@@ -36,7 +36,7 @@ fun <T : ViewDataBinding, V : BaseViewModel> BaseFragment<T, V>.openViewer(
 private fun loadImage(imageView: ImageView, poster: FullImage?) {
     imageView.apply {
         background = context.getDrawableCompat(R.color.black)
-        BindingUtils.setLoadImageUrl(this, poster?.url)
+        BindingUtils.setUserImageUrl(this, poster?.url)
     }
 }
 

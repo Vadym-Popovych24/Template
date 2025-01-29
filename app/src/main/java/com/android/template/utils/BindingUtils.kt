@@ -41,8 +41,8 @@ object BindingUtils {
 
 
     @JvmStatic
-    @BindingAdapter("loadImageUrl")
-    fun setLoadImageUrl(imageView: ImageView, path: String?) {
+    @BindingAdapter("setUserImageUrl")
+    fun setUserImageUrl(imageView: ImageView, path: String?) {
         if (!path.isNullOrEmpty()) {
             val picasso = Picasso.get()
             val requestCreator =

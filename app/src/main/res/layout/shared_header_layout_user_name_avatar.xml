@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImageUrl="@{viewModel.postCreatorAvatar}"
+            app:setUserImageUrl="@{viewModel.postCreatorAvatar}"
             tools:src="@drawable/default_avatar" />
 
         <ImageView

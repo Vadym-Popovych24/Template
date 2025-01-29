@@ -59,7 +59,7 @@
             android:layout_marginBottom="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImageUrl="@{viewModel.userAvatar}"
+            app:setUserImageUrl="@{viewModel.userAvatar}"
             tools:src="@drawable/default_avatar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

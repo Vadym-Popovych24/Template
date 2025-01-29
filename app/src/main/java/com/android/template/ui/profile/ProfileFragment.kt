@@ -35,7 +35,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.getProfile().observe(viewLifecycleOwner) { profile ->
             binding.apply {
                 val firstLastName = "${profile.profileEntity?.firstName} ${profile.profileEntity?.lastName}"
-                BindingUtils.setLoadImageUrl(imgAvatar, profile.profileEntity?.avatarPath)
+                BindingUtils.setUserImageUrl(imgAvatar, profile.profileEntity?.avatarPath)
                 BindingUtils.setLoadImageUrlWithoutPlaceholder(imageCover, profile.profileEntity?.coverPath)
                 tvFirstLastName.text = firstLastName
                 tvEmail.text = profile.profileEntity?.email
