@@ -3,6 +3,7 @@ package com.android.template.data.local
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.DeleteTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -16,11 +17,11 @@ import com.android.template.data.models.db.conversation.User
 @Database(
     entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class,
         MovieEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
     autoMigrations = [AutoMigration(
-        from = 1,
-        to = 2,
+        from = 2,
+        to = 3,
         spec = TemplateDatabase.MyMigration::class
     )]
 
@@ -50,7 +51,8 @@ abstract class TemplateDatabase : RoomDatabase() {
     }
 
 
-    // Here you write your migration
+    // Here you write your migration and use @DeleteTable or @RenameColumn
+    @DeleteTable(tableName = "contact_requests")
     class MyMigration : AutoMigrationSpec
 
     abstract fun profileDao(): ProfileDao
