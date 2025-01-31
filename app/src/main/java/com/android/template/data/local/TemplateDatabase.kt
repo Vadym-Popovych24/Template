@@ -16,7 +16,7 @@ import com.android.template.data.models.db.conversation.User
 @Database(
     entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class,
         MovieEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = true,
     autoMigrations = [AutoMigration(
         from = 1,
