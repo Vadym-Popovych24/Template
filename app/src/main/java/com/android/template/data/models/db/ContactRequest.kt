@@ -33,6 +33,9 @@ class ContactRequest {
     @ColumnInfo
     var comment: String? = null
 
+    @ColumnInfo
+    var description: String? = null
+
     @ColumnInfo(name = "create_date")
     var createdDate: String? = null
 

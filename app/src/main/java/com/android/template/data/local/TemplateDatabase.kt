@@ -1,10 +1,12 @@
 package com.android.template.data.local
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
 import com.android.template.data.local.converter.*
 import com.android.template.data.local.dao.*
 import com.android.template.data.models.db.*
@@ -14,7 +16,14 @@ import com.android.template.data.models.db.conversation.User
 @Database(
     entities = [ProfileEntity::class, ProfileAvatar::class, User::class, Attachment::class,
         MovieEntity::class],
-    version = 7, exportSchema = false
+    version = 1,
+    exportSchema = true,
+    autoMigrations = [AutoMigration(
+        from = 1,
+        to = 2,
+        spec = TemplateDatabase.MyMigration::class
+    )]
+
 )
 @TypeConverters(
     DateConverter::class,
@@ -40,6 +49,9 @@ abstract class TemplateDatabase : RoomDatabase() {
                 .build()
     }
 
+
+    // Here you write your migration
+    class MyMigration : AutoMigrationSpec
 
     abstract fun profileDao(): ProfileDao
     abstract fun movieDao(): MovieDao
