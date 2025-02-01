@@ -187,6 +187,8 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     // room-paging
     implementation "androidx.room:room-paging:$room_version"
+    // SQLCipher for Android
+    implementation "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
 
     // debug database
     debugImplementation "com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:$debug_db_version"
