@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Geocoder
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.android.template.data.local.KeyEncryptor
 import com.android.template.data.local.TemplateDatabase
 import com.android.template.data.prefs.AppPreferencesHelper
 import com.android.template.data.prefs.PreferencesHelper
@@ -59,9 +60,9 @@ class GeneralModule {
 
     @Provides
     @Singleton
-    internal fun provideTemplateDatabase(context: Context): TemplateDatabase {
+    internal fun provideTemplateDatabase(context: Context, keyEncryptor: KeyEncryptor): TemplateDatabase {
         Log.d("myLogs", "Context = " + context::class.java.name)
-        return TemplateDatabase.getInstance(context)
+        return TemplateDatabase.getInstance(context, keyEncryptor)
     }
 
     @Provides
@@ -96,5 +97,12 @@ class GeneralModule {
     internal fun provideDispatchersDefault(): CoroutineDispatcher {
         return Dispatchers.Default
     }
+
+    @Provides
+    @Singleton
+    internal fun provideKeyEncryptor(preferencesHelper: PreferencesHelper): KeyEncryptor {
+        return KeyEncryptor(preferencesHelper)
+    }
+
 
 }

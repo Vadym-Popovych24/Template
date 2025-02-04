@@ -53,6 +53,7 @@ android {
             buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
             buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
             buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            buildConfigField "String", "KEY_ALIAS", "\"${signingConfigs.release.keyAlias}\""
             resValue "string", "app_name", "Template Dev"
         }
 
@@ -62,6 +63,7 @@ android {
             buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
             buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
             buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            buildConfigField "String", "KEY_ALIAS", "\"${signingConfigs.release.keyAlias}\""
             resValue "string", "app_name", "Template"
         }
     }

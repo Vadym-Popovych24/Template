@@ -34,6 +34,7 @@ class AppPreferencesHelper @Inject constructor(
     private val prefKeyNewNotifications = intPreferencesKey("PREF_KEY_NEW_NOTIFICATIONS")
     private val prefKeyLanguageCode = intPreferencesKey("PREF_LANGUAGE_CODE")
     private val prefKeyLocalProfileId = longPreferencesKey("PREF_KEY_LOCAL_PROFILE_ID")
+    private val prefKeyEncryptedDBKey = stringPreferencesKey("PREF_KEY_ENCRYPTED_DB_KEY")
 
     // init Data Store
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = prefName)
@@ -200,6 +201,18 @@ class AppPreferencesHelper @Inject constructor(
         runBlocking {
             context.dataStore.edit { preferences ->
                 preferences[prefKeyLocalProfileId] = localProfileId
+            }
+        }
+    }
+
+    override fun getEncryptedDBKey(): String = runBlocking {
+        context.dataStore.data.first()[prefKeyEncryptedDBKey] ?: ""
+    }
+
+    override fun setEncryptedDBKey(key: String) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[prefKeyEncryptedDBKey] = key
             }
         }
     }

@@ -38,16 +38,15 @@ abstract class TemplateDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TemplateDatabase? = null
 
-        fun getInstance(context: Context): TemplateDatabase =
+        fun getInstance(context: Context, keyEncryptor: KeyEncryptor): TemplateDatabase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE
-                    ?: buildDatabase(context).also { INSTANCE = it }
+                    ?: buildDatabase(context, keyEncryptor).also { INSTANCE = it }
             }
 
-        private fun buildDatabase(context: Context): TemplateDatabase {
+        private fun buildDatabase(context: Context, keyEncryptor: KeyEncryptor): TemplateDatabase {
             val dbName = "TemplateDatabase.db"
-            val password = "your_secure_password"
-            val factory = SupportFactory(password.toByteArray())
+            val factory = SupportFactory(keyEncryptor.getOrCreateEncryptedKey())
 
             return Room.databaseBuilder(
                 context.applicationContext,
@@ -57,16 +56,16 @@ abstract class TemplateDatabase : RoomDatabase() {
                 .openHelperFactory(factory)
                 .build()
         }
+
     }
 
 
-   // Here you can write your migration and use @DeleteTable or @RenameColumn
-   // @DeleteTable(tableName = "table_name")
-   // @RenameColumn(tableName = "table_name", fromColumnName = "column_name", toColumnName = "column_name")
-   class MyMigration : AutoMigrationSpec
+    // Here you can write your migration and use @DeleteTable or @RenameColumn
+    // @DeleteTable(tableName = "table_name")
+    // @RenameColumn(tableName = "table_name", fromColumnName = "column_name", toColumnName = "column_name")
+    class MyMigration : AutoMigrationSpec
 
     abstract fun profileDao(): ProfileDao
     abstract fun movieDao(): MovieDao
-
 
 }

@@ -42,4 +42,7 @@ interface PreferencesHelper {
 
     fun getDBProfileId(): Long
     fun setDBProfileId(localProfileId: Long)
+
+    fun getEncryptedDBKey(): String
+    fun setEncryptedDBKey(key: String)
 }
