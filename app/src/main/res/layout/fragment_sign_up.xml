@@ -48,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/first_name"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn">
+                    app:boxBackgroundColor="@android:color/transparent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_first_name"
@@ -69,8 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/last_name"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn">
+                    app:boxBackgroundColor="@android:color/transparent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_last_name"
@@ -90,8 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/email"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn">
+                    app:boxBackgroundColor="@android:color/transparent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_email"
@@ -112,7 +109,6 @@
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/password"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -134,7 +130,6 @@
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/confirm_password"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText

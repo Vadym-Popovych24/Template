@@ -12,10 +12,10 @@
         <import type="android.view.View" />
     </data>
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -27,9 +27,9 @@
             app:titleTextColor="@android:color/black" />
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                     android:layout_marginEnd="@dimen/default_padding"
                     android:hint="@string/phone_number"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:startIconDrawable="@drawable/common_full_open_on_phone">
+                    app:startIconDrawable="@drawable/ic_phone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_phone"
@@ -195,14 +195,17 @@
 
         </ScrollView>
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/btn_save"
             style="@style/primary_сircular_progress_button"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/xxlarge_padding"
             android:layout_marginBottom="@dimen/large_padding"
             android:text="@string/save" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -68,9 +68,9 @@ object BindingUtils {
                 } else {
                     picasso.load(File(path))
                 }
-            requestCreator.placeholder(R.drawable.logo).into(imageView)
+            requestCreator.placeholder(R.mipmap.ic_launcher).into(imageView)
         } else {
-            Picasso.get().load(R.drawable.logo).into(imageView)
+            Picasso.get().load(R.mipmap.ic_launcher).into(imageView)
         }
     }
 

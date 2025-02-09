@@ -69,7 +69,8 @@
                     android:layout_height="@dimen/logo_size"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/medium_padding"
-                    app:srcCompat="@drawable/logo" />
+                    app:srcCompat="@drawable/logo"
+                    tools:ignore="ContentDescription" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_email"
@@ -77,8 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/email"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    app:hintTextColor="@color/green_btn">
+                    app:boxBackgroundColor="@android:color/transparent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_email"
@@ -99,8 +99,7 @@
                     android:layout_marginTop="@dimen/default_padding"
                     android:hint="@string/password"
                     app:boxBackgroundColor="@android:color/transparent"
-                    app:passwordToggleEnabled="true"
-                    app:hintTextColor="@color/green_btn">
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_password"
@@ -125,12 +124,12 @@
                     android:paddingTop="@dimen/default_padding"
                     android:paddingBottom="@dimen/default_padding"
                     android:text="@string/forgot_password"
-                    android:textColor="@color/green_approved_text" />
+                    android:textColor="@color/colorPrimary" />
 
                 <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                     android:id="@+id/btn_sign_in"
-                    android:layout_gravity="center_horizontal"
                     style="@style/primary_сircular_progress_button"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/login" />
 
             </LinearLayout>

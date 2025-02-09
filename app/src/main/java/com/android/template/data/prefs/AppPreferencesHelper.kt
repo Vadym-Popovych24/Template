@@ -41,9 +41,11 @@ class AppPreferencesHelper @Inject constructor(
 
     override fun clearAllPreferences() {
         runBlocking {
+            val encryptedDBKey = getEncryptedDBKey()
             context.dataStore.edit { prefs ->
                 prefs.clear()
             }
+            setEncryptedDBKey(encryptedDBKey)
         }
     }
 
