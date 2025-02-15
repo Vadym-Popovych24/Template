@@ -10,6 +10,8 @@ interface MoviesStorage {
 
     fun saveMovies(movies: List<MovieEntity>)
 
+    fun saveMovie(movie: MovieEntity)
+
     fun clearMovie()
 
     fun getMovieFromDB(id: Long): Flow<MovieEntity>

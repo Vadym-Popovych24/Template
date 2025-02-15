@@ -14,6 +14,7 @@ import com.android.template.utils.isValidPassword
 import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
 import com.android.template.utils.setOnClickListenerWithPreValidation
 import com.android.template.utils.toEditable
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rule.validator.formvalidator.Validator
 import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
 import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
@@ -53,11 +54,22 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     }
 
     private fun login() {
-        viewModel.login(
-            username = binding.inputEmail.text.toString(),
-            password = binding.inputPassword.text.toString()
-        ) {
-            moveToMainActivity()
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.let { token ->
+                    viewModel.saveFCMToken(token) {
+                        viewModel.login(
+                            username = binding.inputEmail.text.toString(),
+                            password = binding.inputPassword.text.toString()
+                        ) {
+                            moveToMainActivity()
+                        }
+                    }
+                }
+            } else {
+                viewModel.loadingCallback?.invoke(false)
+                showToast(it.exception?.message.toString())
+            }
         }
     }
 

@@ -48,5 +48,10 @@ class MovieRepositoryImpl @Inject constructor(
         storage.getMovieFromDB(id)
 
     override fun getMovieDetails(id: Long): Single<MovieDetailsResponse> =
-        webService.getMovieDetails(id)
+        webService.getMovieDetails(id).map {
+            MovieEntity.mapFromDetails(it).let { movieEntity ->
+                storage.saveMovie(movieEntity)
+            }
+            it
+        }
 }

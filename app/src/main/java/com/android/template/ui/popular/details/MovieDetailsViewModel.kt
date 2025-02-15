@@ -19,7 +19,9 @@ class MovieDetailsViewModel @Inject constructor(
 
     suspend fun getMovieItem(id: Long) {
         movieManager.getMovieFromDB(id).collect { item ->
-            _item.value = PopularMovieViewItem.mapFrom(item)
+            if (item != null) {
+                _item.value = PopularMovieViewItem.mapFrom(item)
+            }
         }
     }
 

@@ -3,7 +3,6 @@ package com.android.template.data.repository.impl
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.security.crypto.EncryptedFile
-import com.android.template.data.local.TemplateDatabase
 import com.android.template.data.local.interfaces.ProfilesStorage
 import com.android.template.data.models.ProfileSettings
 import com.android.template.data.models.db.ProfileAndAvatar
@@ -11,6 +10,7 @@ import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.RemoteFileWebservice
 import com.android.template.data.repository.interfaces.ProfileRepository
 import com.android.template.utils.encryptedFile
+import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import java.io.File
@@ -20,8 +20,7 @@ class ProfileRepositoryImpl @Inject constructor(
     private val storage: ProfilesStorage,
     private val preferences: PreferencesHelper,
     private val remoteFileWebservice: RemoteFileWebservice,
-    private val cacheDir: File,
-    private val database: TemplateDatabase,
+    private val cacheDir: File
 ) : BaseRepositoryImpl(), ProfileRepository {
 
     override fun getProfile(): LiveData<ProfileAndAvatar> {
@@ -93,6 +92,7 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override fun logout(): Completable = Completable.fromAction {
         preferences.clearAllPreferences()
+        FirebaseMessaging.getInstance().deleteToken()
         // TODO uncomment for real project database.clearAllTables()
     }
 }

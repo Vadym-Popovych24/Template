@@ -22,4 +22,6 @@ interface LoginRepository : BaseRepository {
     fun sendResetPasswordCode(email: String, code: String): Completable
 
     fun resetPassword(email: String, code: String, password: String): Completable
+
+    fun saveFCMToken(fcmToken: String): Completable
 }

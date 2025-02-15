@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.android.template.data.local.converter.ListIntConverter
 import com.android.template.data.models.api.response.Movie
+import com.android.template.data.models.api.response.MovieDetailsResponse
 
 @Entity(tableName = "movies")
 data class MovieEntity(
@@ -71,6 +72,25 @@ data class MovieEntity(
                 voteAverage = movie.voteAverage,
                 voteCount = movie.voteCount,
                 genreIds = movie.genreIds
+            )
+        }
+
+        fun mapFromDetails(movie: MovieDetailsResponse): MovieEntity {
+            return MovieEntity(
+                id = movie.id,
+                adult = movie.adult,
+                backdropPath = movie.backdropPath,
+                originalLanguage = movie.originalLanguage,
+                originalTitle = movie.originalTitle,
+                overview = movie.overview,
+                popularity = movie.popularity,
+                posterPath = movie.posterPath,
+                releaseDate = movie.releaseDate,
+                title = movie.title,
+                video = movie.video,
+                voteAverage = movie.voteAverage,
+                voteCount = movie.voteCount,
+                genreIds = movie.genres.map { it.id }
             )
         }
 

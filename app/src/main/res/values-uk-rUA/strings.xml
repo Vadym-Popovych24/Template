@@ -253,4 +253,6 @@
     <string name="status">Статус:</string>
     <string name="vote_count">Кількість голосів:</string>
     <string name="adult">Для дорослих:</string>
+
+    <string name="notifications_admin_channel_name">admin_channel_name</string>
 </resources>

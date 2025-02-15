@@ -19,4 +19,8 @@ class LoginViewModel @Inject constructor(private val loginManager: LoginManager)
         makeRx(loginManager.authByDB(username, password).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
+    fun saveFCMToken(fcmToken: String, completeCallback: (() -> Unit)? = null) {
+        makeRxInvisible(loginManager.saveFCMToken(fcmToken), completeCallback)
+    }
+
 }

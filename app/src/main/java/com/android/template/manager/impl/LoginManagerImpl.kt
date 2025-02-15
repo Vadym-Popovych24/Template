@@ -38,4 +38,6 @@ class LoginManagerImpl @Inject constructor(private val loginRepository: LoginRep
 
     override fun resetPassword(email: String, code: String, password: String): Completable =
         loginRepository.resetPassword(email, code, password)
+
+    override fun saveFCMToken(fcmToken: String): Completable = loginRepository.saveFCMToken(fcmToken)
 }

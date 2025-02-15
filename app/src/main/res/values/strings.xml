@@ -277,4 +277,6 @@
     <string name="status">Status:</string>
     <string name="vote_count">Vote Count:</string>
     <string name="adult">Adult:</string>
+
+    <string name="notifications_admin_channel_name">admin_channel_name</string>
 </resources>

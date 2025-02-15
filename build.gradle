@@ -53,7 +53,10 @@ buildscript {
         loading_button_version = '2.3.0'
         image_cropper_version = '4.6.0'
         stfalcon_image_viewer_version = 'v1.0.1'
+        shortcut_badger_version = '1.1.22@aar'
         tools_build_gradle_version = '8.7.3'
+        sonarqube_version = '3.3'
+        firebase_crashlytics_gradle_version = '3.0.2'
     }
 
     repositories {
@@ -67,7 +70,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.google.gms:google-services:$gsm_version"
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3' // added for sonarQube
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonarqube_version" // added for sonarQube
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$firebase_crashlytics_gradle_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

@@ -3,6 +3,7 @@ package com.android.template.ui.navigation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
@@ -29,8 +30,8 @@ import com.android.template.ui.profile.ProfileFragment
 import com.android.template.ui.popular.PopularFragment
 import com.android.template.ui.bottom_menu3.BottomMenu3Fragment
 import com.android.template.ui.bottom_menu2.BottomMenu2Fragment
+import com.android.template.ui.popular.details.MovieDetailsFragment
 import com.android.template.ui.settings.SettingsFragment
-
 
 class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>() {
 
@@ -55,12 +56,17 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         super.onCreate(savedInstanceState)
 
         screenInitialized = true
+        initBottomMenu()
+        openFirstAvailableScreenInBottomMenu()
+        if (intent.extras != null && intent.extras!!.getString(EXTRA_TOPIC) != null) {
+            navigateByTopic(intent.extras!!)
+        }
+
         viewModel.moveToProfileCallback = {
             showFragment(ProfileFragment.newInstance())
             closeDrawer()
         }
-        initBottomMenu()
-        openFirstAvailableScreenInBottomMenu()
+
         handleOnBackPressed()
 
         viewModel.getProfileDataFromDB().observe(this) { profileAndAvatar ->
@@ -232,6 +238,23 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         }
     }
 
+    private fun navigateByTopic(extras: Bundle) {
+        val topic = extras.getString(EXTRA_TOPIC)
+        val itemId = extras.getString(EXTRA_ID)?.toLong()?:0
+        hideAllLoading()
+        when (topic) {
+
+            NotificationType.MOVIE_DETAILS.toString() -> {
+                showFragment(MovieDetailsFragment.newInstance(itemId))
+            }
+
+            else -> {
+                Log.e(TAG, String.format("Unknown TOPIC %s", topic))
+
+            }
+        }
+    }
+
     override fun setCurrentFragmentOfBottomMenu(fragment: Fragment) {
         activeFragment = fragment
         when (fragment) {
@@ -257,14 +280,13 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         super.openDrawer()
     }
 
-
     override fun onStop() {
         super.onStop()
         screenInitialized = false
     }
 
     companion object {
-
+        private val TAG: String = NavigationActivity::class.java.simpleName
         private var preventBackPressedFragments = mutableListOf(
             PopularFragment::class.java.name,
             BottomMenu2Fragment::class.java.name,
@@ -272,22 +294,36 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
             BottomMenu4Fragment::class.java.name
         )
 
-        private const val EXTRA_NOTIFICATION_TYPE = "EXTRA_NOTIFICATION_TYPE"
-        private const val EXTRA_ITEM_ID = "EXTRA_ITEM_ID"
+        private const val EXTRA_ID = "EXTRA_ID"
         private const val EXTRA_BADGE = "EXTRA_BADGE"
+        const val EXTRA_TOPIC = "EXTRA_TOPIC"
 
         var screenInitialized = false
 
         fun newIntent(context: Context) = Intent(context, NavigationActivity::class.java)
 
-        fun newIntent(
-            context: Context, notificationType: NotificationType, itemId: String?,
-            badge: Int? = null
-        ) = newIntent(context).apply {
-            putExtra(EXTRA_NOTIFICATION_TYPE, notificationType.ordinal)
-            putExtra(EXTRA_ITEM_ID, itemId)
-            badge?.let { putExtra(EXTRA_BADGE, it) }
-        }
+        fun newIntent(context: Context, extras: Bundle?, badge: Int? = null) =
+            newIntent(context).apply {
+
+                // Handle actions for push notification
+                if (extras != null) {
+                    val topic = extras.getString(EXTRA_TOPIC)?.uppercase()
+                    putExtra(EXTRA_TOPIC, topic)
+
+                    when (topic) {
+                        NotificationType.MOVIE_DETAILS.toString() -> {
+                            putExtra(
+                                EXTRA_ID,
+                                extras.getString(EXTRA_ID)
+                            )
+                        }
+
+                    }
+
+                }
+                badge?.let { putExtra(EXTRA_BADGE, it) }
+
+            }
     }
 
 }

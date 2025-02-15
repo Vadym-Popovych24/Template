@@ -17,6 +17,10 @@ class MoviesStorageImpl @Inject constructor(private val database: TemplateDataba
         database.movieDao().insertAll(movies)
     }
 
+    override fun saveMovie(movie: MovieEntity) {
+        database.movieDao().insert(movie)
+    }
+
     override fun clearMovie() {
         database.movieDao().clearTable()
     }

@@ -8,7 +8,9 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 apply plugin: 'com.google.gms.google-services'
 
-apply plugin: 'org.sonarqube' // added for sonar qube
+apply plugin: 'org.sonarqube' // added for sonarqube
+
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     signingConfigs {
@@ -30,7 +32,7 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 14
+        versionCode 15
         versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -255,10 +257,9 @@ dependencies {
     // Declare the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
 
-    //  implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
-    //   implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-messaging'
 
     //data picker
     implementation "com.github.dewinjm:monthyear-picker:$month_year_picker"
@@ -310,4 +311,7 @@ dependencies {
 
     // ImageViewer
     implementation "com.github.stfalcon-studio:StfalconImageViewer:$stfalcon_image_viewer_version"
+
+    //application icon badge
+    implementation "me.leolin:ShortcutBadger:$shortcut_badger_version"
 }
