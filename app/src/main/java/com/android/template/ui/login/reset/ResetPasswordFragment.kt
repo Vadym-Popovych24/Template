@@ -11,6 +11,7 @@ import com.android.template.utils.getStringFromResource
 import com.android.template.utils.isValidPassword
 import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
 import com.android.template.utils.setOnClickListenerWithPreValidation
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rule.validator.formvalidator.Validator
 import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
 import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
@@ -37,12 +38,23 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding, ResetPa
     }
 
     private fun savePassword() {
-        viewModel.saveNewPassword(
-            email = args.email,
-            code = args.code,
-            password = binding.includePassword.inputPassword.text.toString()
-        ) {
-            moveToMainActivity()
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.let { token ->
+                    viewModel.saveFCMToken(token) {
+                        viewModel.saveNewPassword(
+                            email = args.email,
+                            code = args.code,
+                            password = binding.includePassword.inputPassword.text.toString()
+                        ) {
+                            moveToMainActivity()
+                        }
+                    }
+                }
+            } else {
+                viewModel.loadingCallback?.invoke(false)
+                showToast(it.exception?.message.toString())
+            }
         }
     }
 

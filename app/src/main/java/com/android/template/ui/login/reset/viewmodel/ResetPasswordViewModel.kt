@@ -25,6 +25,10 @@ class ResetPasswordViewModel @Inject constructor(private val loginManager: Login
         )
     }
 
+    fun saveFCMToken(fcmToken: String, completeCallback: (() -> Unit)? = null) {
+        makeRxInvisible(loginManager.saveFCMToken(fcmToken), completeCallback)
+    }
+
     override fun handleError(it: Throwable) {
         super.handleError(it)
         showMessage(it.localizedMessage?.toString() ?: "")

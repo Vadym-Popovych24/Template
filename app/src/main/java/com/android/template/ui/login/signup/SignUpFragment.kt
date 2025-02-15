@@ -17,6 +17,7 @@ import com.android.template.utils.isValidName
 import com.android.template.utils.isValidPassword
 import com.android.template.utils.setOnActionDoneCallbackWithPreValidation
 import com.android.template.utils.setOnClickListenerWithPreValidation
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rule.validator.formvalidator.Validator
 import com.rule.validator.formvalidator.validatableformitem.TextInputLayoutValidatableFormItem
 import com.rule.validator.formvalidator.validatableformitem.ValidationStyle
@@ -46,8 +47,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
     }
 
     private fun signUp() {
-        viewModel.requestToken(binding.inputEmail.text.toString()) { requestKey ->
-            moveToApproveRequestKey("${ApiEndpoints.ENDPOINT_WEB_APPROVE}$requestKey")
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.let { token ->
+                    viewModel.saveFCMToken(token) {
+                        viewModel.requestToken(binding.inputEmail.text.toString()) { requestKey ->
+                            moveToApproveRequestKey("${ApiEndpoints.ENDPOINT_WEB_APPROVE}$requestKey")
+                        }
+                    }
+                }
+            } else {
+                viewModel.loadingCallback?.invoke(false)
+                showToast(it.exception?.message.toString())
+            }
         }
         /*viewModel.signUp(
             firstName = binding.inputFirstName.text.toString(),

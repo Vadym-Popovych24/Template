@@ -65,6 +65,10 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
         ).delay(2, TimeUnit.SECONDS), completableCallback)
     }
 
+    fun saveFCMToken(fcmToken: String, completeCallback: (() -> Unit)? = null) {
+        makeRxInvisible(loginManager.saveFCMToken(fcmToken), completeCallback)
+    }
+
     override fun handleError(it: Throwable) {
         if (it is SignUpException) {
             it.errors.forEach {
