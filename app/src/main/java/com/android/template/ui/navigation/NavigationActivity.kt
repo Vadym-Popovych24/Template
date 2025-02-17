@@ -32,12 +32,18 @@ import com.android.template.ui.bottom_menu3.BottomMenu3Fragment
 import com.android.template.ui.bottom_menu2.BottomMenu2Fragment
 import com.android.template.ui.popular.details.MovieDetailsFragment
 import com.android.template.ui.settings.SettingsFragment
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 
 class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>() {
 
     override val fragmentContainerId = R.id.fragment_container
     private val bottomNavigation
         get() = viewDataBinding.includeBodyPublic.bottomNavigation
+
+    private val menus = listOf<Int>(R.menu.bottom_menu, R.menu.bottom_menu_2, R.menu.bottom_menu_3, R.menu.bottom_menu_4)
 
     @get:Synchronized
     @set:Synchronized
@@ -47,6 +53,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     private var bottomMenu3Fragment: BottomMenu3Fragment? = null
     private var bottomMenu4Fragment: BottomMenu4Fragment? = null
     private var isBottomFragmentsAdded = false
+    var menuVariant = 0
 
     override fun updateBottomNavigation(bottomNavigationVisibility: Int) {
         findViewById<View>(R.id.bottomNavigation)?.visibility = bottomNavigationVisibility
@@ -55,6 +62,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setMenuOrder()
         screenInitialized = true
         initBottomMenu()
         openFirstAvailableScreenInBottomMenu()
@@ -172,7 +180,8 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
                     )
                 ) {
                     closeDrawer()
-                } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
+                } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name ||
+                    menuVariant != 0 && currentFragment::class.java.name == BottomMenu2Fragment::class.java.name) {
                     finish()
                 } else {
                     openFirstAvailableScreenInBottomMenu()
@@ -285,7 +294,38 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         screenInitialized = false
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 0
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+
+        remoteConfig.fetchAndActivate().addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                val updated = task.result
+                Log.d(REMOTE_CONFIG_TAG, "Config params updated: $updated")
+                if (updated) {
+                    setMenuOrder()
+                }
+            } else {
+                Log.d(REMOTE_CONFIG_TAG, "Config params not updated!")
+            }
+        }
+
+    }
+
+    private fun setMenuOrder() {
+        menuVariant = Firebase.remoteConfig.getLong("menu_variant").toInt() - 1
+        bottomNavigation.menu.clear()
+        bottomNavigation.inflateMenu(menus[menuVariant])
+    }
+
     companion object {
+        private const val REMOTE_CONFIG_TAG = "Remote config:"
         private val TAG: String = NavigationActivity::class.java.simpleName
         private var preventBackPressedFragments = mutableListOf(
             PopularFragment::class.java.name,

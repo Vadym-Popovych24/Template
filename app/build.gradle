@@ -32,7 +32,7 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 15
+        versionCode 16
         versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -108,6 +108,7 @@ android {
     }
 
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.14'
     }
@@ -258,8 +259,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
 
     implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-config-ktx'
 
     //data picker
     implementation "com.github.dewinjm:monthyear-picker:$month_year_picker"
