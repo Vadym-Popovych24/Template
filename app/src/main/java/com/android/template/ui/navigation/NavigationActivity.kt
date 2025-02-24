@@ -53,7 +53,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     private var bottomMenu3Fragment: BottomMenu3Fragment? = null
     private var bottomMenu4Fragment: BottomMenu4Fragment? = null
     private var isBottomFragmentsAdded = false
-    var menuVariant = 0
+    var menuVariant = 1
 
     override fun updateBottomNavigation(bottomNavigationVisibility: Int) {
         findViewById<View>(R.id.bottomNavigation)?.visibility = bottomNavigationVisibility
@@ -320,6 +320,7 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
 
     private fun setMenuOrder() {
         menuVariant = Firebase.remoteConfig.getLong("menu_variant").toInt() - 1
+        if (menuVariant !in 0..3) menuVariant = 0
         bottomNavigation.menu.clear()
         bottomNavigation.inflateMenu(menus[menuVariant])
     }
