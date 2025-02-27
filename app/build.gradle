@@ -12,6 +12,8 @@ apply plugin: 'org.sonarqube' // added for sonarqube
 
 apply plugin: 'com.google.firebase.crashlytics'
 
+apply plugin: 'com.google.firebase.appdistribution'
+
 android {
     signingConfigs {
         debug {
@@ -32,7 +34,7 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 16
+        versionCode 17
         versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -76,6 +78,13 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            firebaseAppDistribution {
+                serviceCredentialsFile="D:\\Projects\\Template_files\\template-3fcc1-firebase-adminsdk-mgh3v-bf0690700e.json"
+                appId="1:1032016096431:android:d32cbd067813bffc27785a"
+                releaseNotes="New Dev Release Build!"
+                testers="performanc24@gmail.com"
+            }
         }
         debug {
             minifyEnabled false

@@ -57,6 +57,7 @@ buildscript {
         tools_build_gradle_version = '8.7.3'
         sonarqube_version = '3.3'
         firebase_crashlytics_gradle_version = '3.0.2'
+        firebase_app_distribution_version = '4.1.0'
     }
 
     repositories {
@@ -72,6 +73,7 @@ buildscript {
         classpath "com.google.gms:google-services:$gsm_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonarqube_version" // added for sonarQube
         classpath "com.google.firebase:firebase-crashlytics-gradle:$firebase_crashlytics_gradle_version"
+        classpath "com.google.firebase:firebase-appdistribution-gradle:$firebase_app_distribution_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
