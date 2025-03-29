@@ -23,8 +23,8 @@ class LoginWebserviceImpl @Inject constructor(
     @WebRetrofit webRetrofit: Retrofit
 ) : LoginWebservice {
 
-    val loginApi = baseRetrofit.create(LoginApi::class.java)
-    val webApi = webRetrofit.create(WebApi::class.java)
+    val loginApi: LoginApi = baseRetrofit.create(LoginApi::class.java)
+    val webApi: WebApi = webRetrofit.create(WebApi::class.java)
 
     override fun requestToken(): Single<RequestKeyResponse> =
         loginApi.requestToken(ApiEndpoints.API_KEY)
