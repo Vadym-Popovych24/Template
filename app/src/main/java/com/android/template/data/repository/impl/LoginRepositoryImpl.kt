@@ -174,7 +174,12 @@ class LoginRepositoryImpl @Inject constructor(
         loginWebservice.sendResetPasswordCode(email, code)
 
     override fun resetPassword(email: String, code: String, password: String): Completable =
-        loginWebservice.resetPassword(email, code, password).saveAuthData()
+        loginWebservice.resetPassword(email, code, password)
+            //   .saveAuthData() // TODO Change it by yours api request if you have bearer token in response
+            .flatMapCompletable {
+            Completable.complete()
+        }
+
 
     override fun saveFCMToken(fcmToken: String): Completable =
         Completable.fromAction {

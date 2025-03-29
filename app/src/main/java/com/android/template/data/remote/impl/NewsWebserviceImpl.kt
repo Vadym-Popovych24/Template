@@ -11,7 +11,7 @@ class NewsWebserviceImpl @Inject constructor(
     @NewsRetrofit newsRetrofit: Retrofit
 ) : NewsWebservice {
 
-    private val newsApi = newsRetrofit.create(NewsApi::class.java)
+    val newsApi: NewsApi = newsRetrofit.create(NewsApi::class.java)
 
     override suspend fun getNews(): NewsResponse = newsApi.getNews()
 

@@ -47,7 +47,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding, ResetPa
                             code = args.code,
                             password = binding.includePassword.inputPassword.text.toString()
                         ) {
-                            moveToMainActivity()
+                            showToast(R.string.password_saved)
                         }
                     }
                 }

@@ -117,6 +117,13 @@ android {
         freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
     }
 
+    testOptions {
+        unitTests.all {
+            it.reports.html.required = true
+            it.reports.junitXml.required = true
+        }
+    }
+
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 
     composeOptions {
@@ -143,12 +150,19 @@ sonarqube {
 }
 
 dependencies {
+    // Add the module containing your classes as a test dependency
+    testImplementation project(":app")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation project(':validator')
     testImplementation "junit:junit:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
+    testImplementation 'androidx.core:core-ktx:1.13.1'
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 

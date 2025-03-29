@@ -23,8 +23,8 @@ class LoginWebserviceImpl @Inject constructor(
     @WebRetrofit webRetrofit: Retrofit
 ) : LoginWebservice {
 
-    private val loginApi = baseRetrofit.create(LoginApi::class.java)
-    private val webApi = webRetrofit.create(WebApi::class.java)
+    val loginApi = baseRetrofit.create(LoginApi::class.java)
+    val webApi = webRetrofit.create(WebApi::class.java)
 
     override fun requestToken(): Single<RequestKeyResponse> =
         loginApi.requestToken(ApiEndpoints.API_KEY)
@@ -45,7 +45,7 @@ class LoginWebserviceImpl @Inject constructor(
         loginApi.createSession(ApiEndpoints.API_KEY, SessionRequest(requestToken))
 
     override fun login(email: String, password: String): Single<LoginResponse> =
-        TODO("Change it by yours api request")
+        loginApi.login(email, password)
 
     override fun signUp(
         firstName: String,
@@ -53,7 +53,12 @@ class LoginWebserviceImpl @Inject constructor(
         email: String,
         password: String
     ): Single<LoginResponse> =
-        TODO("Change it by yours api request")
+        loginApi.signUp(
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            password = password
+        )
         // Below example how to handle custom error response from server
         /*.onErrorResumeNext { throwable ->
                 Single.create {
@@ -83,26 +88,34 @@ class LoginWebserviceImpl @Inject constructor(
 
     override fun sendResetPasswordCode(email: String, code: String): Completable =
         if (code == "123456") {
-            Completable.complete()
+            Completable.complete() // TODO Change it by yours api request
         } else {
             Completable.error(
                 IllegalArgumentException(
                     R.string.wrong_secure_code_error.getStringFromResource
                 )
             )
-        } // TODO Change it by yours api request
+        }
 
     override fun resetPassword(
         email: String,
         code: String,
         password: String
     ): Single<LoginResponse> =
-        Single.just(LoginResponse("", 0,"")) // TODO Change it by yours api request
-   .onErrorResumeNext {
-                Single.error(
-                    IllegalArgumentException(
-                        R.string.wrong_password_error.getStringFromResource
-                    )
+        if (code == "123456") {
+            Single.just(
+                LoginResponse(
+                    accessToken = "accessToken",
+                    expiresIn = 600,
+                    refreshToken = "refreshToken"
                 )
-            }
+            ) // TODO Change it by yours api request
+        } else {
+            Single.error(
+                IllegalArgumentException(
+                    R.string.wrong_password_error.getStringFromResource
+                )
+            )
+
+        }
 }
