@@ -14,6 +14,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 apply plugin: 'com.google.firebase.appdistribution'
 
+apply plugin: 'jacoco'
+
 android {
     signingConfigs {
         debug {
@@ -135,6 +137,27 @@ android {
     namespace 'com.android.template'
 }
 
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.withType(Test).configureEach {
+    finalizedBy jacocoTestReport
+}
+
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn 'testDebugUnitTest' // Ensures unit tests run before generating the report
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
+    classDirectories.setFrom(files("$buildDir/intermediates/javac/debug"))
+    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
+}
+
 sonarqube {
     properties {
         property "sonar.projectName", "Template"
@@ -165,7 +188,8 @@ dependencies {
     testImplementation 'androidx.core:core-ktx:1.13.1'
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-
+    // For coverage reports
+    debugImplementation 'org.jacoco:org.jacoco.core:0.8.10'
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
     implementation "androidx.multidex:multidex:$multidex_version"
