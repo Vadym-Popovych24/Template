@@ -2,11 +2,8 @@ package com.android.template.ui.login.signup.viewmodel
 
 import com.android.template.R
 import com.android.template.data.models.api.model.SignUpProfileData
-import com.android.template.data.models.exception.ApproveException
-import com.android.template.data.models.exception.SignUpException
 import com.android.template.manager.interfaces.LoginManager
 import com.android.template.ui.base.BaseViewModel
-import com.android.template.utils.getStringFromResource
 import com.rule.validator.formvalidator.FormValidator
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -67,17 +64,6 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
 
     fun saveFCMToken(fcmToken: String, completeCallback: (() -> Unit)? = null) {
         makeRxInvisible(loginManager.saveFCMToken(fcmToken), completeCallback)
-    }
-
-    override fun handleError(it: Throwable) {
-        if (it is SignUpException) {
-            it.errors.forEach {
-                val errorMessage = it.errorMessage.getStringFromResource
-                showMessage(errorMessage)
-            }
-        } else if (it is ApproveException) {
-            showMessage(R.string.request_token_not_approved)
-        } else super.handleError(it)
     }
 
 }

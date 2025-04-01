@@ -34,19 +34,19 @@ class NewsWebserviceImplTest {
     }
 
     @Test
-    fun `test newsApi is correctly initialized`() {
+    fun testNewsApiIsCorrectlyInitialized() {
         assertNotNull(newsWebservice.newsApi)
         verify { mockNewsRetrofit.create(NewsApi::class.java) } // Verify that create() was called
     }
 
     @Test
-    fun `test newsApi is instance of NewsApi`() {
+    fun testNewsApiIsInstanceOfNewsApi() {
         assertTrue(newsWebservice.newsApi is NewsApi)
         verify { mockNewsRetrofit.create(NewsApi::class.java) }
     }
 
     @Test
-    fun `getNews returns expected NewsResponse`() = runTest {
+    fun getNewsReturnsExpectedNewsResponse() = runTest {
         // Given
         val mockResponse = NewsResponse(
             status = "ok",

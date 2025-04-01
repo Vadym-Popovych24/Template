@@ -58,33 +58,33 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `test loginApi is correctly initialized`() {
+    fun testLoginApiIsCorrectlyInitialized() {
         assertNotNull(loginWebservice.loginApi)
         verify { mockBaseRetrofit.create(LoginApi::class.java) } // Verify that create() was called
     }
 
     @Test
-    fun `test webApi is correctly initialized`() {
+    fun testWebApiISCorrectlyInitialized() {
         assertNotNull(loginWebservice.webApi)
         verify { mockWebRetrofit.create(WebApi::class.java) } // Verify that create() was called
     }
 
     @Test
-    fun `test loginApi is instance of LoginApi`() {
+    fun testLoginApiIsInstanceOfLoginApi() {
         assertTrue(loginWebservice.loginApi is LoginApi)
         verify { mockBaseRetrofit.create(LoginApi::class.java) }
     }
 
     @Test
-    fun `test webApi is instance of WebApi`() {
+    fun testWebApiIsInstanceOfWebApi() {
         assertTrue(loginWebservice.webApi is WebApi)
         verify { mockWebRetrofit.create(WebApi::class.java) }
     }
 
     @Test
-    fun `test request token`() {
+    fun testRequestToken() {
         // Given
-        val expectedResponse =  RequestKeyResponse(success = true, expiresAt = "600", requestToken = "valid_token")
+        val expectedResponse = RequestKeyResponse(success = true, expiresAt = "600", requestToken = "valid_token")
 
         every {
             mockLoginApi.requestToken(ApiEndpoints.API_KEY)
@@ -105,7 +105,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `approveRequestToken completes successfully`() {
+    fun approveRequestTokenCompletesSuccessfully() {
         // Given
         val requestToken = "valid_token"
         every { mockWebApi.approveRequestToken(requestToken) } returns Completable.complete()
@@ -124,7 +124,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `approveRequestToken throws ApproveException on 401 error`() {
+    fun approveRequestTokenThrowsApproveExceptionOn401Error() {
         // Given
         val requestToken = "invalid_token"
         val responseBody = "Unauthorized".toResponseBody("application/json".toMediaTypeOrNull())
@@ -146,7 +146,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `approveRequestToken propagates HttpException for other error codes`() {
+    fun approveRequestTokenPropagatesHttpExceptionForOtherErrorCodes() {
         // Given
         val requestToken = "some_token"
         val responseBody = "Forbidden".toResponseBody("application/json".toMediaTypeOrNull())
@@ -168,7 +168,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `approveRequestToken propagates non-HTTP errors`() {
+    fun approveRequestTokenPropagatesNonHTTPErrors() {
         // Given
         val requestToken = "random_token"
         val networkException = RuntimeException("Network error")
@@ -188,7 +188,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `createSession returns SessionResponse on success`() {
+    fun createSessionReturnsSessionResponseOnSuccess() {
         // Given
         val requestToken = "valid_token"
         val expectedResponse = SessionResponse(success = true, sessionId = "session_123")
@@ -212,7 +212,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `login returns LoginResponse on success`() {
+    fun loginReturnsLoginResponseOnSuccess() {
         // Given
         val email = "test@example.com"
         val password = "password"
@@ -237,7 +237,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `signUp returns LoginResponse on success`() {
+    fun signUpReturnsLoginResponseOnsuccess() {
         // Given
         val firstName = "name"
         val lastName = "lastName"
@@ -265,7 +265,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `signUp returns HttpException on 400 error`() {
+    fun signUpReturnsHttpExceptionOn400Error() {
         // Given
         val firstName = "name"
         val lastName = "lastName"
@@ -295,7 +295,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `signUp propagates network error`() {
+    fun signUpPropagatesNetworkError() {
         // Given
         val firstName = "John"
         val lastName = "Doe"
@@ -322,7 +322,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `requestResetPasswordCode completes successfully`() {
+    fun requestResetPasswordCodeCompletesSuccessfully() {
         // Given
         val email = "test@example.com"
 
@@ -337,7 +337,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `sendResetPasswordCode completes successfully when code is correct`() {
+    fun sendResetPasswordCodeCompleteSuccessfullyWhenCodeIsCorrect() {
         // Given
         val email = "test@example.com"
         val correctCode = "123456"
@@ -353,7 +353,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `sendResetPasswordCode returns error when code is incorrect`() {
+    fun sendResetPasswordCodeReturnsErrorWhenCodeIsIncorrect() {
         // Given
         val email = "test@example.com"
         val wrongCode = "654321"
@@ -372,7 +372,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `resetPassword completes successfully when no error occurs`() {
+    fun resetPasswordCompletesSuccessfullyWhenNoErrorOccurs() {
         // Given
         val email = "test@example.com"
         val code = "123456"
@@ -395,7 +395,7 @@ class LoginWebserviceImplTest {
     }
 
     @Test
-    fun `resetPassword returns error when an exception occurs`() {
+    fun resetPasswordReturnsErrorWhenExceptionOccurs() {
         // Given
         val email = "test@example.com"
         val code = "wrong_code"

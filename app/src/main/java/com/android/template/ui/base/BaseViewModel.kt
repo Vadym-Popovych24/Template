@@ -10,6 +10,11 @@ import com.android.template.R
 import com.android.template.data.models.api.ErrorResult
 import com.android.template.data.models.api.Result
 import com.android.template.data.models.api.SuccessResult
+import com.android.template.data.models.exception.ApproveException
+import com.android.template.data.models.exception.SignInException
+import com.android.template.data.models.exception.SignUpException
+import com.android.template.data.models.exception.UserAlreadyExistException
+import com.android.template.data.models.exception.UserNotFoundException
 import com.android.template.utils.getStringFromResource
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.FORBIDDEN
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INTERNAL_SERVER_ERROR
@@ -148,6 +153,19 @@ abstract class BaseViewModel : ViewModel() {
             showMessage(R.string.no_internet_error)
             return
         }
+        if (it is SignInException) showMessage(R.string.invalid_username_or_password)
+        if (it is UserNotFoundException) showMessage(R.string.no_user_with_email_error)
+        if (it is SignUpException) {
+            it.errors.forEach {
+                val errorMessage = it.errorMessage.getStringFromResource
+                showMessage(errorMessage)
+            }
+        } else if (it is ApproveException) {
+            showMessage(R.string.request_token_not_approved)
+        } else if (it is UserAlreadyExistException) {
+            showMessage(R.string.sign_up_duplicate_error_simple)
+        }
+
         if (it is HttpException) {
             when {
                 it.code() == FORBIDDEN -> {
