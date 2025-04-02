@@ -144,7 +144,7 @@ jacoco {
 }
 
 tasks.register('generateCoverageReport', JacocoReport) {
-    dependsOn 'testDebugUnitTest' // Ensure tests run before coverage report generation
+    dependsOn 'testDevDebugUnitTest' // Ensure tests run before coverage report generation
 
     reports {
         xml.required = true  // Coverage Plugin reads XML reports
@@ -153,7 +153,7 @@ tasks.register('generateCoverageReport', JacocoReport) {
 
     sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
     classDirectories.setFrom(files("$buildDir/intermediates/javac/debug"))
-    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
+    executionData.setFrom(files("$buildDir/jacoco/testDevDebugUnitTest.exec"))
 }
 
 
