@@ -143,10 +143,6 @@ jacoco {
     toolVersion = "0.8.10"
 }
 
-tasks.named("uploadCrashlyticsMappingFileDevRelease") {
-    dependsOn("processDevDebugGoogleServices")
-}
-
 tasks.register('generateCoverageReport', JacocoReport) {
     dependsOn 'testDevDebugUnitTest' // Ensure tests run before coverage report generation
 
