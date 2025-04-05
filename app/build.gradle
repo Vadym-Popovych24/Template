@@ -151,9 +151,31 @@ tasks.register('generateCoverageReport', JacocoReport) {
         html.required = true
     }
 
-    sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
-    classDirectories.setFrom(files("$buildDir/intermediates/javac/debug"))
-    executionData.setFrom(files("$buildDir/jacoco/testDevDebugUnitTest.exec"))
+     sourceDirectories.setFrom(files([
+            'src/main/java',
+            'src/dev/java',
+            'src/debug/java'
+    ]))
+    executionData.setFrom(
+            layout.buildDirectory.map {
+                file("${it.asFile}/outputs/unit_test_code_coverage/devDebugUnitTest/testDevDebugUnitTest.exec")
+            }
+    )
+
+    classDirectories.setFrom(
+            files([
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/tmp/kotlin-classes/devDebug", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    },
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/intermediates/javac/devDebug/classes", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    }
+            ])
+    )
 }
 
 
