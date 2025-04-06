@@ -1,60 +1,64 @@
 package com.android.template.data.models.api
 
-typealias Mapper<Input, Output> = (Input) -> Output
-
 /**
  * Base class which represents result of some async operation
  */
 sealed class Result<T> {
 
     /**
-     * Convert this result of type T into another result of type R:
-     * - error result of type T is converted to error result of type R with the same exception
-     * - pending result of type T is converted to pending result of type R
-     * - success result of type T is converted to success result of type R, where conversion
-     *   of ([SuccessResult.data] from T to R is conducted by [mapper]
+     * Convert Result<T> into Result<R>.
      */
-    fun <R> map(mapper: Mapper<T, R>? = null): Result<R> = when(this) {
-        is PendingResult -> PendingResult()
-        is ErrorResult -> ErrorResult(this.exception)
-        is SuccessResult -> {
-            if (mapper == null) throw IllegalArgumentException("Mapper should not be NULL for success result")
-            SuccessResult(mapper(this.data))
+    fun <R> map(mapper: ((T) -> R)? = null): Result<R> {
+        return when (this) {
+            is Success<T> -> {
+                if (mapper == null) {
+                    throw IllegalStateException("Can't map Success<T> result without mapper.")
+                } else {
+                    Success(mapper(this.value))
+                }
+            }
+            is Error<T> -> Error(this.error)
+            is Empty<T> -> Empty()
+            is Pending<T> -> Pending()
         }
+    }
+
+    fun getValueOrNull(): T? {
+        if (this is Success<T>) return this.value
+        return null
+    }
+
+    fun isFinished() = this is Success<T> || this is Error<T>
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (this is Success<*> && other is Success<*>) {
+            return this.value == other.value
+        } else if (this is Error<*> && other is Error<*>) {
+            return this.error == other.error
+        }
+        return true
+    }
+
+    override fun hashCode(): Int {
+        if (this is Success<*>) return javaClass.hashCode() +
+                31 * this.value.hashCode()
+        if (this is Error<*>) return javaClass.hashCode() +
+                31 * this.error.hashCode()
+        return javaClass.hashCode()
     }
 
 }
 
-/**
- * Operation has been finished
- */
-sealed class FinalResult<T> : Result<T>()
+class Success<T>(
+    val value: T
+) : Result<T>()
 
-/**
- * Operation is in progress
- */
-class PendingResult<T> : Result<T>()
+class Error<T>(
+    val error: Throwable
+) : Result<T>()
 
-/**
- * Operation has finished successfully
- */
-class SuccessResult<T>(
-    val data: T
-) : FinalResult<T>()
+class Empty<T> : Result<T>()
 
-/**
- * Operation has finished with error
- */
-class ErrorResult<T>(
-    val exception: Exception
-) : FinalResult<T>()
-
-/**
- * Get success value of [Result] if it is possible; otherwise return NULL.
- */
-fun <T> Result<T>?.takeSuccess(): T? {
-    return if (this is SuccessResult)
-        this.data
-    else
-        null
-}
+class Pending<T> : Result<T>()

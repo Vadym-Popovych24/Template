@@ -208,6 +208,7 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
     testImplementation "androidx.core:core-ktx:$core_ktx_version"
     testImplementation "androidx.test:core:$test_core_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_testing_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     // For coverage reports

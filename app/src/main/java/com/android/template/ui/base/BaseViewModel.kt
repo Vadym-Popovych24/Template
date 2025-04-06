@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.template.R
-import com.android.template.data.models.api.ErrorResult
+import com.android.template.data.models.api.Error
 import com.android.template.data.models.api.Result
-import com.android.template.data.models.api.SuccessResult
+import com.android.template.data.models.api.Success
 import com.android.template.data.models.exception.ApproveException
 import com.android.template.data.models.exception.SignInException
 import com.android.template.data.models.exception.SignUpException
@@ -138,9 +138,9 @@ abstract class BaseViewModel : ViewModel() {
         isLoading.set(true)
         coroutineScope.launch {
             try {
-                liveResult.postValue(SuccessResult(block()))
+                liveResult.postValue(Success(block()))
             } catch (e: Exception) {
-                if (e !is CancellationException) liveResult.postValue(ErrorResult(e))
+                if (e !is CancellationException) liveResult.postValue(Error(e))
             } finally {
                 isLoading.set(false)
             }
