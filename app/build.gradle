@@ -14,6 +14,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 apply plugin: 'com.google.firebase.appdistribution'
 
+apply plugin: 'jacoco'
+
 android {
     signingConfigs {
         debug {
@@ -78,6 +80,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            testCoverageEnabled true // Enables coverage collection
 
             firebaseAppDistribution {
                 serviceCredentialsFile="D:\\Projects\\Template_files\\template-3fcc1-firebase-adminsdk-mgh3v-bf0690700e.json"
@@ -90,6 +93,7 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true // Enables coverage collection
         }
     }
 
@@ -135,6 +139,46 @@ android {
     namespace 'com.android.template'
 }
 
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.register('generateCoverageReport', JacocoReport) {
+    dependsOn 'testDevDebugUnitTest' // Ensure tests run before coverage report generation
+
+    reports {
+        xml.required = true  // Coverage Plugin reads XML reports
+        html.required = true
+    }
+
+     sourceDirectories.setFrom(files([
+            'src/main/java',
+            'src/dev/java',
+            'src/debug/java'
+    ]))
+    executionData.setFrom(
+            layout.buildDirectory.map {
+                file("${it.asFile}/outputs/unit_test_code_coverage/devDebugUnitTest/testDevDebugUnitTest.exec")
+            }
+    )
+
+    classDirectories.setFrom(
+            files([
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/tmp/kotlin-classes/devDebug", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    },
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/intermediates/javac/devDebug/classes", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    }
+            ])
+    )
+}
+
+
 sonarqube {
     properties {
         property "sonar.projectName", "Template"
@@ -166,7 +210,8 @@ dependencies {
     testImplementation 'androidx.test:core:1.6.1'
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-
+    // For coverage reports
+    debugImplementation 'org.jacoco:org.jacoco.core:0.8.10'
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
     implementation "androidx.multidex:multidex:$multidex_version"
