@@ -1,5 +1,5 @@
-#### Task         : JUnit Data model class and repository
-#### Description  : Writed JUnit tests for test AccountResponse data class and same Repository classes also configured sources for Jenkin JUnit Plugin and coverage
+#### Task         : JUnit test for LoginManagerImpl 
+#### Description  : Writed JUnit tests for test LoginManagerImpl. LoginManagerImplTest - verify that methods of manager's class call relevant repository methods
 #### Version      : 3.1
 #### Author       : Vadym Popovych
 #### Support	  : vadympopovychn24@gmail.com

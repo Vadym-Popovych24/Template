@@ -14,11 +14,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertNotNull
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import retrofit2.Retrofit
 
-@RunWith(JUnit4::class)
 class NewsWebserviceImplTest {
 
     private lateinit var newsWebservice: NewsWebserviceImpl

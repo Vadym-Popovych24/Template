@@ -26,13 +26,10 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertNotNull
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 
-@RunWith(JUnit4::class)
 class LoginWebserviceImplTest {
 
     private lateinit var loginWebservice: LoginWebserviceImpl
