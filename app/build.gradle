@@ -36,8 +36,8 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 17
-        versionName "3.0"
+        versionCode 18
+        versionName "3.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -140,7 +140,7 @@ android {
 }
 
 jacoco {
-    toolVersion = "0.8.10"
+    toolVersion = "$jacoco_version"
 }
 
 tasks.register('generateCoverageReport', JacocoReport) {
@@ -206,12 +206,12 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
-    testImplementation 'androidx.core:core-ktx:1.13.1'
-    testImplementation 'androidx.test:core:1.6.1'
+    testImplementation "androidx.core:core-ktx:$core_ktx_version"
+    testImplementation "androidx.test:core:$test_core_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     // For coverage reports
-    debugImplementation 'org.jacoco:org.jacoco.core:0.8.10'
+    debugImplementation "org.jacoco:org.jacoco.core:$jacoco_version"
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
     implementation "androidx.multidex:multidex:$multidex_version"
