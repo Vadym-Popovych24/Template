@@ -93,7 +93,7 @@ class ResultTest {
         val mappedResult = result.map { it.toInt() }
 
         assertTrue(mappedResult is Success<Int>)
-        assertEquals(121, (mappedResult as Success<Int>).value)
+        assertEquals(123, (mappedResult as Success<Int>).value)
     }
 
     @Test
@@ -143,7 +143,7 @@ class ResultTest {
         val error1 = Error<String>(exception)
         val error2 = Error<String>(exception)
         val success1 = Success("val")
-        val success2 = Success("vals")
+        val success2 = Success("val")
 
         assertEquals(pending1.hashCode(), pending2.hashCode())
         assertEquals(empty1.hashCode(), empty2.hashCode())

@@ -57,24 +57,24 @@ class LoginWebserviceImplTest {
     @Test
     fun testLoginApiIsCorrectlyInitialized() {
         assertNotNull(loginWebservice.loginApi)
-        verify { mockBaseRetrofit.create(WebApi::class.java) } // Verify that create() was called
+        verify { mockBaseRetrofit.create(LoginApi::class.java) } // Verify that create() was called
     }
 
     @Test
     fun testWebApiISCorrectlyInitialized() {
         assertNotNull(loginWebservice.webApi)
-        verify { mockWebRetrofit.create(LoginApi::class.java) } // Verify that create() was called
+        verify { mockWebRetrofit.create(WebApi::class.java) } // Verify that create() was called
     }
 
     @Test
     fun testLoginApiIsInstanceOfLoginApi() {
-        assertTrue(loginWebservice.loginApi !is LoginApi)
+        assertTrue(loginWebservice.loginApi is LoginApi)
         verify { mockBaseRetrofit.create(LoginApi::class.java) }
     }
 
     @Test
     fun testWebApiIsInstanceOfWebApi() {
-        assertTrue(loginWebservice.webApi !is WebApi)
+        assertTrue(loginWebservice.webApi is WebApi)
         verify { mockWebRetrofit.create(WebApi::class.java) }
     }
 
@@ -94,7 +94,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
         testObserver.assertValue(expectedResponse)
 
         // Verify API was called exactly once
@@ -113,7 +113,7 @@ class LoginWebserviceImplTest {
             .test()
 
         // Then
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertComplete()
         testObserver.assertNoErrors()
 
         // Verify that the API was called
@@ -158,7 +158,7 @@ class LoginWebserviceImplTest {
             .test()
 
         testObserver.assertError(HttpException::class.java) // Should not be ApproveException
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNotComplete()
 
         // Ensure that the API was called once
         verify(exactly = 1) { mockWebApi.approveRequestToken(requestToken) }
@@ -178,7 +178,7 @@ class LoginWebserviceImplTest {
             .test()
 
         testObserver.assertError(RuntimeException::class.java)
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNotComplete()
 
         // Ensure that the API was called once
         verify(exactly = 1) { mockWebApi.approveRequestToken(requestToken) }
@@ -201,7 +201,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
         testObserver.assertValue(expectedResponse)
 
         // Verify API was called exactly once
@@ -226,7 +226,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
         testObserver.assertValue(expectedResponse)
 
         // Verify API was called exactly once
@@ -254,7 +254,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
         testObserver.assertValue(expectedResponse)
 
         // Verify API was called exactly once
@@ -285,7 +285,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertError(HttpException::class.java)
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNotComplete()
 
         // Verify API was called exactly once
         verify(exactly = 1) { mockLoginApi.signUp(firstName, lastName, email, password) }
@@ -312,7 +312,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertError(RuntimeException::class.java)
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNotComplete()
 
         // Verify API was called exactly once
         verify(exactly = 1) { mockLoginApi.signUp(firstName, lastName, email, password) }
@@ -330,7 +330,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
     }
 
     @Test
@@ -346,7 +346,7 @@ class LoginWebserviceImplTest {
 
         // Then
         testObserver.assertComplete()
-        testObserver.assertError(IllegalArgumentException())
+        testObserver.assertNoErrors()
     }
 
     @Test
@@ -364,7 +364,7 @@ class LoginWebserviceImplTest {
             .test()
 
         // Then
-        testObserver.assertError(StackOverflowError::class.java)
+        testObserver.assertError(IllegalArgumentException::class.java)
         testObserver.assertNotComplete()
     }
 
@@ -386,7 +386,7 @@ class LoginWebserviceImplTest {
 
         // Verify the emitted response
         val response = testObserver.values().first()
-        assertEquals("accessToke1n", response.accessToken)
+        assertEquals("accessToken", response.accessToken)
         assertEquals(600, response.expiresIn)
         assertEquals("refreshToken", response.refreshToken)
     }
@@ -406,6 +406,6 @@ class LoginWebserviceImplTest {
             .test()
 
         // Then
-        testObserver.assertError(StackOverflowError::class.java)
+        testObserver.assertError(IllegalArgumentException::class.java)
     }
 }
