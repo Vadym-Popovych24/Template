@@ -1,4 +1,4 @@
-package com.android.template.data.repository
+package com.android.template.data.repository.impl
 
 import com.android.template.data.local.interfaces.ProfilesStorage
 import com.android.template.data.models.api.model.AccountWithSession
@@ -10,7 +10,6 @@ import com.android.template.data.models.exception.UserNotFoundException
 import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.data.remote.interfaces.LoginWebservice
 import com.android.template.data.remote.interfaces.ProfileWebservice
-import com.android.template.data.repository.impl.LoginRepositoryImpl
 import com.android.template.testutils.createAccountResponse
 import com.android.template.testutils.createProfileEntity
 import com.android.template.testutils.createRequestKeyResponse
@@ -69,7 +68,7 @@ class LoginRepositoryImplTest {
         val requestKeyResponse = createRequestKeyResponse()
 
         every { profilesStorage.getProfileByEmailIgnoreEmpty(email) } returns Single.just(
-            ProfileEntity.getEmptyProfileEntity()
+            ProfileEntity.Companion.getEmptyProfileEntity()
         )
         every { loginWebservice.requestToken() } returns Single.just(requestKeyResponse)
 
