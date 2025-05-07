@@ -90,8 +90,8 @@ class NewsRepositoryImplTest {
         val progressList = repository.getProgress().toList()
 
         // Then
-        TestCase.assertEquals(100, progressList.size)
+        TestCase.assertEquals(101, progressList.size)
         TestCase.assertEquals(1, progressList.first())
-        TestCase.assertEquals(100, progressList.last())
+        TestCase.assertEquals(101, progressList.last())
     }
 }

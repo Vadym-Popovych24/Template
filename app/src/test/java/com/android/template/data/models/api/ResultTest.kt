@@ -14,13 +14,13 @@ class ResultTest {
 
     @Test
     fun getValueOrNullReturnsNullForNonSuccessResults() {
-        val emptyResult = Empty<String>()
-        val pendingResult = Pending<String>()
-        val errorResult = Error<String>(Exception())
+        val emptyLivaDataResult = EmptyLiveData<String>()
+        val pendingLiveDataResult = PendingLiveData<String>()
+        val errorLivaDataResult = ErrorLiveData<String>(Exception())
 
-        val emptyValue = emptyResult.getValueOrNull()
-        val pendingValue = pendingResult.getValueOrNull()
-        val errorValue = errorResult.getValueOrNull()
+        val emptyValue = emptyLivaDataResult.getValueOrNull()
+        val pendingValue = pendingLiveDataResult.getValueOrNull()
+        val errorValue = errorLivaDataResult.getValueOrNull()
 
         assertNull(emptyValue)
         assertNull(pendingValue)
@@ -29,20 +29,20 @@ class ResultTest {
 
     @Test
     fun getValueOrNullReturnsValueForSuccessResult() {
-        val successResult = Success("test")
+        val successLivaDataResult = SuccessLiveData("test")
 
-        val value = successResult.getValueOrNull()
+        val value = successLivaDataResult.getValueOrNull()
 
         assertEquals("test", value)
     }
 
     @Test
     fun isFinishedForSuccessAndErrorReturnsTrue() {
-        val errorResult = Error<String>(Exception())
-        val successResult = Success("test")
+        val errorLivaDataResult = ErrorLiveData<String>(Exception())
+        val successLivaDataResult = SuccessLiveData("test")
 
-        val isErrorFinished = errorResult.isFinished()
-        val isSuccessFinished = successResult.isFinished()
+        val isErrorFinished = errorLivaDataResult.isFinished()
+        val isSuccessFinished = successLivaDataResult.isFinished()
 
         assertTrue(isErrorFinished)
         assertTrue(isSuccessFinished)
@@ -50,11 +50,11 @@ class ResultTest {
 
     @Test
     fun isFinishedForEmptyAndPendingReturnsFalse() {
-        val emptyResult = Empty<String>()
-        val pendingResult = Pending<String>()
+        val emptyLivaDataResult = EmptyLiveData<String>()
+        val pendingLiveDataResult = PendingLiveData<String>()
 
-        val isEmptyFinished = emptyResult.isFinished()
-        val isPendingFinished = pendingResult.isFinished()
+        val isEmptyFinished = emptyLivaDataResult.isFinished()
+        val isPendingFinished = pendingLiveDataResult.isFinished()
 
         assertFalse(isEmptyFinished)
         assertFalse(isPendingFinished)
@@ -63,23 +63,23 @@ class ResultTest {
     @Test
     fun testNonSuccessResultsMapping() {
         val exception = Exception()
-        val emptyResult = Empty<String>()
-        val pendingResult = Pending<String>()
-        val errorResult = Error<String>(exception)
+        val emptyLivaDataResult = EmptyLiveData<String>()
+        val pendingLiveDataResult = PendingLiveData<String>()
+        val errorLivaDataResult = ErrorLiveData<String>(exception)
 
-        val mappedEmptyResult = emptyResult.map<Int>()
-        val mappedPendingResult = pendingResult.map<Int>()
-        val mappedErrorResult = errorResult.map<Int>()
+        val mappedEmptyResult = emptyLivaDataResult.map<Int>()
+        val mappedPendingResult = pendingLiveDataResult.map<Int>()
+        val mappedErrorResult = errorLivaDataResult.map<Int>()
 
-        assertTrue(mappedEmptyResult is Empty<Int>)
-        assertTrue(mappedPendingResult is Pending<Int>)
-        assertTrue(mappedErrorResult is Error<Int>)
-        assertSame(exception, (mappedErrorResult as Error<Int>).error)
+        assertTrue(mappedEmptyResult is EmptyLiveData<Int>)
+        assertTrue(mappedPendingResult is PendingLiveData<Int>)
+        assertTrue(mappedErrorResult is ErrorLiveData<Int>)
+        assertSame(exception, (mappedErrorResult as ErrorLiveData<Int>).error)
     }
 
     @Test
     fun mapWithoutMapperCantConvertSuccessResult() {
-        val result = Success("test")
+        val result = SuccessLiveData("test")
 
         catch<IllegalStateException> { result.map<Int>() }
 
@@ -88,67 +88,67 @@ class ResultTest {
 
     @Test
     fun mapWithMapperConvertsSuccessToSuccess() {
-        val result = Success("123")
+        val result = SuccessLiveData("123")
 
         val mappedResult = result.map { it.toInt() }
 
-        assertTrue(mappedResult is Success<Int>)
-        assertEquals(123, (mappedResult as Success<Int>).value)
+        assertTrue(mappedResult is SuccessLiveData<Int>)
+        assertEquals(123, (mappedResult as SuccessLiveData<Int>).value)
     }
 
     @Test
     fun testEquals() {
         val exception = IllegalStateException()
-        val pending1 = Pending<String>()
-        val pending2 = Pending<String>()
-        val empty1 = Empty<String>()
-        val empty2 = Empty<String>()
-        val error1 = Error<String>(exception)
-        val error2 = Error<String>(exception)
-        val success1 = Success("val")
-        val success2 = Success("val")
+        val pendingLiveData1 = PendingLiveData<String>()
+        val pendingLiveData2 = PendingLiveData<String>()
+        val emptyLivaData1 = EmptyLiveData<String>()
+        val emptyLivaData2 = EmptyLiveData<String>()
+        val errorLivaData1 = ErrorLiveData<String>(exception)
+        val errorLivaData2 = ErrorLiveData<String>(exception)
+        val successLivaData1 = SuccessLiveData("val")
+        val successLivaData2 = SuccessLiveData("val")
 
-        assertEquals(pending1, pending2)
-        assertEquals(empty1, empty2)
-        assertEquals(error1, error2)
-        assertEquals(success1, success2)
+        assertEquals(pendingLiveData1, pendingLiveData2)
+        assertEquals(emptyLivaData1, emptyLivaData2)
+        assertEquals(errorLivaData1, errorLivaData2)
+        assertEquals(successLivaData1, successLivaData2)
     }
 
     @Test
     fun testNotEquals() {
-        val pending = Pending<String>()
-        val empty = Empty<String>()
-        val error1 = Error<String>(IllegalStateException())
-        val error2 = Error<String>(IllegalStateException())
-        val success1 = Success("val1")
-        val success2 = Success("val2")
+        val pendingLiveData = PendingLiveData<String>()
+        val emptyLivaData = EmptyLiveData<String>()
+        val errorLivaData1 = ErrorLiveData<String>(IllegalStateException())
+        val errorLivaData2 = ErrorLiveData<String>(IllegalStateException())
+        val successLivaData1 = SuccessLiveData("val1")
+        val successLivaData2 = SuccessLiveData("val2")
 
-        assertNotEquals(pending, empty)
-        assertNotEquals(pending, error1)
-        assertNotEquals(pending, success1)
-        assertNotEquals(empty, error1)
-        assertNotEquals(empty, success1)
-        assertNotEquals(error1, error2)
-        assertNotEquals(error1, success1)
-        assertNotEquals(success1, success2)
+        assertNotEquals(pendingLiveData, emptyLivaData)
+        assertNotEquals(pendingLiveData, errorLivaData1)
+        assertNotEquals(pendingLiveData, successLivaData1)
+        assertNotEquals(emptyLivaData, errorLivaData1)
+        assertNotEquals(emptyLivaData, successLivaData1)
+        assertNotEquals(errorLivaData1, errorLivaData2)
+        assertNotEquals(errorLivaData1, successLivaData1)
+        assertNotEquals(successLivaData1, successLivaData2)
     }
 
     @Test
     fun testHashCode() {
         val exception = IllegalStateException()
-        val pending1 = Pending<String>()
-        val pending2 = Pending<String>()
-        val empty1 = Empty<String>()
-        val empty2 = Empty<String>()
-        val error1 = Error<String>(exception)
-        val error2 = Error<String>(exception)
-        val success1 = Success("val")
-        val success2 = Success("val")
+        val pendingLiveData1 = PendingLiveData<String>()
+        val pendingLiveData2 = PendingLiveData<String>()
+        val emptyLivaData1 = EmptyLiveData<String>()
+        val emptyLivaData2 = EmptyLiveData<String>()
+        val errorLivaData1 = ErrorLiveData<String>(exception)
+        val errorLivaData2 = ErrorLiveData<String>(exception)
+        val successLivaData1 = SuccessLiveData("val")
+        val successLivaData2 = SuccessLiveData("val")
 
-        assertEquals(pending1.hashCode(), pending2.hashCode())
-        assertEquals(empty1.hashCode(), empty2.hashCode())
-        assertEquals(error1.hashCode(), error2.hashCode())
-        assertEquals(success1.hashCode(), success2.hashCode())
+        assertEquals(pendingLiveData1.hashCode(), pendingLiveData2.hashCode())
+        assertEquals(emptyLivaData1.hashCode(), emptyLivaData2.hashCode())
+        assertEquals(errorLivaData1.hashCode(), errorLivaData2.hashCode())
+        assertEquals(successLivaData1.hashCode(), successLivaData2.hashCode())
     }
 
 }

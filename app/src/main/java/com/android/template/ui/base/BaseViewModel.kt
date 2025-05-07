@@ -2,14 +2,13 @@ package com.android.template.ui.base
 
 import androidx.annotation.StringRes
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.template.R
-import com.android.template.data.models.api.Error
-import com.android.template.data.models.api.Result
-import com.android.template.data.models.api.Success
+import com.android.template.data.models.api.ErrorLiveData
+import com.android.template.data.models.api.ResultLiveData
+import com.android.template.data.models.api.SuccessLiveData
 import com.android.template.data.models.exception.ApproveException
 import com.android.template.data.models.exception.SignInException
 import com.android.template.data.models.exception.SignUpException
@@ -31,9 +30,9 @@ import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 import retrofit2.HttpException
 
-typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
-typealias LiveResult<T> = LiveData<Result<T>>
-typealias ResultFlow<T> = Flow<Result<T>>
+typealias MutableLiveResult<T> = MutableLiveData<ResultLiveData<T>>
+typealias LiveResult<T> = LiveData<ResultLiveData<T>>
+typealias ResultFlow<T> = Flow<ResultLiveData<T>>
 
 abstract class BaseViewModel : ViewModel() {
     val compositeDisposable = CompositeDisposable()
@@ -138,9 +137,9 @@ abstract class BaseViewModel : ViewModel() {
         isLoading.set(true)
         coroutineScope.launch {
             try {
-                liveResult.postValue(Success(block()))
+                liveResult.postValue(SuccessLiveData(block()))
             } catch (e: Exception) {
-                if (e !is CancellationException) liveResult.postValue(Error(e))
+                if (e !is CancellationException) liveResult.postValue(ErrorLiveData(e))
             } finally {
                 isLoading.set(false)
             }
@@ -197,21 +196,5 @@ abstract class BaseViewModel : ViewModel() {
             it.message?.let{ messageCallback!!.invoke(it) }
         }
         it.printStackTrace()
-    }
-
-
-    protected open fun checkIfEmpty(
-        field: ObservableField<String>,
-        error: ObservableField<String>,
-        length: Int = 1
-    ): Boolean {
-        val value = field.get()
-        return if (value == null || value.length < length) {
-            error.set(R.string.invalid_value.getStringFromResource)
-            true
-        } else {
-            error.set(null)
-            false
-        }
     }
 }

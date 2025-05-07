@@ -65,9 +65,9 @@ class ComposeFragment : BaseFragment<FragmentComposeBinding, ComposeViewModel>()
                     binding.saveProgressBar.progress = percentage
                     val percentageText = "$percentage %"
                     binding.saveProgressBarText.text = percentageText
-                    binding.saveProgressBar.isVisible = percentage != 100
-                    binding.saveProgressBarText.isVisible = percentage != 100
-                    binding.composeView.isVisible = percentage == 100
+                    binding.saveProgressBar.isVisible = percentage != 101
+                    binding.saveProgressBarText.isVisible = percentage != 101
+                    binding.composeView.isVisible = percentage == 101
                 }
             }
         }

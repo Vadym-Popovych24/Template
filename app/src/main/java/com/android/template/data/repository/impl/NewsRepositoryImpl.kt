@@ -19,7 +19,7 @@ class NewsRepositoryImpl @Inject constructor(
 
     override fun getProgress(): Flow<Int> = flow {
         var progress = 0
-        while (progress < 100) {
+        while (progress < 101) {
             progress += 1
             delay(20)
             emit(progress)
