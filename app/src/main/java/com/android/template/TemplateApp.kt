@@ -6,9 +6,6 @@ import com.android.template.data.prefs.PreferencesHelper
 import com.android.template.di.component.AppComponent
 import com.android.template.di.component.DaggerAppComponent
 import com.google.gson.Gson
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -42,9 +39,6 @@ class TemplateApp : Application(), HasAndroidInjector {
             .context(this)
             .build()
         component.inject(this)
-
-        AppCenter.start(this, "1bf327aa-96f7-4b4a-b896-f0784b76f684",
-            Analytics::class.java, Crashes::class.java)
 
     }
 

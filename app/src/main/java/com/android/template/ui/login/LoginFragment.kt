@@ -75,7 +75,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     private fun subscribeToObservableFields() {
         viewModel.loadingCallback = { loading ->
-            BindingUtils.loadingCircularProgressButton(binding.btnSignIn, loading)
+            requireActivity().runOnUiThread {
+                BindingUtils.loadingCircularProgressButton(binding.btnSignIn, loading)
+            }
         }
     }
 

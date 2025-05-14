@@ -48,7 +48,9 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         }
 
         viewModel.loadingCallback = {
-            binding.progressBar.isVisible = it
+            requireActivity().runOnUiThread {
+                binding.progressBar.isVisible = it
+            }
         }
     }
 

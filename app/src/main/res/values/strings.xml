@@ -113,7 +113,7 @@
     <string name="internal_server_error">Internal Server Error</string>
     <string name="timeout_error">Request timeout</string>
     <string name="not_found">404 Not Found</string>
-    <string name="invalid_username_or_password">Іnvalid username or password</string>
+    <string name="invalid_username_or_password">Invalid username or password</string>
     <string name="verification_code_rule">The verification code must consist of 6 digits</string>
     <string name="failed_request_token">Failed getting request Token</string>
     <string name="web_view_open_error">Couldn\'t open link %s in webview</string>

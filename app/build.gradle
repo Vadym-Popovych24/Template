@@ -36,8 +36,8 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 21
-        versionName "3.1"
+        versionCode 22
+        versionName "3.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -336,10 +336,6 @@ dependencies {
 
     //data picker
     implementation "com.github.dewinjm:monthyear-picker:$month_year_picker"
-
-//    implementation 'androidx.activity:activity-ktx:1.3.0-alpha07'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${app_center_sdk_version}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${app_center_sdk_version}"
 
     // Compose BOM
     implementation platform("androidx.compose:compose-bom:$compose_bom")  // Bom version

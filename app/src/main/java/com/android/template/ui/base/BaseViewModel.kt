@@ -11,15 +11,14 @@ import com.android.template.data.models.api.ResultLiveData
 import com.android.template.data.models.api.SuccessLiveData
 import com.android.template.data.models.exception.ApproveException
 import com.android.template.data.models.exception.SignInException
-import com.android.template.data.models.exception.SignUpException
 import com.android.template.data.models.exception.UserAlreadyExistException
 import com.android.template.data.models.exception.UserNotFoundException
-import com.android.template.utils.getStringFromResource
+import com.android.template.utils.helpers.ResourceProvider
+import com.android.template.utils.helpers.ResourceProviderImpl
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.FORBIDDEN
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INTERNAL_SERVER_ERROR
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.INVALID_USERNAME_OR_PASSWORD
 import com.android.template.utils.interceptors.ErrorHandlerInterceptor.Companion.NOT_FOUND
-import com.microsoft.appcenter.utils.HandlerUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -41,9 +40,10 @@ abstract class BaseViewModel : ViewModel() {
 
     var messageCallback: ((message: String?) -> Unit)? = null
 
-    private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, _ ->
-        // you can add some exception handling here
+    private val coroutineContext = SupervisorJob() + Dispatchers.IO + CoroutineExceptionHandler { _, _ ->  // you can add some exception handling here
     }
+
+    protected open val resourceProvider: ResourceProvider = ResourceProviderImpl()
 
     private var job: Job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job + NonCancellable)
@@ -60,7 +60,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun showMessage(@StringRes messageId: Int) {
-        messageCallback?.invoke(messageId.getStringFromResource)
+        messageCallback?.invoke(resourceProvider.getString(messageId))
     }
 
     fun <T : Any> makeRx(single: Single<T>, callback: (T) -> Unit) {
@@ -69,11 +69,11 @@ abstract class BaseViewModel : ViewModel() {
             single
                 .doOnSubscribe {
                     isLoading.set(true)
-                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(true) }
+                    loadingCallback?.invoke(true)
                 }
                 .doFinally {
                     isLoading.set(false)
-                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(false) }
+                    loadingCallback?.invoke(false)
                 }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -90,11 +90,11 @@ abstract class BaseViewModel : ViewModel() {
             completable
                 .doOnSubscribe {
                     isLoading.set(true)
-                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(true) }
+                    loadingCallback?.invoke(true)
                 }
                 .doFinally {
                     isLoading.set(false)
-                    HandlerUtils.runOnUiThread { loadingCallback?.invoke(false) }
+                    loadingCallback?.invoke(false)
                 }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -106,7 +106,6 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun <T : Any> makeRxInvisible(single: Single<T>, callback: (T) -> Unit) {
-        isLoading.set(true)
         compositeDisposable.add(
             single
                 .subscribeOn(Schedulers.io())
@@ -118,7 +117,6 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun makeRxInvisible(completable: Completable, completeCallback: (() -> Unit)? = null) {
-        isLoading.set(true)
         compositeDisposable.add(
             completable
                 .subscribeOn(Schedulers.io())
@@ -147,19 +145,13 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     open fun handleError(it: Throwable) {
-        if (it.message?.contains(R.string.no_address_associated.getStringFromResource) == true
-        ) {
+        if (it.message?.contains(resourceProvider.getString(R.string.no_address_associated)) == true) {
             showMessage(R.string.no_internet_error)
             return
         }
         if (it is SignInException) showMessage(R.string.invalid_username_or_password)
         if (it is UserNotFoundException) showMessage(R.string.no_user_with_email_error)
-        if (it is SignUpException) {
-            it.errors.forEach {
-                val errorMessage = it.errorMessage.getStringFromResource
-                showMessage(errorMessage)
-            }
-        } else if (it is ApproveException) {
+        else if (it is ApproveException) {
             showMessage(R.string.request_token_not_approved)
         } else if (it is UserAlreadyExistException) {
             showMessage(R.string.sign_up_duplicate_error_simple)
@@ -178,7 +170,7 @@ abstract class BaseViewModel : ViewModel() {
                 it.message().isNotEmpty() -> {
                     try {
                         val errorBody = JSONObject(it.message())
-                        if (errorBody.has("Message")) {
+                        if (errorBody.has("Message")) {   // To test this line need instrumented  Android test
                             showMessage(errorBody.getString("Message"))
                         } else {
                             showMessage(it.message())
@@ -189,11 +181,11 @@ abstract class BaseViewModel : ViewModel() {
                     }
                 }
                 else -> {
-                    if (it.code() !=0) messageCallback?.invoke(it.code().toString())
+                    if (it.code() !=0) showMessage(it.code().toString())
                 }
             }
         } else {
-            it.message?.let{ messageCallback!!.invoke(it) }
+            it.message?.let{ showMessage(it) }
         }
         it.printStackTrace()
     }

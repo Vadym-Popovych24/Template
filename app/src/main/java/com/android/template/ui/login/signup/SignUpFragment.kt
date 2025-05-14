@@ -87,7 +87,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>() {
         }
 
         viewModel.loadingCallback = { loading ->
-            BindingUtils.loadingCircularProgressButton(binding.btnSignup, loading)
+            requireActivity().runOnUiThread {
+                BindingUtils.loadingCircularProgressButton(binding.btnSignup, loading)
+            }
         }
     }
 

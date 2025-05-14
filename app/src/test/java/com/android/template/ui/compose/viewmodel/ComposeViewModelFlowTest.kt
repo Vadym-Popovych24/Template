@@ -17,7 +17,7 @@ class ComposeViewModelFlowTest : ViewModelTest() {
     private val viewModel = ComposeViewModel(newsManager)
 
     @Test
-    fun `numbersFlow should emit values from newsManager`() = runTest {
+    fun numbersFlowShouldEmitValuesFromNewsManager() = runTest {
 
         every { newsManager.getProgress() } returns flowOf(1, 2, 3)
 

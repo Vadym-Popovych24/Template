@@ -36,12 +36,6 @@
                 android:layout_height="match_parent" />
 
                 <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="@{safeUnbox(viewModel.isLoading()) ? View.VISIBLE : View.GONE}" />
-
-                <ProgressBar
                     android:id="@+id/saveProgressBar"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"

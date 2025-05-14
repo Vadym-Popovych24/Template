@@ -1,0 +1,6 @@
+Task         : JUnit test for BaseViewModel
+Description  : Writed JUnit tests for test functions of BaseViewModel class 
+Version      : 3.2
+Author       : Vadym Popovych
+Support	     : vadympopovychn24@gmail.com
+Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/app-center-distribute

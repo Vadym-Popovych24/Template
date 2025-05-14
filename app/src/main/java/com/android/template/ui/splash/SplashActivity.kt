@@ -1,5 +1,6 @@
 package com.android.template.ui.splash
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import com.android.template.ui.login.LoginActivity
 import com.android.template.ui.navigation.NavigationActivity
 import com.android.template.ui.splash.viewmodel.SplashViewModel
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     override val fragmentContainerId = R.id.fl_for_fragment

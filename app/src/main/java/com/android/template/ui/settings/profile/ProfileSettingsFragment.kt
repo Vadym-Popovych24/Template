@@ -50,7 +50,9 @@ class ProfileSettingsFragment :
         }
 
         viewModel.loadingCallback = { loading ->
-            BindingUtils.loadingCircularProgressButton(binding.btnSave, loading)
+            requireActivity().runOnUiThread {
+                BindingUtils.loadingCircularProgressButton(binding.btnSave, loading)
+            }
         }
 
         setupValidations()
