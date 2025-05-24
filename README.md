@@ -1,15 +1,13 @@
-# Template
-Basic configuration for Android app
+# Template app
+Template - it basic configuration for Android app
 
-# Overview
+## Overview
 The Template app is a basic configuration starting point for Android application development. The Template repository contains the fundamental structure and configuration files needed to bootstrap an Android project quickly, eliminating the need to set up common boilerplate code and configurations manually.
 
-# Purpose and Scope
+## Purpose and Scope
 The Template repository is designed to provide developers with a standardized, minimal starting point for Android application development. It includes basic configuration files and follows Android development best practices. This overview covers the high-level components and structure of the template, but does not delve into implementation details.
 
-For more detailed information about the architectural components, see Architecture. For specifics on resource organization, refer to Resource Organization.
-
-The Template app stack:
+### The Template app stack:
 - Android SDK
 - XML layouts, Fragment, Activity, Compose
 - Navigation component
@@ -22,7 +20,7 @@ The Template app stack:
 - Retrofit2
 - Firebasew - Cloud Messaging, Remote Config, App distribution
 
-The Template app showcases:
+### The Template app showcases:
 - Login, Registration, SignOut and Forgot Password process
 - Profile, Edit Profile data, Change password, Settings
 - Left and bottom menu navigation
@@ -34,11 +32,11 @@ The Template app showcases:
 - Validation module
 - JUnit4 tests
 
-# Screenshots
+## Screenshots
 
-# What you need to know
+## What you need to know
 
-# When to Use This Template
+## When to Use Template
 This template is ideal for:
 - Starting new Android application projects
 - Learning Android development fundamentals
@@ -48,7 +46,7 @@ This template is ideal for:
 The template provides the minimal necessary configuration to start development, allowing developers to focus on implementing application-specific features rather than setting up the project structure.
 
 
-# Benefits of Using the Template
+## Benefits of Using the Template
 Using this template offers several advantages for Android development:
 - Consistent Project Structure: 
 - Follows Android best practices for organization
@@ -58,3 +56,5 @@ Using this template offers several advantages for Android development:
 - Faster Development Start: Enables developers to begin coding features immediately
 
 The Template serves as a foundation that can be extended and customized according to specific project requirements, while maintaining alignment with Android development standards.
+
+For more detailed information about the architectural components, see Architecture. For specifics on resource organization, refer to Resource Organization.
