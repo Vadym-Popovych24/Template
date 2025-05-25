@@ -33,6 +33,64 @@ The Template repository is designed to provide developers with a standardized, m
 - JUnit4 tests
 
 ## Screenshots
+  <table width="100%">
+    <tr>
+      <td align="center" width="25%">
+        <img src="screenshots/popular_movies.jpg" alt="Popular movies" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/compose_list.jpg" alt="Compose list" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/profile.jpg" alt="Profile" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/edit_profile.jpg" alt="Edit profile" height="400"/>  
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="25%">
+        <img src="screenshots/left_menu.jpg" alt="Left menu" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/movie_details_1.jpg" alt="Movie details 1" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/movie_details_2.jpg" alt="Movie details 2" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/bottom_menu_4.jpg" alt="Bottom menu 4" height="400"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="25%">
+        <img src="screenshots/settings.jpg" alt="Settings" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/reset_password.jpg" alt="Reset password" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/splash.jpg" alt="Splash" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/registration.jpg" alt="Registration" height="400"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="25%">
+        <img src="screenshots/sign_in.jpg" alt="Login" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/forgot_password.jpg" alt="Forgot password" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/verification_code.jpg" alt="Verification code" height="400"/>
+      </td>
+      <td align="center" width="25%">
+        <img src="screenshots/new_password.jpg" alt="New password" height="400"/>
+      </td>
+    </tr>
+  </table>
 
 ## What you need to know
 
