@@ -494,7 +494,7 @@ class BaseViewModelTest : ViewModelTest() {
 
     @Test
     fun handleErrorShouldNotShowHTTPCodeIfMatchedCodeIsZero() {
-        val exception = mockk<HttpException>()
+        val exception = mockk<HttpException>(relaxed = true)
         val exceptionCode = 0
         every { exception.code() } returns exceptionCode
         every { exception.message() } returns ""

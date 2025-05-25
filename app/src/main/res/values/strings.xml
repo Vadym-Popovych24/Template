@@ -224,7 +224,6 @@
 
     <string name="language_key_en" translatable="false">EN</string>
     <string name="language_key_uk" translatable="false">UK</string>
-    <string name="language_key_ru" translatable="false">RU</string>
 
     <string name="sign_up_duplicate_error">User email %s is already taken.</string>
     <string name="sign_up_duplicate_error_simple">User email is already taken.</string>
