@@ -115,4 +115,11 @@ Using this template offers several advantages for Android development:
 
 The Template serves as a foundation that can be extended and customized according to specific project requirements, while maintaining alignment with Android development standards.
 
-For more detailed information about the architectural components, see Architecture. For specifics on resource organization, refer to Resource Organization.
+For more information, refer to the project Wiki:
+- [Overview](https://github.com/Vadym-Popovych24/Template/wiki/Overview)
+- [Getting Started](https://github.com/Vadym-Popovych24/Template/wiki/Getting-Started)
+- [Architecture](https://github.com/Vadym-Popovych24/Template/wiki/Architecture)
+- [Component Structure](https://github.com/Vadym-Popovych24/Template/wiki/Component-Structure)
+- [Resource Organization](https://github.com/Vadym-Popovych24/Template/wiki/Resource-Organization)
+- [Build Process](https://github.com/Vadym-Popovych24/Template/wiki/Build-Process)
+- [Activity Lifecycle](https://github.com/Vadym-Popovych24/Template/wiki/Activity-Lifecycle)
