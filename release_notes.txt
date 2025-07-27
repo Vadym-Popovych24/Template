@@ -3,4 +3,4 @@ Description  : Setup release notes for automatic reading from a file release_not
 Version      : 3.2
 Author       : Vadym Popovych
 Support	     : vadympopovychn24@gmail.com
-Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/app-center-distribute
+Help         : https://firebase.google.com/docs/app-distribution
