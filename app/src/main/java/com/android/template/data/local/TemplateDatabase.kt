@@ -62,7 +62,9 @@ abstract class TemplateDatabase : RoomDatabase() {
 
     // Here you can write your migration and use @DeleteTable or @RenameColumn
     // @DeleteTable(tableName = "table_name")
-    // @RenameColumn(tableName = "table_name", fromColumnName = "column_name", toColumnName = "column_name")
+    // @RenameTable(fromTableName = "table_name", toTableName = "table_new_name")
+    // @DeleteColumn(tableName = "table_name", columnName = "column_name")
+    // @RenameColumn(tableName = "table_name", fromColumnName = "column_name", toColumnName = "column_new_name")
     class MyMigration : AutoMigrationSpec
 
     abstract fun profileDao(): ProfileDao

@@ -41,4 +41,7 @@ interface ProfileDao: BaseDao<ProfileEntity> {
     @Transaction
     @Query("SELECT id FROM profiles WHERE email =:email")
     fun getProfileIdByEmail(email: String): Long
+
+    @Query("SELECT * FROM profiles WHERE profile_id = :profileId LIMIT 1")
+    fun getProfileById(profileId: Long): ProfileEntity?
 }

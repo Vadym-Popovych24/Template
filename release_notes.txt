@@ -1,5 +1,5 @@
-Task         : JUnit test for BaseViewModel
-Description  : Writed JUnit tests for test functions of BaseViewModel class 
+Task         : Setup release notes
+Description  : Setup release notes for automatic reading from a file release_notes.txt
 Version      : 3.2
 Author       : Vadym Popovych
 Support	     : vadympopovychn24@gmail.com
