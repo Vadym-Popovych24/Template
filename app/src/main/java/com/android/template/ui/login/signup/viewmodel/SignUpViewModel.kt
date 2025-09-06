@@ -14,7 +14,7 @@ class SignUpViewModel @Inject constructor(private val loginManager: LoginManager
 
     var signUpFinishedCallback: (() -> Unit)? = null
 
-    val formValidator = FormValidator(null)
+    val formValidator = FormValidator()
 
     override fun onCleared() {
         super.onCleared()

@@ -19,7 +19,7 @@ class ProfileSettingsViewModel @Inject constructor(private val profileManager: P
 
     var uploadCallback: (() -> Unit)? = null
 
-    val formValidator = FormValidator(null)
+    val formValidator = FormValidator()
 
     override fun onCleared() {
         super.onCleared()

@@ -1,6 +1,7 @@
 package com.android.template.data.repository.impl
 
 import androidx.compose.ui.text.intl.Locale
+import androidx.lifecycle.LiveData
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -13,7 +14,6 @@ import com.android.template.data.remote.interfaces.MovieWebservice
 import com.android.template.data.repository.interfaces.MovieRepository
 import com.android.template.ui.base.paging.RxPagingRemoteMediator
 import io.reactivex.rxjava3.core.Single
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -44,7 +44,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getMovieFromDB(id: Long): Flow<MovieEntity> =
+    override fun getMovieFromDB(id: Long): LiveData<MovieEntity> =
         storage.getMovieFromDB(id)
 
     override fun getMovieDetails(id: Long): Single<MovieDetailsResponse> =

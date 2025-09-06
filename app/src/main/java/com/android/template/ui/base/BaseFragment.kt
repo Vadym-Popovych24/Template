@@ -5,14 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -36,7 +34,6 @@ import com.android.template.utils.getGenericClassExtends
 import com.android.template.utils.getLayoutId
 import com.android.template.utils.initNavigationIcon
 import dagger.android.support.AndroidSupportInjection
-import net.cachapa.expandablelayout.ExpandableLayout
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
@@ -178,13 +175,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         viewModel.isLoading.addOnPropertyChangedCallback(isLoadingDataCallback)
     }
 
-    protected fun showFragment(fragment: Fragment) {
-        val activity = requireActivity()
-        if (activity is NavigationActivityCallback) {
-            activity.showFragment(fragment)
-        }
-    }
-
 
     /**
      * Called when the fragment is no longer attached to its activity. This is called after onDestroy().
@@ -274,7 +264,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     }
 
     protected fun hasPermissions(permissions: Array<out String>): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
+        if (context != null) {
             for (permission in permissions) {
                 if (ActivityCompat.checkSelfPermission(
                         requireContext(),
@@ -310,25 +300,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-
-    protected fun initExpandableLayout(
-        expandableLayout: ExpandableLayout?, toggleButton: View?,
-        expandableIcon: ImageView?
-    ) {
-        toggleButton?.setOnClickListener {
-            expandableLayout?.toggle(true)
-        }
-        expandableLayout?.setOnExpansionUpdateListener { _, _ ->
-            expandableIcon?.setImageResource(
-                if (expandableLayout.isExpanded) {
-                    R.drawable.ic_collapse
-                } else {
-                    R.drawable.ic_expand
-                }
-            )
-        }
-    }
-
     protected fun moveToMainActivity() {
         requireActivity().finish()
         hideKeyboard()
@@ -358,11 +329,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     fun setFragmentResult(key: String) = setFragmentResult(key, Bundle())
 
     fun setStatusBarColor(color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = requireActivity().window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = ContextCompat.getColor(requireContext(), color)
-        }
+        val window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(requireContext(), color)
     }
 
 }

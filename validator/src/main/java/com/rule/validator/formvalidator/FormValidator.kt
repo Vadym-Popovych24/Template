@@ -8,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
-class FormValidator constructor(private var onValidate:((isValid: Boolean) -> Unit)?) {
+class FormValidator(private var onValidate:((isValid: Boolean) -> Unit)? = null) {
 
     private val compositeDisposable = CompositeDisposable()
     private val validators = arrayListOf<ValidatableFormItem>()

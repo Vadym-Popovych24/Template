@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ResetEmailViewModel @Inject constructor(private val loginManager: LoginManager) :
     BaseViewModel() {
 
-    val emailFormValidator = FormValidator(null)
+    val emailFormValidator = FormValidator()
 
 
     override fun onCleared() {

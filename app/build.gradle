@@ -1,20 +1,15 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-kapt'
-
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-
-apply plugin: 'com.google.gms.google-services'
-
-apply plugin: 'org.sonarqube' // added for sonarqube
-
-apply plugin: 'com.google.firebase.crashlytics'
-
-apply plugin: 'com.google.firebase.appdistribution'
-
-apply plugin: 'jacoco'
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
+    id("org.sonarqube")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.appdistribution")
+    id("jacoco")
+    id("org.jetbrains.kotlin.plugin.compose")
+}
 
 android {
     signingConfigs {
@@ -36,8 +31,8 @@ android {
         minSdkVersion min_sdk
         compileSdk target_sdk
         targetSdkVersion target_sdk
-        versionCode 23
-        versionName "3.2"
+        versionCode 24
+        versionName "3.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -80,7 +75,6 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            testCoverageEnabled true // Enables coverage collection
 
             firebaseAppDistribution {
                 serviceCredentialsFile="D:\\Projects\\Template_files\\template-3fcc1-firebase-adminsdk-mgh3v-bf0690700e.json"
@@ -90,12 +84,15 @@ android {
                         "New Dev Release Build!"
                 testers="performanc24@gmail.com"
             }
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
         }
         debug {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            testCoverageEnabled true // Enables coverage collection
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
         }
     }
 
@@ -106,7 +103,6 @@ android {
     }
 
     kapt {
-        generateStubs = true
         javacOptions {
             // Increase the max count of errors from annotation processors.
             // Default is 100.
@@ -132,9 +128,6 @@ android {
 
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.14'
-    }
     packagingOptions {
         resources.excludes.add("META-INF/*")
     }
@@ -315,8 +308,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     implementation "androidx.legacy:legacy-support-v4:$androidx_support_version"
-    //expandableLayout
-    implementation "com.github.cachapa:ExpandableLayout:$expandable_layout_version"
 
     //sms retriever
     //  implementation 'com.google.android.gms:play-services-auth:19.0.0'
@@ -345,6 +336,7 @@ dependencies {
     // Compose dependencies
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.material3:material3"
+    // Tooling support (Previews, etc.)
     implementation "androidx.compose.ui:ui-tooling-preview"
     debugImplementation "androidx.compose.ui:ui-tooling"
     // Integration compose with activities
@@ -355,15 +347,13 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended"
     // Animations
     implementation "androidx.compose.animation:animation"
-    // Tooling support (Previews, etc.)
-    implementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_junit4"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
 
     // Tooling support loading Image from url
     implementation "io.coil-kt:coil-compose:$compose_loading_image_version"
     // Integration with ViewModels
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_lifecycle_viewmodel_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose"
 
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version" // Optional for logging
@@ -380,9 +370,8 @@ dependencies {
     //crop
     implementation "com.vanniktech:android-image-cropper:$image_cropper_version"
 
-    // ImageViewer
-    implementation "com.github.stfalcon-studio:StfalconImageViewer:$stfalcon_image_viewer_version"
-
     //application icon badge
     implementation "me.leolin:ShortcutBadger:$shortcut_badger_version"
+
+    implementation "com.github.chrisbanes:PhotoView:$photo_view_version"
 }

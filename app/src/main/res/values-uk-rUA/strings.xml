@@ -30,6 +30,7 @@
 
     <!--    Profile-->
     <string name="profile">Профіль</string>
+    <string name="profile_cover">Обкладинка профілю</string>
 
     <string name="male">Чоловік</string>
     <string name="female">Жінка</string>

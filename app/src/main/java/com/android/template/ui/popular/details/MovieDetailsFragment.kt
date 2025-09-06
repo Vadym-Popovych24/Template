@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.lifecycleScope
 import com.android.template.databinding.FragmentMovieDetailsBinding
 import com.android.template.databinding.ItemMovieBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.popular.PopularMovieAdapter
+import com.android.template.ui.popular.PopularMovieViewItem
 import com.android.template.utils.getStringFromResource
 import kotlinx.coroutines.launch
 
@@ -23,10 +24,14 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
 
         binding.toolbar.initUpNavigation()
 
-        val id = arguments?.getLong(EXTRA_MOVIE_ID)
-        viewModel.viewModelScope.launch {
-            id?.let { viewModel.getMovieItem(it) }
+        val id = arguments?.getString(EXTRA_MOVIE_ID)?.toLong()
+
+        id?.let {
+            viewModel.getMovieItem(it).observe(viewLifecycleOwner) { item ->
+                PopularMovieViewItem.mapFrom(item).let { viewHolder?.bind(it) }
+            }
         }
+
 
         id?.let { viewModel.getDetails(it) }
 
@@ -39,17 +44,16 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
     }
 
     private fun subscribeToObservables() {
-        viewModel.item.observe(viewLifecycleOwner) { item ->
-            viewHolder?.bind(item)
-        }
 
         viewModel.details.observe(viewLifecycleOwner) { details ->
             details?.let { bindDetails(it) }
         }
 
         viewModel.loadingCallback = {
-            requireActivity().runOnUiThread {
-                binding.progressBar.isVisible = it
+            lifecycleScope.launch {
+                if (view != null) {
+                    binding.progressBar.isVisible = it
+                }
             }
         }
     }
@@ -95,8 +99,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
 
     companion object {
         private const val EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID"
-        fun newInstance(id: Long) = MovieDetailsFragment().apply {
-            arguments = bundleOf(Pair(EXTRA_MOVIE_ID, id))
-        }
+
+        fun newInstance(id: String) = bundleOf(Pair(EXTRA_MOVIE_ID, id))
     }
 }

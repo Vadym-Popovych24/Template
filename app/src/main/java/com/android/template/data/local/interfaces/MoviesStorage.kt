@@ -1,8 +1,8 @@
 package com.android.template.data.local.interfaces
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import com.android.template.data.models.db.MovieEntity
-import kotlinx.coroutines.flow.Flow
 
 interface MoviesStorage {
 
@@ -14,5 +14,5 @@ interface MoviesStorage {
 
     fun clearMovie()
 
-    fun getMovieFromDB(id: Long): Flow<MovieEntity>
+    fun getMovieFromDB(id: Long): LiveData<MovieEntity>
 }

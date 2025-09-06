@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import androidx.core.os.bundleOf
+import androidx.navigation.fragment.navArgs
 import com.android.template.R
 import com.android.template.data.models.enums.ChangeImageType
 import com.android.template.databinding.FragmentChangeAvatarBinding
@@ -14,15 +14,17 @@ import com.android.template.utils.bitmapToUri
 import com.canhub.cropper.CropImageView
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.getValue
 
 class ChangeImageFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeImageViewModel>() {
+
+    private val args by navArgs<ChangeImageFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imagePath: String = arguments?.getString(EXTRA_IMAGE_PATH).toString()
-        val imageType: ChangeImageType =
-            ChangeImageType.getChangeImageType(arguments?.getInt(EXTRA_IMAGE_TYPE) ?: -1)
+        val imagePath: String = args.imagePath
+        val imageType: ChangeImageType = ChangeImageType.getChangeImageType(args.type)
         viewModel.setChangeAvatarType(imageType)
         when (imageType) {
             ChangeImageType.AVATAR -> {
@@ -85,20 +87,6 @@ class ChangeImageFragment : BaseFragment<FragmentChangeAvatarBinding, ChangeImag
             e.printStackTrace()
             showToast(R.string.image_save_failed)
         }
-    }
-
-    companion object {
-
-        private const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
-        private const val EXTRA_IMAGE_TYPE= "EXTRA_IMAGE_TYPE"
-
-        fun initArgumentsBundle(imagePath: String, type: Int) = ChangeImageFragment().apply {
-            arguments = bundleOf(
-                Pair(EXTRA_IMAGE_PATH, imagePath),
-                Pair(EXTRA_IMAGE_TYPE, type)
-            )
-        }
-
     }
 
 }

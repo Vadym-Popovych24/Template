@@ -1,11 +1,11 @@
 package com.android.template.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.android.template.data.models.db.MovieEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao : BaseDao<MovieEntity> {
@@ -19,5 +19,5 @@ interface MovieDao : BaseDao<MovieEntity> {
 
     @Transaction
     @Query("SELECT * FROM movies WHERE id =:id")
-    fun getMovieById(id: Long): Flow<MovieEntity>
+    fun getMovieById(id: Long): LiveData<MovieEntity>
 }

@@ -24,7 +24,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppCompatActivity() {
-    private val navController: NavController by lazy {
+    val navController: NavController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(fragmentContainerId) as NavHostFragment
         navHostFragment.navController

@@ -12,26 +12,17 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import androidx.fragment.app.commit
+import androidx.navigation.fragment.NavHostFragment
 import com.android.template.R
 import com.android.template.data.models.enums.NotificationType
 import com.android.template.ui.base.BaseActivityWithMenuPublic
-import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.base.Stub
-import com.android.template.ui.compose.ComposeFragment
-import com.android.template.ui.coroutine.CoroutineFragment
 import com.android.template.ui.bottom_menu4.BottomMenu4Fragment
-import com.android.template.ui.menu1.MenuItem1Fragment
-import com.android.template.ui.menu2.MenuItem2Fragment
-import com.android.template.ui.menu3.MenuItem3Fragment
-import com.android.template.ui.menu4.MenuItem4Fragment
 import com.android.template.ui.navigation.viewmodel.NavigationHeaderViewModel
-import com.android.template.ui.profile.ProfileFragment
 import com.android.template.ui.popular.PopularFragment
 import com.android.template.ui.bottom_menu3.BottomMenu3Fragment
 import com.android.template.ui.bottom_menu2.BottomMenu2Fragment
 import com.android.template.ui.popular.details.MovieDetailsFragment
-import com.android.template.ui.settings.SettingsFragment
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -43,17 +34,13 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     private val bottomNavigation
         get() = viewDataBinding.includeBodyPublic.bottomNavigation
 
+    private val navHostFragment by lazy {
+        supportFragmentManager.findFragmentById(fragmentContainerId) as NavHostFragment
+    }
+
     private val menus = listOf<Int>(R.menu.bottom_menu, R.menu.bottom_menu_2, R.menu.bottom_menu_3, R.menu.bottom_menu_4)
 
-    @get:Synchronized
-    @set:Synchronized
-    private var activeFragment: Fragment? = null
-    private var popularFragment: PopularFragment? = null
-    private var bottomMenu2Fragment: BottomMenu2Fragment? = null
-    private var bottomMenu3Fragment: BottomMenu3Fragment? = null
-    private var bottomMenu4Fragment: BottomMenu4Fragment? = null
-    private var isBottomFragmentsAdded = false
-    var menuVariant = 1
+    private var menuVariant = 1
 
     override fun updateBottomNavigation(bottomNavigationVisibility: Int) {
         findViewById<View>(R.id.bottomNavigation)?.visibility = bottomNavigationVisibility
@@ -64,14 +51,15 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
 
         setMenuOrder()
         screenInitialized = true
-        initBottomMenu()
         openFirstAvailableScreenInBottomMenu()
         if (intent.extras != null && intent.extras!!.getString(EXTRA_TOPIC) != null) {
             navigateByTopic(intent.extras!!)
         }
 
         viewModel.moveToProfileCallback = {
-            showFragment(ProfileFragment.newInstance())
+            navController.navigate(
+                R.id.navigationProfile
+            )
             closeDrawer()
         }
 
@@ -82,15 +70,15 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
             viewModel.userEmail.set(profileAndAvatar?.profileEntity?.email)
             viewModel.userAvatar.set(profileAndAvatar?.profileEntity?.avatarPath)
         }
-    }
 
-    private fun initBottomMenu() {
-        //bottom menu
-        if (!isBottomFragmentsAdded) {
-            isBottomFragmentsAdded = true
-            //init bottom menu fragments
-            initFragmentsOfBottomMenu()
-            addFragmentsOfBottomMenu()
+        // Add navigation listener to handle bottom menu selection
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigationPopular -> setSelectedMenuItem(R.id.bottom_menu_item_popular)
+                R.id.navigationBottomMenu2 -> setSelectedMenuItem(R.id.bottom_menu_item_2)
+                R.id.navigationBottomMenu3 -> setSelectedMenuItem(R.id.bottom_menu_item_3)
+                R.id.navigationBottomMenu4 -> setSelectedMenuItem(R.id.bottom_menu_item_4)
+            }
         }
     }
 
@@ -105,74 +93,25 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
     private fun selectItem(itemId: Int) = when (itemId) {
-        R.id.bottom_menu_item_popular -> showPopularFragment()
-        R.id.bottom_menu_item_2 -> showBottomMenu2Fragment()
-        R.id.bottom_menu_item_3 -> showBottomMenu3Fragment()
-        R.id.bottom_menu_item_4 -> showBottomMenu4Fragment()
-        R.id.navigation_menu_item_1 -> showFragment(MenuItem1Fragment())
-        R.id.navigation_menu_item_2 -> showFragment(MenuItem2Fragment())
-        R.id.navigation_menu_item_3 -> showFragment(MenuItem3Fragment())
-        R.id.navigation_menu_item_4 -> showFragment(MenuItem4Fragment())
-        R.id.navigation_coroutines -> showFragment(CoroutineFragment())
-        R.id.navigation_compose -> showFragment(ComposeFragment())
-        R.id.navigation_settings -> showFragment(SettingsFragment())
+        R.id.bottom_menu_item_popular -> navController.navigate(R.id.navigationPopular)
+        R.id.bottom_menu_item_2 -> navController.navigate(R.id.navigationBottomMenu2)
+        R.id.bottom_menu_item_3 -> navController.navigate(R.id.navigationBottomMenu3)
+        R.id.bottom_menu_item_4 -> navController.navigate(R.id.navigationBottomMenu4)
+        R.id.navigation_menu_item_1 -> navController.navigate(R.id.navigationMenuItem1)
+        R.id.navigation_menu_item_2 -> navController.navigate(R.id.navigationMenuItem2)
+        R.id.navigation_menu_item_3 -> navController.navigate(R.id.navigationMenuItem3)
+        R.id.navigation_menu_item_4 -> navController.navigate(R.id.navigationMenuItem4)
+        R.id.navigation_coroutines -> navController.navigate(R.id.navigationMenuCoroutine)
+        R.id.navigation_compose -> navController.navigate(R.id.navigationMenuCompose)
+        R.id.navigation_settings ->  navController.navigate(R.id.navigationSettings)
 
         else -> showStub()
-    }
-
-    override fun showPopularFragment() {
-        popularFragment?.let {
-            showFragment(it)
-        }
-    }
-
-    override fun showBottomMenu2Fragment() {
-        bottomMenu2Fragment?.let {
-            showFragment(it)
-        }
-    }
-
-    override fun showBottomMenu3Fragment() {
-        bottomMenu3Fragment?.let {
-            showFragment(it)
-        }
-    }
-
-    override fun showBottomMenu4Fragment() {
-        bottomMenu4Fragment?.let {
-            showFragment(it)
-        }
-    }
-
-    private fun initFragmentsOfBottomMenu() {
-        if (popularFragment == null) popularFragment = PopularFragment()
-        if (bottomMenu2Fragment == null) bottomMenu2Fragment = BottomMenu2Fragment()
-        if (bottomMenu3Fragment == null) bottomMenu3Fragment = BottomMenu3Fragment()
-        if (bottomMenu4Fragment == null) bottomMenu4Fragment = BottomMenu4Fragment()
-    }
-
-    private fun addFragmentsOfBottomMenu() {
-        addFragmentOfBottomMenu(popularFragment)
-        addFragmentOfBottomMenu(bottomMenu2Fragment)
-        addFragmentOfBottomMenu(bottomMenu3Fragment)
-        addFragmentOfBottomMenu(bottomMenu4Fragment)
-    }
-
-    private fun addFragmentOfBottomMenu(fragment: Fragment?) {
-        fragment?.let {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                supportFragmentManager.findFragmentByTag(it::class.java.name)?.let { remove(it) }
-                add(fragmentContainerId, it, it::class.java.name)
-                hide(it)
-            }
-        }
     }
 
     private fun handleOnBackPressed() {
 
         onBackPressedDispatcher.addCallback(this) {
-            val currentFragment = activeFragment!!
+            val currentFragment = navHostFragment.childFragmentManager.fragments.firstOrNull() ?: return@addCallback
 
             if (preventBackPressedFragments.contains(currentFragment::class.java.name)) {
                 if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START) || viewDataBinding.drawerLayoutPublic.isDrawerOpen(
@@ -224,37 +163,20 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
         }
     }
 
-    @Synchronized
-    override fun showFragment(fragment: Fragment?) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            fragment?.let {
-                activeFragment?.let { active -> hide(active) }
-
-                if (it is PopularFragment || it is BottomMenu2Fragment || it is BottomMenu3Fragment || it is BottomMenu4Fragment) {
-                    activeFragment = it
-                    show(it)
-                } else {
-                    val existingFragment =
-                        supportFragmentManager.findFragmentByTag(it::class.java.name)
-                    existingFragment?.let { fragment -> remove(fragment) }
-                    activeFragment = it
-                    addToBackStack(it::class.java.name)
-                    add(fragmentContainerId, it, it::class.java.name)
-                }
-                if (fragment is BaseFragment<*, *>) updateBottomNavigation(fragment.bottomNavigationVisibility)
-            }
-        }
-    }
-
     private fun navigateByTopic(extras: Bundle) {
         val topic = extras.getString(EXTRA_TOPIC)
-        val itemId = extras.getString(EXTRA_ID)?.toLong()?:0
+        val itemId = extras.getString(EXTRA_ID)
         hideAllLoading()
         when (topic) {
 
             NotificationType.MOVIE_DETAILS.toString() -> {
-                showFragment(MovieDetailsFragment.newInstance(itemId))
+
+                    itemId?.let {
+                        navController.navigate(
+                            R.id.navigationMovieDetails,
+                            MovieDetailsFragment.newInstance(it)
+                        )
+                    }
             }
 
             else -> {
@@ -265,7 +187,6 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
     }
 
     override fun setCurrentFragmentOfBottomMenu(fragment: Fragment) {
-        activeFragment = fragment
         when (fragment) {
             is PopularFragment -> {
                 setSelectedMenuItem(R.id.bottom_menu_item_popular)

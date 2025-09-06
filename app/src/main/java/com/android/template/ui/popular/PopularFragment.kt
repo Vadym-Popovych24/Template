@@ -2,9 +2,9 @@ package com.android.template.ui.popular
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.android.template.databinding.FragmentPopularBinding
 import com.android.template.ui.base.BaseFragmentWithBottomMenu
-import com.android.template.ui.popular.details.MovieDetailsFragment
 import com.android.template.ui.popular.viewmodel.PopularViewModel
 import com.android.template.utils.setupPagedList
 import javax.inject.Inject
@@ -22,7 +22,10 @@ class PopularFragment : BaseFragmentWithBottomMenu<FragmentPopularBinding, Popul
         setupPagedList(binding.pagedList, adapter, viewModel.pagingFlow)
 
         adapter.onItemClick = {
-            showFragment(MovieDetailsFragment.newInstance(it.id))
+            PopularFragmentDirections.actionNavigationPopularToMovieDetails(it.id.toString())
+                .run {
+                    findNavController().navigate(this)
+                }
         }
     }
 }

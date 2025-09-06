@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(private val loginManager: LoginManager) : BaseViewModel() {
 
-    val formValidator = FormValidator(null)
+    val formValidator = FormValidator()
 
     override fun onCleared() {
         super.onCleared()

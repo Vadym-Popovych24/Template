@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ResetPasswordViewModel @Inject constructor(private val loginManager: LoginManager) :
     BaseViewModel() {
 
-    val passwordFormValidator = FormValidator(null)
+    val passwordFormValidator = FormValidator()
 
     override fun onCleared() {
         super.onCleared()

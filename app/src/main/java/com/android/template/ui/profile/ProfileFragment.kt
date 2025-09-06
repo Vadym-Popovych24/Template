@@ -6,15 +6,14 @@ import com.android.template.R
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
-import com.android.template.data.models.api.model.FullImage
+import androidx.navigation.fragment.findNavController
 import com.android.template.data.models.enums.ChangeImageType
 import com.android.template.databinding.FragmentProfileBinding
 import com.android.template.ui.base.BaseFragment
-import com.android.template.ui.avatar.ChangeImageFragment
 import com.android.template.ui.profile.viewmodel.ProfileViewModel
 import com.android.template.utils.BindingUtils
+import com.android.template.utils.custom.ImageViewerDialog
 import com.android.template.utils.getStringFromResource
-import com.android.template.utils.custom.openViewer
 import com.android.template.utils.writeFileContent
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
@@ -45,19 +44,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 tvSessionId.text = profile.profileEntity?.sessionId
                 tvUserNameMovie.text = profile.profileEntity?.userName
                 imgAvatar.setOnClickListener {
-                    openViewer(
-                        listOf(FullImage(profile.profileEntity?.avatarPath?:"", R.string.profile.getStringFromResource)),
-                        imgAvatar,
-                        0
-                    )
+                    ImageViewerDialog.newInstance(profile.profileEntity?.avatarPath?:"", R.string.profile.getStringFromResource)
+                        .show(parentFragmentManager, "image_viewer_avatar")
                 }
                 imageCover.setOnClickListener {
                     profile.profileEntity?.coverPath?.let { coverPath ->
-                        openViewer(
-                            listOf(FullImage(coverPath, R.string.profile.getStringFromResource)),
-                            imgAvatar,
-                            0
-                        )
+                        ImageViewerDialog.newInstance(coverPath, R.string.profile_cover.getStringFromResource)
+                            .show(parentFragmentManager, "image_viewer_cover")
                     }
                 }
             }
@@ -65,7 +58,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun moveToUploadAvatar(imagePath: String) = imagePath.let {
-        showFragment(ChangeImageFragment.initArgumentsBundle(imagePath, viewModel.getChangeAvatarType().code))
+        ProfileFragmentDirections.actionNavigationProfileToChangeImage(
+            imagePath = imagePath,
+            type = viewModel.getChangeAvatarType().code
+        ).run {
+            findNavController().navigate(this)
+        }
     }
 
     private val permissionLauncherSingle = registerForActivityResult(

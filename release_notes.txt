@@ -1,6 +1,6 @@
-Task         : Setup release notes
-Description  : Setup release notes for automatic reading from a file release_notes.txt
-Version      : 3.2
-Author       : Vadym Popovych
-Support	     : vadympopovychn24@gmail.com
-Help         : https://firebase.google.com/docs/app-distribution
+Task              : Update gradle
+Description       : Update gradle version, kotlin version, replace deprecated code, update libs, change apply plugins by DLS approach, fix multiply opening MovieDetails, migrate from showFragment to navigation.  
+Version           : 3.3
+Author            : Vadym Popovych
+Support	          : vadympopovychn24@gmail.com
+Help              : https://firebase.google.com/docs/app-distribution

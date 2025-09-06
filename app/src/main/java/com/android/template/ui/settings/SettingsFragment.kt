@@ -2,11 +2,10 @@ package com.android.template.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.android.template.databinding.FragmentSettingsBinding
 import com.android.template.ui.base.BaseFragment
 import com.android.template.ui.login.LoginActivity
-import com.android.template.ui.settings.password.ChangePasswordFragment
-import com.android.template.ui.settings.profile.ProfileSettingsFragment
 import com.android.template.ui.settings.viewmodel.SettingsViewModel
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
@@ -17,11 +16,17 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         binding.toolbar.initUpNavigation()
 
         binding.profileSettings.setOnClickListener {
-            showFragment(ProfileSettingsFragment())
+            SettingsFragmentDirections.actionNavigationSettingsToProfileSettings()
+                .run {
+                    findNavController().navigate(this)
+                }
         }
 
         binding.passwordSettings.setOnClickListener {
-            showFragment(ChangePasswordFragment())
+            SettingsFragmentDirections.actionNavigationSettingsToChangePassword()
+                .run {
+                    findNavController().navigate(this)
+                }
         }
 
         binding.signOut.setOnClickListener {

@@ -13,14 +13,4 @@ interface NavigationActivityCallback {
     fun popBackStackByFragmentName(fragmentName: String)
 
     fun setCurrentFragmentOfBottomMenu(fragment: Fragment)
-
-    fun showFragment(fragment: Fragment?)
-
-    fun showPopularFragment()
-
-    fun showBottomMenu2Fragment()
-
-    fun showBottomMenu3Fragment()
-
-    fun showBottomMenu4Fragment()
 }
