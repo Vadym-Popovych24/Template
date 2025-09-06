@@ -348,7 +348,7 @@ dependencies {
     // Animations
     implementation "androidx.compose.animation:animation"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
+    androidTestImplementation platform("androidx.compose:compose-bom:$compose_bom")
 
     // Tooling support loading Image from url
     implementation "io.coil-kt:coil-compose:$compose_loading_image_version"
