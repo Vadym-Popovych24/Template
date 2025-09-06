@@ -1,5 +1,5 @@
 Task              : Update gradle
-Description       : Update gradle version, kotlin version, replace deprecated code, update libs, change apply plugins by DLS approach, fix multiply opening MovieDetails, migrate from showFragment to navigation.  
+Description       : Update gradle version, kotlin version, replace deprecated code, update libs, change apply plugins by DLS approach, fix multiply opening MovieDetails, migrate from showFragment to navigation, reimplement full image viewer, fix navigate back when open left menu.  
 Version           : 3.3
 Author            : Vadym Popovych
 Support	          : vadympopovychn24@gmail.com

@@ -114,9 +114,8 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
             val currentFragment = navHostFragment.childFragmentManager.fragments.firstOrNull() ?: return@addCallback
 
             if (preventBackPressedFragments.contains(currentFragment::class.java.name)) {
-                if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START) || viewDataBinding.drawerLayoutPublic.isDrawerOpen(
-                        GravityCompat.END
-                    )
+                if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START) ||
+                    viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.END)
                 ) {
                     closeDrawer()
                 } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name ||
@@ -125,6 +124,9 @@ class NavigationActivity : BaseActivityWithMenuPublic<NavigationHeaderViewModel>
                 } else {
                     openFirstAvailableScreenInBottomMenu()
                 }
+            } else if (viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.START) ||
+                viewDataBinding.drawerLayoutPublic.isDrawerOpen(GravityCompat.END)) {
+                closeDrawer()
             } else if (currentFragment::class.java.name == PopularFragment::class.java.name || currentFragment::class.java.name == Stub::class.java.name) {
                 finish()
             } else if (viewModel.isLoading.get() && currentFragment::class.java.name == Stub::class.java.name) {
