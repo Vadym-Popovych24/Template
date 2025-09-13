@@ -1,0 +1,377 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
+    id("org.sonarqube")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.appdistribution")
+    id("jacoco")
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('sign/template.jks')
+            storePassword 'templateStorePass'
+            keyAlias 'template_alias'
+            keyPassword 'templateKeyPass'
+        }
+        release {
+            storeFile file('sign/template.jks')
+            storePassword 'templateStorePass'
+            keyAlias 'template_alias'
+            keyPassword 'templateKeyPass'
+        }
+    }
+    defaultConfig {
+        applicationId "com.android.template"
+        minSdkVersion min_sdk
+        compileSdk target_sdk
+        targetSdkVersion target_sdk
+        versionCode 24
+        versionName "3.3"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    flavorDimensions = ["version"]
+    productFlavors {
+        dev {
+            dimension "version"
+            applicationIdSuffix '.dev'
+            buildConfigField "String", "MOVIE_DB_API_ENDPOINT", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
+            buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
+            buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            buildConfigField "String", "KEY_ALIAS", "\"${signingConfigs.release.keyAlias}\""
+            resValue "string", "app_name", "Template Dev"
+        }
+
+        prod {
+            dimension "version"
+            buildConfigField "String", "MOVIE_DB_API_ENDPOINT", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "MOVIE_DB_WEB_ENDPOINT", "\"https://www.themoviedb.org/\""
+            buildConfigField "String", "API_KEY", "\"272381ea875be07ab116a0c117c7c86b\""
+            buildConfigField "String", "NEWS_API_ENDPOINT", "\"https://newsapi.org/v2/\""
+            buildConfigField "String", "KEY_ALIAS", "\"${signingConfigs.release.keyAlias}\""
+            resValue "string", "app_name", "Template"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            firebaseAppDistribution {
+                serviceCredentialsFile="D:\\Projects\\Template_files\\template-3fcc1-firebase-adminsdk-mgh3v-bf0690700e.json"
+                appId="1:1032016096431:android:d6972a05d2b55c9127785a"
+                releaseNotes = project.hasProperty("releaseNotesFile") ?
+                        new File(project.property("releaseNotesFile")).text :
+                        "New Dev Release Build!"
+                testers="performanc24@gmail.com"
+            }
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+        compose true
+    }
+
+    kapt {
+        javacOptions {
+            // Increase the max count of errors from annotation processors.
+            // Default is 100.
+            option("-Xmaxerrs", 500)
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+    }
+
+    testOptions {
+        unitTests.all {
+            it.reports.html.required = true
+            it.reports.junitXml.required = true
+        }
+    }
+
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+    namespace 'com.android.template'
+}
+
+jacoco {
+    toolVersion = "$jacoco_version"
+}
+
+tasks.register('generateCoverageReport', JacocoReport) {
+    dependsOn 'testDevDebugUnitTest' // Ensure tests run before coverage report generation
+
+    reports {
+        xml.required = true  // Coverage Plugin reads XML reports
+        html.required = true
+    }
+
+     sourceDirectories.setFrom(files([
+            'src/main/java',
+            'src/dev/java',
+            'src/debug/java'
+    ]))
+    executionData.setFrom(
+            layout.buildDirectory.map {
+                file("${it.asFile}/outputs/unit_test_code_coverage/devDebugUnitTest/testDevDebugUnitTest.exec")
+            }
+    )
+
+    classDirectories.setFrom(
+            files([
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/tmp/kotlin-classes/devDebug", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    },
+                    layout.buildDirectory.map {
+                        fileTree(dir: "${it.asFile}/intermediates/javac/devDebug/classes", excludes: [
+                                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*'
+                        ])
+                    }
+            ])
+    )
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Template"
+        property "sonar.projectKey", "Template"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.language", "kotlin"
+        property "sonar.sources", "src/main/java"
+        property "sonar.java.sources", "src/main/java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.login", "admin"
+        property "sonar.password", "mySonarQ24;"
+    }
+}
+
+dependencies {
+    // Add the module containing your classes as a test dependency
+    testImplementation project(":app")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation project(':validator')
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
+    testImplementation "androidx.core:core-ktx:$core_ktx_version"
+    testImplementation "androidx.test:core:$test_core_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_testing_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    // For coverage reports
+    debugImplementation "org.jacoco:org.jacoco.core:$jacoco_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+
+    // App dependencies
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    /**
+     * Reactive Programing library
+     */
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // RxJava Adapter for Retrofit
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+
+
+    /**
+     * di Dagger 2
+     */
+    // Basic Dagger 2 (required)
+    implementation "com.google.dagger:dagger:${dagger2_version}"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+
+    // dagger.android package (optional)
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+
+    // Support library support (optional)
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+
+    /**
+     * ROOM
+     */
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    // room-paging
+    implementation "androidx.room:room-paging:$room_version"
+    // SQLCipher for Android
+    implementation "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
+
+    // debug database
+    debugImplementation "com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:$debug_db_version"
+
+    /**
+     * VIEW MODEL AND LIVE DATE
+     */
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
+    /**
+     * Pagination Library
+     */
+    implementation "androidx.paging:paging-runtime-ktx:$pagination_version"
+    implementation "androidx.paging:paging-rxjava3:$pagination_version"
+
+    /**
+     * Picasso fot image
+     */
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+
+    /**
+     * * SwipeRefreshLayout
+     */
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_layout_version"
+
+//    image picker
+    implementation "com.github.nguyenhoanglam:ImagePicker:$image_picker_version"
+
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+
+    // Dynamic Feature Module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    implementation "androidx.legacy:legacy-support-v4:$androidx_support_version"
+
+    //sms retriever
+    //  implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    //  implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.0'
+
+    //secure code
+    implementation "io.github.chaosleung:pinview:$pin_view_version"
+
+    // firebase
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-config-ktx'
+
+    //data picker
+    implementation "com.github.dewinjm:monthyear-picker:$month_year_picker"
+
+    // Compose BOM
+    implementation platform("androidx.compose:compose-bom:$compose_bom")  // Bom version
+
+    // Compose dependencies
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.material3:material3"
+    // Tooling support (Previews, etc.)
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    // Integration compose with activities
+    implementation "androidx.activity:activity-compose"
+
+    // Compose Material Design
+    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.material:material-icons-extended"
+    // Animations
+    implementation "androidx.compose.animation:animation"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
+    androidTestImplementation platform("androidx.compose:compose-bom:$compose_bom")
+
+    // Tooling support loading Image from url
+    implementation "io.coil-kt:coil-compose:$compose_loading_image_version"
+    // Integration with ViewModels
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version" // Optional for logging
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // Security-crypto
+    implementation "androidx.security:security-crypto:$security_crypto_version"
+
+    // loading button
+    implementation "com.github.leandroborgesferreira:loading-button-android:$loading_button_version"
+
+    //crop
+    implementation "com.vanniktech:android-image-cropper:$image_cropper_version"
+
+    //application icon badge
+    implementation "me.leolin:ShortcutBadger:$shortcut_badger_version"
+
+    implementation "com.github.chrisbanes:PhotoView:$photo_view_version"
+}

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.android.template.ui.profile.viewmodel.ProfileViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="@dimen/xxxsmall_padding"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/xxxsmall_padding"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@android:color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@android:color/white">
+
+                <!-- Toolbar -->
+
+                <!-- Image & Titles expanded -->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@android:color/transparent"
+                    android:elevation="@dimen/xxxsmall_padding"
+                    app:layout_collapseMode="pin">
+
+                    <LinearLayout
+                        android:id="@+id/infoCollapsed"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/subtitleCollapsed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            tools:text="Site name" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/infoExpanded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@color/colorPrimary"
+                        android:contentDescription="@string/none"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="H,5:2.6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@color/design_default_color_secondary" />
+
+                    <ImageView
+                        android:id="@+id/img_change_cover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="6dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="10dp"
+                        android:src="@drawable/svg_photo_camera"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_cover"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="8dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/profile"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/medium_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_avatar"
+                        tools:text="@string/profile" />
+
+                    <com.android.template.utils.custom.RoundedImageView
+                        android:id="@+id/img_avatar"
+                        android:layout_width="158dp"
+                        android:layout_height="158dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_cover"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_cover"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/default_avatar" />
+
+                    <ImageView
+                        android:id="@+id/img_change_avatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circler_border_with_background"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="7dp"
+                        android:src="@{@drawable/svg_photo_camera}"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_avatar"
+                        app:layout_constraintEnd_toEndOf="@+id/img_avatar"
+                        app:layout_constraintHorizontal_bias="0.97"
+                        app:layout_constraintStart_toStartOf="@+id/img_avatar"
+                        app:layout_constraintTop_toTopOf="@+id/img_avatar"
+                        app:layout_constraintVertical_bias="0.97"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/default_padding"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/tv_first_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                tools:text="User Name" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xsmall_padding"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                tools:text="email@example.com"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/xsmall_padding"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                tools:text="+3801100..."
+                tools:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="8dp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/themoviedb"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="User Name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="8dp"
+                    android:singleLine="true"
+                    android:text="@string/username"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_user_name_movie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textIsSelectable="true"
+                    tools:text="User Name" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="8dp"
+                    android:singleLine="true"
+                    android:text="@string/request_token"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_request_token"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="8dp"
+                    android:textColor="@android:color/black"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="8dp"
+                    android:singleLine="true"
+                    android:text="@string/session_id"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_session_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="8dp"
+                    android:textColor="@android:color/black"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:autoLink="web"
+                android:includeFontPadding="false"
+                android:linksClickable="true"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:singleLine="true"
+                android:text="@string/themoviedb_url"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title_collapsed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_anchor="@+id/appbar"
+            app:layout_anchorGravity="top|center"
+            tools:text="Site name" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

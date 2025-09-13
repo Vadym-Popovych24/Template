@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/white"
+            android:elevation="@dimen/small_padding"
+            app:title="@string/details" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/container_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" />
+
+                    <LinearLayout
+                        android:id="@+id/container_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_padding"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/container_genres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/genres"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_genres"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="Action, Comedy" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_language"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/language_label"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_language"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="en" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_popularity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/popularity"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_popularity"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="729" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_budget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/budget"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_budget"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="120000$" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/revenue"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_revenue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="446398000$" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/country"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_country"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="UK" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_companies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/companies"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_companies"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="Original Film" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_tagline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/tagline"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_tagline"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:autoLink="web"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/blue"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="To be better" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_adult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/adult"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_adult"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:autoLink="web"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/blue"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="Yes" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_vote_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/vote_count"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_vote_count"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:autoLink="web"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/blue"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="114" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/status"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_status"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:autoLink="web"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/blue"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="Released" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_homepage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="@string/homepage"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/xmedium_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_homepage"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:autoLink="web"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/blue"
+                                android:textSize="@dimen/xmedium_text_size"
+                                tools:text="https://homepage.com" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

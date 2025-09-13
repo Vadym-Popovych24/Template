@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_container"
+    app:startDestination="@id/stub">
+
+    <fragment
+        android:id="@+id/stub"
+        android:name="com.android.template.ui.base.Stub"
+        android:label="Stub" />
+
+    <fragment
+        android:id="@+id/navigationSettings"
+        android:name="com.android.template.ui.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_navigationSettings_to_ProfileSettings"
+            app:destination="@id/navigationProfileSettings"/>
+
+        <action
+            android:id="@+id/action_navigationSettings_to_ChangePassword"
+            app:destination="@id/navigationChangePassword"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationProfile"
+        android:name="com.android.template.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_navigationProfile_to_ChangeImage"
+            app:destination="@id/navigationChangeAvatar">
+            <argument
+                android:name="imagePath"
+                app:argType="string" />
+
+            <argument
+                android:name="type"
+                app:argType="integer" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationChangeAvatar"
+        android:name="com.android.template.ui.avatar.ChangeImageFragment"
+        android:label="ChangeAvatarFragment"
+        tools:layout="@layout/fragment_change_avatar">
+
+        <argument
+            android:name="imagePath"
+            app:argType="string" />
+
+        <argument
+            android:name="type"
+            app:argType="integer" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationProfileSettings"
+        android:name="com.android.template.ui.settings.profile.ProfileSettingsFragment"
+        android:label="ProfileSettingsFragment"
+        tools:layout="@layout/fragment_profile_settings"/>
+
+    <fragment
+        android:id="@+id/navigationChangePassword"
+        android:name="com.android.template.ui.settings.password.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_passwords" />
+
+    <fragment
+        android:id="@+id/navigationPopular"
+        android:name="com.android.template.ui.popular.PopularFragment"
+        android:label="PopularFragment"
+        tools:layout="@layout/fragment_popular">
+
+        <action
+            android:id="@+id/action_navigationPopular_to_MovieDetails"
+            app:destination="@id/navigationMovieDetails">
+            <argument
+                android:name="EXTRA_MOVIE_ID"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationMovieDetails"
+        android:name="com.android.template.ui.popular.details.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details" />
+
+    <fragment
+        android:id="@+id/navigationBottomMenu2"
+        android:name="com.android.template.ui.bottom_menu2.BottomMenu2Fragment"
+        android:label="BottomMenu2Fragment"
+        tools:layout="@layout/fragment_bottom_menu_two"/>
+
+    <fragment
+        android:id="@+id/navigationBottomMenu3"
+        android:name="com.android.template.ui.bottom_menu3.BottomMenu3Fragment"
+        android:label="BottomMenu3Fragment"
+        tools:layout="@layout/fragment_bottom_menu_three"/>
+
+    <fragment
+        android:id="@+id/navigationBottomMenu4"
+        android:name="com.android.template.ui.bottom_menu4.BottomMenu4Fragment"
+        android:label="BottomMenu4Fragment"
+        tools:layout="@layout/fragment_bottom_menu_four"/>
+
+    <fragment
+        android:id="@+id/navigationMenuCoroutine"
+        android:name="com.android.template.ui.coroutine.CoroutineFragment"
+        android:label="CoroutineFragment"
+        tools:layout="@layout/fragment_coroutine"/>
+
+    <fragment
+        android:id="@+id/navigationMenuCompose"
+        android:name="com.android.template.ui.compose.ComposeFragment"
+        android:label="ComposeActivity"
+        tools:layout="@layout/fragment_compose"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem1"
+        android:name="com.android.template.ui.menu1.MenuItem1Fragment"
+        android:label="MenuItem1Fragment"
+        tools:layout="@layout/fragment_menu_item_one"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem2"
+        android:name="com.android.template.ui.menu2.MenuItem2Fragment"
+        android:label="MenuItem2Fragment"
+        tools:layout="@layout/fragment_menu_item_two"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem3"
+        android:name="com.android.template.ui.menu3.MenuItem3Fragment"
+        android:label="MenuItem3Fragment"
+        tools:layout="@layout/fragment_menu_item_three"/>
+
+    <fragment
+        android:id="@+id/navigationMenuItem4"
+        android:name="com.android.template.ui.menu4.MenuItem4Fragment"
+        android:label="MenuItem4Fragment"
+        tools:layout="@layout/fragment_menu_item_four"/>
+
+</navigation>

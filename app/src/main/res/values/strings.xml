@@ -1,0 +1,282 @@
+<resources>
+    <string name="app_name">Template</string>
+    <string name="translation_key">en</string>
+    <string name="none">none</string>
+    <string name="no_permission_error">You should give permissions to move on</string>
+    <string name="ago">ago</string>
+    <string name="just_now">Just now</string>
+    <!--    Login-->
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="code">Code from email</string>
+    <string name="sign_up">Registration</string>
+    <string name="passwords_not_match">Passwords don\'t match</string>
+    <string name="send_secure_code_to_email">Send code to email</string>
+    <string name="reset_password">Reset password</string>
+    <string name="save_new_password">Save new password</string>
+    <string name="no_user_with_email_error">User not found</string>
+    <string name="wrong_secure_code_error">Wrong secure code</string>
+    <string name="wrong_password_error">Wrong password</string>
+    <string name="sign_up_hint">You have no account? You can create it right now!</string>
+    <string name="reset_password_title">Account recovery</string>
+    <string name="reset_password_write_email_hint">Please, enter your e-mai address associated with your account</string>
+    <string name="reset_password_bottom_text">We will send you a code to reset your password</string>
+    <string name="enter_email_code_hint">Enter the code from e-mail.</string>
+    <string name="enter_code_timer_hint">If you don\'t receive a code, please check spam or we will email you again after %d s</string>
+    <string name="enter_code_timer_finished_hint">If you don\'t receive a code, please check spam or we will email you again</string>
+    <string name="enter_code_timer_finished_clickable">again</string>
+    <string name="setup_new_password_hint">Choose a new password</string>
+    <string name="cancel_password_reset_confirmation_message">Are you sure you want to cancel account recovery?</string>
+    <string name="wrong_old_password_error">Wrong old password</string>
+
+    <string name="type">Type</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkedin">LinkedIn</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="present">Present</string>
+
+    <!--    notifications-->
+    <string name="channel_name" translatable="false">Main Channel</string>
+    <string name="channel_description" translatable="false">Template Main Channel</string>
+
+    <!--    bottom menu jobs-->
+    <string name="popular">Popular</string>
+    <string name="bottom_menu_2">Bottom menu 2</string>
+    <string name="bottom_menu_3">Bottom menu 3</string>
+    <string name="bottom_menu_4">Bottom menu 4</string>
+    <!--    bottom menu jobs end-->
+
+    <!--    left hand menu jobs-->
+    <string name="menu_item_1">Menu Item 1</string>
+    <string name="menu_item_2">Menu Item 2</string>
+    <string name="menu_item_3">Menu Item 3</string>
+    <string name="menu_item_4">Menu Item 4</string>
+
+    <string name="workspaces">Workspaces</string>
+    <string name="sign_out">Sign Out</string>
+    <!--    left hand menu jobs end-->
+
+    <!--    Profile-->
+    <string name="profile">Profile</string>
+    <string name="profile_cover">Profile cover</string>
+    <string name="upload_avatar">Upload Avatar</string>
+    <string name="profile_avatar">Profile avatar</string>
+
+    <!--    post action-->
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="write_a_comment">Write a comment…</string>
+    <string name="comment_add_success">Comment is added</string>
+    <string name="leave_create_post">If you leave this page all data will be removed.</string>
+    <string name="leave_edit_post">If you leave this page all changes will be removed.</string>
+
+    <!--    post-->
+    <string name="create_post">Create a post</string>
+    <string name="create_post_hint">Post something…</string>
+    <string name="post_button">POST</string>
+    <string name="make_attachment">Attach the file</string>
+    <string name="want_delete_post">Are you sure you want to delete this post?</string>
+
+    <!--    Action-->
+    <string name="hide">Hide</string>
+    <string name="cancel_hide">Back</string>
+    <string name="apply">Apply</string>
+    <string name="applied">Applied</string>
+    <string name="save">Save</string>
+    <string name="saved">Saved</string>
+
+
+    <!-- errors-->
+    <string name="auth_error">Invalid login or password</string>
+    <string name="unauthorized_error">Session expired</string>
+    <string name="no_internet_error">No internet connection found</string>
+    <string name="default_error">Something is wrong</string>
+
+    <string name="critical_error">Something went wrong</string>
+    <string name="description_critical_error">Our engineers are working on it</string>
+    <string name="try_again_later">Try again later. If the problem still exist please try to</string>
+    <string name="try_again_later_continue">relogin by clicking</string>
+    <string name="here"><u>here</u></string>
+    <string name="forbidden_error">App access is disabled for current user</string>
+    <string name="internal_server_error">Internal Server Error</string>
+    <string name="timeout_error">Request timeout</string>
+    <string name="not_found">404 Not Found</string>
+    <string name="invalid_username_or_password">Invalid username or password</string>
+    <string name="verification_code_rule">The verification code must consist of 6 digits</string>
+    <string name="failed_request_token">Failed getting request Token</string>
+    <string name="web_view_open_error">Couldn\'t open link %s in webview</string>
+    <string name="request_token_not_approved">Authentication request into Themoviedb not approved.Please try again.</string>
+    <string name="no_address_associated">No address associated with hostname</string>
+
+    // validations
+    <string name="validation.rule.required">Please enter a value</string>
+    <string name="validation.rule.regex">Please enter a valid value</string>
+    <string name="validation.rule.minLength">Please enter %d or more character</string>
+    <string name="validation.rule.minMaxLength" formatted="false">Please enter a value between %1$d and %2$d</string>
+    <string name="validation.rule.email">Please enter a proper email</string>
+    <string name="validation.rule.phone">Please enter a valid phone number</string>
+    <string name="validation.rule.password">Please enter a valid password (from 6 to 64 characters) Password must contain a number, small and large latin letters</string>
+    <string name="validation.rule.firstName">The First Name must be at least 2 and at max 64 characters long</string>
+    <string name="validation.rule.lastName">The Last Name must be at least 2 and at max 64 characters long</string>
+    <string name="validation.rule.preferredName">Please enter a correct preferred name</string>
+    <string name="validation.rule.invalidCharacter" formatted="false">You\'ve entered an invalid character %s</string>
+    <string name="validation.rule.minDouble" formatted="false">Please enter a value of %s or more</string>
+    <string name="validation.rule.maxDouble" formatted="false">Please enter a value of %s or less</string>
+    <string name="validation.rule.date">Please select correct date</string>
+
+    <!--    ???-->
+
+    <string name="publicc">Public</string>
+    <string name="forgot_password">Forgot password?</string>
+
+    <string name="create_workspace">Create Workspace</string>
+
+    <string name="calendar">Calendar</string>
+    <string name="currency_usd">$</string>
+    <string name="currency_eur">€</string>
+    <string name="currency_uah">₴</string>
+    <string name="news">News</string>
+    <string name="documents">Documents</string>
+
+    <string name="location_hint">Location</string>
+    <string name="location_settings">Location Settings</string>
+    <string name="sort_type">Sort</string>
+    <string name="date_sort">Period</string>
+
+    <string name="search">Search</string>
+    <string name="clean"><u>Clean</u></string>
+
+
+    <string name="name_label">Name</string>
+    <string name="surname_label">Surname</string>
+    <string name="email_label">E-Mail</string>
+    <string name="phone_label">Phone</string>
+    <string name="phone_number">Phone number</string>
+    <string name="working_now">Working now</string>
+    <string name="attachment_label">Attachment</string>
+    <string name="name_error">Please enter your name</string>
+    <string name="surname_error">Please enter your surname</string>
+    <string name="email_error">Please enter your email address</string>
+    <string name="phone_error">Please enter your phone number</string>
+
+    <string name="industry_label">Industry</string>
+
+
+    <!--    company details-->
+    <string name="list_title_placeholder" formatted="false">%s in %s</string>
+    <string name="default_location_placeholder">%s in Ukraine</string>
+
+    <string-array name="days_of_week">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+    <string name="main_information">Main Information</string>
+
+    <string name="created">Created</string>
+
+    <string name="timeline">Timeline</string>
+    <string name="immediately">Immediately</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="never">Never</string>
+
+
+    <string name="settings">Settings</string>
+    <string name="notifications_admin_channel_description" translatable="false">admin_channel_description</string>
+
+    //settings
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="language">Language</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="data_saved">Data are successfully saved</string>
+
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="new_password_not_valid">Please enter a valid password (from 6 to 32 characters) \nPassword must contain a number, small and large letters</string>
+    <string name="same_password_error">Old and new passwords cannot be the same</string>
+    <string name="new_password_does_not_match">Confirmation and new password don\'t match</string>
+    <string name="password_saved">New password saved</string>
+
+    <string name="invalid_value">Please, input valid value</string>
+    <string name="invalid_phone">Please, input valid phone number</string>
+
+    <string name="language_key_en" translatable="false">EN</string>
+    <string name="language_key_uk" translatable="false">UK</string>
+
+    <string name="sign_up_duplicate_error">User email %s is already taken.</string>
+    <string name="sign_up_duplicate_error_simple">User email is already taken.</string>
+    <string name="sign_up_password_requires_lower_error">Passwords must have at least one lowercase (\'a\'-\'z\').</string>
+    <string name="sign_up_password_requires_upper_error">Passwords must have at least one uppercase (\'A\'-\'Z\').</string>
+    <string name="sign_up_password_requires_digit_error">Passwords must have at least one digit (\'0\'-\'9\').</string>
+    <string name="settings_terms_and_conditions">Terms &amp; conditions</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_app_version">App Version</string>
+
+
+    <string name="default_phone_country_code">+380</string>
+
+    <string name="phone_confirmed"><![CDATA[<b>Phone</b> is confirmed]]></string>
+
+    <string name="confirm">Confirm</string>
+    <string name="continue_btn">Confirm</string>
+
+    <string name="city">City</string>
+
+
+    <string name="you">You</string>
+
+    <string name="from">From</string>
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="title_activity_onboarding">OnboardingActivity</string>
+    <string name="coroutines">Coroutines</string>
+    <string name="compose">Compose</string>
+    <string name="themoviedb">Themoviedb info:</string>
+    <string name="themoviedb_url">https://developer.themoviedb.org</string>
+    <string name="request_token">Request Token:</string>
+    <string name="session_id">Session Id:</string>
+    <string name="username">Username:</string>
+    <string name="image_saved">Image successfully saved</string>
+    <string name="image_save_failed">Failed to save image</string>
+
+    // movie
+    <string name="popular_list_empty_title">No popular movies</string>
+    <string name="popular_list_empty_subtitle">There are no popular movies, as soon as they appear they will be displayed here</string>
+    <string name="details">Details</string>
+    <string name="genres">Genres:</string>
+    <string name="budget">Budget:</string>
+    <string name="revenue">Revenue:</string>
+    <string name="country">Country:</string>
+    <string name="companies">Companies:</string>
+    <string name="language_label">Language:</string>
+    <string name="popularity">Popularity:</string>
+    <string name="homepage">Homepage:</string>
+    <string name="tagline">Tagline:</string>
+    <string name="status">Status:</string>
+    <string name="vote_count">Vote Count:</string>
+    <string name="adult">Adult:</string>
+
+    <string name="notifications_admin_channel_name">admin_channel_name</string>
+</resources>
