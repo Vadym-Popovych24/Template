@@ -126,7 +126,6 @@ The Template serves as a foundation that can be extended and customized accordin
 - Don’t use ObservableField, use LiveData, StateFlow, or other binding-friendly types instead.
 - Avoid using ObservableField because it's heavy and can cause lifecycle issues. It's better to use data binding to set values directly into the View.
 - Use the following naming convention in layouts: view_name_name_of_item for example: tv_fisrt_name, btn_login, et_email, etc. For more on naming conventions, see the [Resource Organization](https://github.com/Vadym-Popovych24/Template/wiki/Resource-Organization).
-- Use showFragment() for navigation within NavigationActivity.
 - Centralize Data Storage on Login. When logging into the application, users may reach the main NavigationActivity through different entry points (e.g., login, registration, or password reset). To ensure consistency, all identifiers and tokens should be stored using a centralized approach. Use the <b>saveAuthData()</b> method to handle this. Uncomment, modify, and use it according to your requirements.
 - Logout Handling. Uncomment <b>database.clearAllTables()</b>to properly handle user logout. It is currently commented out for user retention and testing purposes during the login process. In real projects, the database should be cleared on logout to ensure data consistency and security.
 - The project supports product flavors defined in app/build.gradle under the <b>productFlavors {} </b> section. Available Flavors:
