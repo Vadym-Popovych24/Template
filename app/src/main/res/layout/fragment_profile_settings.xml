@@ -200,12 +200,22 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-            android:id="@+id/btn_save"
-            style="@style/primary_сircular_progress_button"
-            android:layout_marginTop="@dimen/xxlarge_padding"
-            android:layout_marginBottom="@dimen/large_padding"
-            android:text="@string/save" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/large_padding">
+
+            <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+                android:id="@+id/btn_save"
+                style="@style/primary_сircular_progress_button"
+                android:layout_gravity="center"
+                android:width="@dimen/large_padding"
+                android:text="@string/save" />
+
+        </FrameLayout>
 
     </LinearLayout>
 </layout>
