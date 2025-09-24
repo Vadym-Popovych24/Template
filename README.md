@@ -18,7 +18,7 @@ The Template repository is designed to provide developers with a standardized, m
 - Clean Architecture, MVVM
 - Paging3
 - Retrofit2
-- Firebasew - Cloud Messaging, Remote Config, App distribution
+- Firebase - Cloud Messaging, Remote Config, App distribution
 
 ### The Template app showcases:
 - Login, Registration, SignOut and Forgot Password process
