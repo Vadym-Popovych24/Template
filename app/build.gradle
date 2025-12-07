@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -29,9 +31,9 @@ android {
     defaultConfig {
         applicationId "com.android.template"
         minSdkVersion min_sdk
-        compileSdk target_sdk
+        compileSdk = target_sdk
         targetSdkVersion target_sdk
-        versionCode 25
+        versionCode 26
         versionName "3.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -106,7 +108,7 @@ android {
         javacOptions {
             // Increase the max count of errors from annotation processors.
             // Default is 100.
-            option("-Xmaxerrs", 500)
+            option("-Xmaxerrs", "500")
         }
     }
     compileOptions {
@@ -114,9 +116,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+
+            freeCompilerArgs.addAll(
+                    "-Xopt-in=kotlin.RequiresOptIn"
+            )
+        }
     }
 
     testOptions {
@@ -221,8 +228,8 @@ dependencies {
     /**
      * Reactive Programing library
      */
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rx_android_version"
 
 
     //retrofit

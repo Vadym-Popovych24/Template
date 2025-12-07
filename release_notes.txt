@@ -1,5 +1,5 @@
-Task              : Fix profile settings button loading state
-Description       : Fix profile settings button during loading state button moved from center to start
+Task              : Update project (Android Studio Otter | 2025.2.1)
+Description       : Update libs to latest, AGP and gradle version, replace deprecated code in gradle.
 Version           : 3.3
 Author            : Vadym Popovych
 Support	          : vadympopovychn24@gmail.com

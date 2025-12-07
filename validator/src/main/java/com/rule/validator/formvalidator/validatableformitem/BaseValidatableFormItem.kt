@@ -1,6 +1,6 @@
 package com.rule.validator.formvalidator.validatableformitem
 
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 abstract class BaseValidatableFormItem : ValidatableFormItem {
     private var isValidValue: Boolean? = null
