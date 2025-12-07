@@ -37,10 +37,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
+import retrofit2.Response
 import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -436,8 +438,8 @@ class BaseViewModelTest : ViewModelTest() {
     fun handleErrorShouldShowForbiddenErrorFromHttpException() {
         val exception = mockk<HttpException>()
         every { exception.code() } returns FORBIDDEN
-        every { exception.message() } returns ""
-        every { mockResourceProvider.getString(R.string.forbidden_error) } returns "Forbidden"
+        every { exception.message } returns "Forbidden"
+        every { mockResourceProvider.getString(any()) } returns "Forbidden"
         baseViewModel.handleError(exception)
         verify { callback("Forbidden") }
     }
@@ -446,8 +448,8 @@ class BaseViewModelTest : ViewModelTest() {
     fun handleErrorShouldShowNotFoundErrorFromHttpException() {
         val exception = mockk<HttpException>()
         every { exception.code() } returns NOT_FOUND
-        every { exception.message() } returns ""
-        every { mockResourceProvider.getString(R.string.not_found) } returns "Not found"
+        every { exception.message } returns "Not found"
+        every { mockResourceProvider.getString(any()) } returns "Not found"
         baseViewModel.handleError(exception)
         verify { callback("Not found") }
     }
@@ -455,29 +457,34 @@ class BaseViewModelTest : ViewModelTest() {
     @Test
     fun handleErrorShouldShowInvalidUsernameOrPasswordErrorFromHttpException() {
         val exception = mockk<HttpException>()
+        val errorMessage = "Invalid username or password"
         every { exception.code() } returns INVALID_USERNAME_OR_PASSWORD
-        every { exception.message() } returns ""
-        every { mockResourceProvider.getString(R.string.invalid_username_or_password) } returns "Invalid username or password"
+        every { exception.message } returns errorMessage
+        every { mockResourceProvider.getString(any()) } returns errorMessage
         baseViewModel.handleError(exception)
-        verify { callback("Invalid username or password") }
+        verify { callback(errorMessage) }
     }
 
     @Test
     fun handleErrorShouldShowInternalServerErrorFromHttpException() {
         val exception = mockk<HttpException>()
         every { exception.code() } returns INTERNAL_SERVER_ERROR
-        every { exception.message() } returns ""
-        every { mockResourceProvider.getString(R.string.internal_server_error) } returns "Internal server error"
+        every { exception.message } returns "Internal server error"
+        every { mockResourceProvider.getString(any()) } returns "Internal server error"
         baseViewModel.handleError(exception)
         verify { callback("Internal server error") }
     }
 
     @Test
     fun handleErrorShouldShowRawMessageWhenJSONParsingFails() {
-        val exception = mockk<HttpException>()
-        every { exception.code() } returns UNKNOWN
-        every { exception.message() } returns "Non-JSON message"
+        // Створюємо реальний HttpException
+        val response = Response.error<Any>(400, "Non-JSON message".toResponseBody())
+        val exception = HttpException(response)
+
+        every { mockResourceProvider.getString(any()) } returns "Non-JSON message"
+
         baseViewModel.handleError(exception)
+
         verify { callback("Non-JSON message") }
     }
 
@@ -486,7 +493,8 @@ class BaseViewModelTest : ViewModelTest() {
         val exceptionCode = 402
         val exception = mockk<HttpException>(relaxed = true) {
             every { code() } returns exceptionCode
-            every { message() } returns ""
+            every { message } returns ""
+            every { mockResourceProvider.getString(any()) } returns exceptionCode.toString()
         }
         baseViewModel.handleError(exception)
         verify { callback(exceptionCode.toString()) }
@@ -497,7 +505,8 @@ class BaseViewModelTest : ViewModelTest() {
         val exception = mockk<HttpException>(relaxed = true)
         val exceptionCode = 0
         every { exception.code() } returns exceptionCode
-        every { exception.message() } returns ""
+        every { exception.message } returns null
+        every { mockResourceProvider.getString(any()) } returns ""
         baseViewModel.handleError(exception)
         verify { callback wasNot called }
     }

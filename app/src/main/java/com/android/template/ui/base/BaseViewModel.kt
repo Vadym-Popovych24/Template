@@ -167,7 +167,7 @@ abstract class BaseViewModel : ViewModel() {
                 }
                 it.code() == INTERNAL_SERVER_ERROR -> showMessage(R.string.internal_server_error)
                 it.code() == INVALID_USERNAME_OR_PASSWORD -> showMessage(R.string.invalid_username_or_password)
-                it.message().isNotEmpty() -> {
+                it.message?.isNotEmpty() == true -> {
                     try {
                         val errorBody = JSONObject(it.message())
                         if (errorBody.has("Message")) {   // To test this line need instrumented  Android test
@@ -185,7 +185,7 @@ abstract class BaseViewModel : ViewModel() {
                 }
             }
         } else {
-            it.message?.let{ showMessage(it) }
+            it.message?.takeIf { it.isNotEmpty() }?.let{ showMessage(it) }
         }
         it.printStackTrace()
     }

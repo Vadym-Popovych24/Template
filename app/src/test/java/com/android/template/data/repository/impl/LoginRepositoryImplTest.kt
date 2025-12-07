@@ -58,7 +58,7 @@ class LoginRepositoryImplTest {
 
         testObserver.assertError(UserAlreadyExistException::class.java)
         verify(exactly = 1) { profilesStorage.getProfileByEmailIgnoreEmpty(email) }
-        verify { loginRepository.requestToken(email = email) wasNot called }
+        verify(exactly = 0) { loginWebservice.requestToken() }
         confirmVerified(profilesStorage, loginWebservice)
     }
 
@@ -136,7 +136,7 @@ class LoginRepositoryImplTest {
         testObserver.assertNotComplete()
         testObserver.assertError(Exception::class.java)
         verify { loginWebservice.approveRequestToken(requestToken) }
-        verify { loginWebservice.createSession(any()) wasNot called }
+        verify(exactly = 0) { loginWebservice.createSession(any()) }
         verify(exactly = 0) { profileWebservice.getAccount(any()) }
         verify(exactly = 0) { profilesStorage.insertProfile(any()) }
     }

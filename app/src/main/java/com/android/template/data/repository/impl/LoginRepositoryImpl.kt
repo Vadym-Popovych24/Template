@@ -45,8 +45,12 @@ class LoginRepositoryImpl @Inject constructor(
         requestToken: String, signUpProfileData: SignUpProfileData
     ): Completable =
         loginWebservice.approveRequestToken(requestToken)
-            .andThen(loginWebservice.createSession(requestToken)
-                .flatMap { profileWebservice.getAccount(it.sessionId) })
+            .andThen(
+                Single.defer {
+                    loginWebservice.createSession(requestToken)
+                        .flatMap { profileWebservice.getAccount(it.sessionId) }
+                }
+            )
             .flatMapCompletable { accountResponseWithSession ->
                 Completable.fromAction {
                     ProfileEntity.mapTo(
